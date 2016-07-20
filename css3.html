@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8"/>
+    <style media="screen">
+    body,ul,li,a{
+  padding: 0 ;
+  margin:0;
+  font-size: 18px;
+  color: white;
+  font-weight: 900;
+}
+.all{
+  width: 260px;
+  height: 240px;
+  margin:100px auto;
+}
+.clear:after{
+  content: ".";
+  height: 0;
+  visibility: hidden;
+  display: block;
+  clear: both;
+}
+.Css{
+  width: 140px;
+  height: 140px;
+  background: #6bd179;
+  float: left;
+  text-align: center;
+  line-height: 140px;
+}
+.Node{
+  width: 120px;
+  height: 70px;
+  background: #309ed5;
+  float: left;
+  text-align: center;
+  line-height: 70px;
+}
+.JQuery{
+  width: 120px;
+  height: 70px;
+  background: #3ebfd5;
+  float: left;
+  text-align: center;
+  line-height: 70px;
+}
+.Javascript{
+  width: 100px;
+  height: 100px;
+  background: #ebb742;
+  float: left;
+  text-align: center;
+  line-height: 100px;
+}
+.Html{
+  width: 160px;
+  height: 100px;
+  background: #80e35e;
+  float: left;
+  text-align: center;
+  line-height: 100px;
+}
+@-webkit-keyframes FZ {
+  0% {
+      -webkit-transform: perspective(400px) rotateX(0deg);
+      opacity: 1;
+  }
+  100% {
+      -webkit-transform: perspective(400px) rotateX(180deg);
+      opacity: 0;
+  }
+}
+@-webkit-keyframes XZ {
+  0% {
+      -webkit-transform: perspective(400px) rotateY(0deg);
+      opacity: 0;
+  }
+  100% {
+      -webkit-transform: perspective(400px) rotateY(180deg);
+      opacity: 1;
+  }
+}
+    </style>
+    <script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
+</head>
+<body>
+<div class="all clear">
+    <div class="Css">Css</div>
+    <div class="Node">Node.js</div>
+    <div class="JQuery">JQuery</div>
+    <div class="Javascript">Javascript</div>
+    <div class="Html">Html</div>
+</div>
+<script>
+    $(function(){
+        $(".Css").on({mouseover:function(){
+            $(this).css({
+                webkitAnimation:"FZ 0.5s linear"
+            },setTimeout(function(){
+                $(".Css").css({
+                    webkitAnimation:"",
+                    background:"white",
+                    color:"#6bd179"
+                });
+            },500)
+            );
+        },mouseout:function(){
+            $(this).css({
+                webkitAnimation:"",
+                background:"#6bd179",
+                color:"white"
+            });
+        }
+        });
+        $(".Javascript").on({mouseover:function(){
+            $(this).css({
+                        webkitAnimation:"XZ 0.5s linear"
+                    },setTimeout(function(){
+                $(".Javascript").css({
+                    webkitAnimation:"",
+                    background:"white",
+                    color:"#ebb742"
+                });
+            },500));
+        },mouseout:function(){
+            $(this).css({
+                webkitAnimation:"",
+                background:"#ebb742",
+                color:"white"
+            });
+        }
+        });
+        $(".Node").on({mouseover:function(){
+            $(this).css({
+                webkitAnimation:"FZ 0.5s linear"
+            },setTimeout(function(){
+                $(".Node").css({
+                    webkitAnimation:"",
+                    background:"white",
+                    color:"#309ed5"
+                });
+            },500));
+        },mouseout:function(){
+            $(this).css({
+                webkitAnimation:"",
+                background:"#309ed5",
+                color:"white"
+            });
+        }
+        });
+        $(".JQuery").on({mouseover:function(){
+            $(this).css({
+                webkitAnimation:"XZ 0.5s linear"
+            },setTimeout(function(){
+                $(".JQuery").css({
+                    webkitAnimation:"",
+                    background:"white",
+                    color:"#3ebfd5"
+                });
+            },500));
+        },mouseout:function(){
+            $(this).css({
+                webkitAnimation:"",
+                background:"#3ebfd5",
+                color:"white"
+            });
+        }
+        });
+        $(".Html").on({mouseover:function(){
+            $(this).css({
+                webkitAnimation:"FZ 0.5s linear"
+            },setTimeout(function(){
+                $(".Html").css({
+                    webkitAnimation:"",
+                    background:"white",
+                    color:"#80e35e"
+                });
+            },500));
+        },mouseout:function(){
+            $(this).css({
+                webkitAnimation:"",
+                background:"#80e35e",
+                color:"white"
+            });
+        }
+        });
+    });
+</script>
+</body>
+</html>
