@@ -18,11 +18,7 @@ myTest(45);
 */
 ?>
 <br/>
-<?php
-print "<h2>PHP is fun!</h2>";
-print "Hello world!<br>";
-print "I'm about to learn PHP!";
-?>
+
 <br />
 <br />
 <?php
@@ -305,7 +301,7 @@ catch(Exception $e){
 
 <!-- 高级过滤器 -->
 <?php
-    $int = 1222;
+  /*  $int = 1222;
     $min = 1;
     $max = 200;
 
@@ -313,7 +309,11 @@ catch(Exception $e){
       echo ("变量值不在合法范围内");
     }else{
       echo ("变量值在合法范围内");
-    }
+    }*/
  ?>
+
+<?php
+print_r(PDO::getAvailableDrivers());
+  ?>
 </body>
 </html>
