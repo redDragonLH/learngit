@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>交互</title>
+<style>
+#text_input{
+width:500px;
+height:200px;
+}
+img{
+width:50px;
+height:50px;
+border-radius:50%;
+}
+.user > *{
+display:inline-block;
+}
+#name{
+line-height:50px;
+text-align:center;
+}
+.p_user{
+display:inline-block;
+
+}
+.p_name{
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    line-height: 38px;
+    margin: auto 0;
+}
+.nierong{
+	width:600px;
+	min-height:60px;
+	display:inline-block;
+	padding: 20px 10px 20px 10px;
+
+}
+.pinglunBox{
+margin-bottom:50px;
+}
+</style>
+</head>
+<body>
+<div class="user">
+<img class="touxiang" src="my.png">
+<div id="name">刘鹤</div>
+</div>
+<textarea id="text_input" maxlength="120" placeholder="留言板"></textarea>
+<button id="button">提交</button>
+<hr/>
+<div class="pinglunBox"></div>
+<div class="fenye">
+
+</div>
+<script src="jquery-1.9.0.min.js"></script>
+<script>
+$(document).ready(function(){
+	$("body").on("click","#button",function(){
+		var user_tou = $(".touxiang")[0].src; 
+		var user_name = $("#name").text();
+		var user_text = $("#text_input").val();
+		var user_data = Date.parse(new Date()); 
+		
+		$("#text_input").val(" ");
+ 		var text = '<div class="pinglun"><div class="p_user"><img class="touxiang" src="'+user_tou+'"><div class="p_name">'+user_name+'</div></div><div class="nierong">'+user_text+'</div></div><hr/>';
+		$(".pinglunBox").prepend(text);
+		jioahu(user_name,user_text,user_data);
+	})
+function jioahu(name,text,datar){  //把值传到数据库
+var name = name;
+var neirong = text;
+var timer = datar;
+
+	var json;
+	$.ajax({
+		cache:false,
+		async:true,
+		url:"/message/jiaohu.php",
+		type:"post",
+		traditional:true,
+		data:{"name":name,"neirong":neirong,"timer":timer}, //传过去的值
+		error:function(){
+		alert("不行啊")
+		},
+		success:function(data){
+			console.log(data)
+		}
+	});
+
+}
+(function(){  //接收从php数据库传过来的值
+$.ajax({
+		cache:false,
+		async:true,
+		url:"/message/shuju.php",
+		type:"post",
+		traditional:true,
+		error:function(){
+		alert("不行啊")
+		},
+		success:function(data){
+			var a = data;
+		
+			var obj = JSON.parse(a); 
+
+			ffa(obj);
+		}
+	});
+	function ffa(a){
+
+	for( x in a){
+		var textJ = '<div class="pinglun"><div class="p_user"><img class="touxiang" src="my.png"><div class="p_name">'+a[x].id+'</div></div><div class="nierong">'+a[x].name+'</div></div><hr/>';
+		$(".pinglunBox").prepend(textJ);
+	}
+		
+	}
+})()
+})
+</script>
+
+</body>
+</html>
