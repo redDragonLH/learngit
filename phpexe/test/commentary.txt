@@ -1,0 +1,4 @@
+文件上传实例文件夹
+upload              文件上传的目录
+form.html           表单文件
+upload_file.php     php上传代码
