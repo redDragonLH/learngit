@@ -1,0 +1,13 @@
+{
+  "name": "ldle",
+  "version": "0.0.1",
+  "description": "闲的时候玩的",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:redDragonLH/ldle.git"
+  },
+  "devDependencies": {
+    "gulp-task-listing": "^1.0.1",
+    "gulp-util": "^3.0.7"
+  }
+}
