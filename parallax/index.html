@@ -19,6 +19,8 @@
       position: absolute;
       top: 50%;
       left: 50%;
+
+transform-style: preserve-3d;
     }
   </style>
 </head>
@@ -43,9 +45,7 @@ y_a.unshift(yy);
 var x= xx-x_a_x,
     y= yy-y_a_x;
 
-  $(".img").offset({top:y,left:x},function(){
-      $(".img").css({top:y,left:x});
-  });
+  $(".img").css( 'transform', 'translate('+x+','+y+')');
 
 });
 </script>
