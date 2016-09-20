@@ -14,3 +14,14 @@ body {
   font-size: 12px; }
   #banner .list {
     width: 100%; }
+  #banner .list {
+    font-size: 14px;
+    zoom: 1;
+    background-color: #ffffff; }
+  #banner .anv {
+    float: left;
+    overflow: hidden; }
+  #banner .sd {
+    display: block; }
+  #banner .sadsa {
+    display: block; }

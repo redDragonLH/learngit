@@ -2,3 +2,5 @@
 
 ##js react
 ##php
+
+##parallax  视差滚动
