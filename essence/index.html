@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>javascript语言精粹</title>
+</head>
+<body>
+
+</body>
+<script>
+var stooge ={
+  "first-name":"jerome",
+  "last-name":"howard"
+}
+  flight={
+    numbers:123,
+    text:"liuhe"
+  }
+  left={
+    numbers:123
+  }
+  var another_stooge = Object.create(stooge);
+
+  another_stooge['first-name'] = 'harry';
+  another_stooge['middle-name'] = 'moses';
+  another_stooge.nickname = 'moe';
+  // hasOwnProperty()方法检查对象是否拥有独有的属性，如过有则返回true
+flight.hasOwnProperty('numbers')
+
+ // 枚举
+ // for in
+ /*var name;
+ for(name in another_stooge){
+   if(typeof another_stooge[name] !== 'function'){
+     document.writeln(name +':' + another_stooge[name])
+   }
+ }*/
+ // for
+ var i;
+ var properties = [
+   'first-name',
+   'middle-name',
+   'last-name',
+   'profession'
+ ];
+ for(i = 0;i<properties.length;i++){
+   document.writeln(properties[i]+':'+another_stooge[properties[i]])
+ }
+</script>
+</html>
