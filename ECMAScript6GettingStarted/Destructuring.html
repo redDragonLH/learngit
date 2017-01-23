@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>变量的解构赋值</title>
+</head>
+<body>
+  <script type="text/javascript">
+    // 定义： 按照一定模式，从数组和对象中提取值，对变量进行赋值，着被称为解构（Destructuring）
+    let [a,b,c] = [1,2,3];
+    console.log(a)
+    // 嵌套数组进行解构
+    let [foo,[[bor],baz]] = [1,[[2],3]]
+    console.log(foo)
+    let [head,...tail] = [1,2,3,4]
+    console.log(tail)
+
+    // 解构不成功，变量的值就等于 undefined
+    let [foo] = [];
+    let [bar, foo] = [1];
+
+    // 不完全解构，即等左边的模式，只匹配一部分的等号右边的数组，依旧可以解构成功
+    let [x, y] = [1, 2, 3];
+    x // 1
+    y // 2
+
+    let [a, [b], d] = [1, [2, 3], 4];
+    a // 1
+    b // 2
+    d // 4
+
+    //如果等号右边不是可遍历的解构，那么将会报错
+      // 报错
+      let [foo] = 1;
+      let [foo] = false;
+      let [foo] = NaN;
+      let [foo] = undefined;
+      let [foo] = null;
+      let [foo] = {};
+
+    // 对于set 结构，也可以使用数组的解构赋值
+    let [x, y, z] = new Set(['a', 'b', 'c']);
+
+    // 默认值
+    let [foo = true] = [];
+    console.log(foo) // true
+
+    let [x, y = 'b'] = ['a']; // x='a', y='b'
+    let [x, y = 'b'] = ['a', undefined]; // x='a', y='b'
+
+    // 默认值可以引用解构赋值的其他变量，但该变量必须已经声明
+    let [x = 1, y = x] = [];     // x=1; y=1
+    let [x = 1, y = x] = [2];    // x=2; y=2
+    let [x = 1, y = x] = [1, 2]; // x=1; y=2
+    let [x = y, y = 1] = [];     // ReferenceError
+  // -----------------------------------------------------------------------------------------------------------------
+  // 对象的解构赋值
+    // 变量必须与属性同名，才能取到正确的值
+  let { foo, bar } = { foo: "aaa", bar: "bbb" };
+
+  // 真正的解构赋值
+  let { foo: foo, bar: bar } = { foo: "aaa", bar: "bbb" };
+
+  // 对象赋值与数组解构赋值都可以有默认值，，默认值生效的条件是，对象的属性值严格等于 undefined
+    var {x = 3} = {x: undefined};
+    x // 3
+
+    var {x = 3} = {x: null};
+    x // null
+
+    // 解构失败，变量的值等于 undefined
+
+    //
+    let { log, sin, cos } = Math;
+    console.log(log)
+    console.log(math)
+
+    // -----------------------------------------------------------------------------------------------------
+    // 字符串也可以进行解构赋值，此时，字符串被转换成一个类似数组的对象
+    const [a, b, c, d, e] = 'hello';
+
+    // 类似数组的对象都有一个 length 属性，因此还可以对这个属性解构赋值
+    let {length : len} = 'hello';
+
+    // -------------------------------------------------------------------------------------------------------------------
+    // 数值和布尔值的解构赋值
+      // 解构赋值时，如果等号右边时数值和布尔值，则会先转为对象
+      let {toString: s} = 123;
+      s === Number.prototype.toString // true
+
+      let {toString: s} = true;
+      s === Boolean.prototype.toString // true
+
+      // 解构赋值的规则： 只要等号右边的值不是对象，就先将其转为对象。由于 undefined 和 null 无法转为对象，所以对它们进行解构赋值，都会报错
+      let { prop: x } = undefined; // TypeError
+      let { prop: y } = null; // TypeError
+
+      // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      // 函数参数的解构赋值
+        // 函数参数也可以使用解构赋值
+        function add([x, y]){
+          return x + y;
+        }
+
+        add([1, 2]); // 3
+  // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // 圆括号问题
+      // 不能使用圆括号的情况
+        //（1）变量声明语句中，不能带有圆括号
+        // 全部报错
+          let [(a)] = [1];
+
+          let {x: (c)} = {};
+          let ({x: c}) = {};
+          let {(x: c)} = {};
+          let {(x): c} = {};
+
+          let { o: ({ p: p }) } = { o: { p: 2 } };
+        // （2） 函数参数中，模式不能带有圆括号
+          // 函数参数也属于变量声明，因此不能带有圆括号
+          // 报错
+          function f([(z)]) { return z; }
+      // （3）赋值语句中，不能将整个模式，或嵌套模式中的一层，放在圆括号之中
+      // 全部报错
+        ({ p: a }) = { p: 42 };
+        ([a]) = [5];
+        [({ p: a }), { x: c }] = [{}, {}];
+
+    // 可以使用圆括号的情况 - - - - - - - - - - - - -
+      //赋值语句的非模式部分，可以使用圆括号
+        // 这三行都可以正确执行，因为首先它们都是赋值语句，而不是声明语句；其次它们的圆括号都不属于模式的一部分。
+        // 第一行语句中，模式是取数组的第一个成员，跟圆括号无关；
+        // 第二行语句中，模式是p，而不是d，第三行语句与第一行语句的性质一致
+      [(b)] = [3]; // 正确
+      ({ p: (d) } = {}); // 正确
+      [(parseInt.prop)] = [3]; // 正确
+
+  //------------------------------------------------------------------------------------------------------------------------
+  // 用途
+    //(1)交换变量的值
+    let x = 1;
+    let y = 2;
+
+    [x, y] = [y, x];
+
+    //(2)从函数返回多个值
+      // 函数只能返回一个值,如果返回多个值,只能将它们放在数组和对象里返回,解构赋值就非常方便
+      // 返回一个数组
+
+        function example() {
+          return [1, 2, 3];
+        }
+        let [a, b, c] = example();
+
+        // 返回一个对象
+
+        function example() {
+          return {
+            foo: 1,
+            bar: 2
+          };
+        }
+        let { foo, bar } = example();
+
+    // (3) 函数参数的定义
+      //解构赋值可以很方便的将一组参数与变量名对应起来
+        // 参数是一组有次序的值
+        function f([x, y, z]) { ... }
+        f([1, 2, 3]);
+
+        // 参数是一组无次序的值
+        function f({x, y, z}) { ... }
+        f({z: 3, y: 2, x: 1});
+
+    // (4) 提取JSON数据
+      // 解构赋值对提取JSON对象中的数据很有用
+        let jsonData = {
+          id: 42,
+          status: "OK",
+          data: [867, 5309]
+        };
+
+        let { id, status, data: number } = jsonData;
+
+        console.log(id, status, number);
+        // 42, "OK", [867, 5309]
+
+    // (5)函数参数的默认值
+      // 可以避免在函数体内再写
+    jQuery.ajax = function (url, {
+      async = true,
+      beforeSend = function () {},
+      cache = true,
+      complete = function () {},
+      crossDomain = false,
+      global = true,
+      // ... more config
+      }) {
+      // ... do stuff
+      };
+
+  //(6) 遍历Map解构
+    //任何部署了 Iterator 接口的对象，都可以用 for...of 循环遍历。Map解构原生支持 Iterator 接口，配合变量的解构赋值，获取键名和键值很方便
+      var map = new Map();
+      map.set('first', 'hello');
+      map.set('second', 'world');
+
+      for (let [key, value] of map) {
+       console.log(key + " is " + value);
+      }
+      // first is hello
+      // second is world
+    // 单独获取键名或键值：
+      // 获取键名
+      for (let [key] of map) {
+        // ...
+      }
+
+      // 获取键值
+      for (let [,value] of map) {
+        // ...
+      }
+  // （7） 输入模块的指定方法
+    //加载模块时，需要指定输入哪些方法。解构赋值使得输入语句灰尘清晰
+      const { SourceMapConsumer, SourceNode } = require("source-map");
+  </script>
+</body>
+</html>
