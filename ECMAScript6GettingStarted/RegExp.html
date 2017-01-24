@@ -8,5 +8,36 @@
 </head>
 <body>
 
+<!--  -->
+<script type="text/javascript">
+  // u修饰符
+  // 含义为 “Unicode模式”，用来处理大于 \uFFFF 的Unicode 字符，可以正确处理四字节的 UTF-16编码
+  // 加上 u 修饰符会改变的行为
+    // （1）点字符
+      // 点字符含义是除了换行符以外的任意单个字符，对于码点大于 0xFFFF 的Unicode 字符，点字符不能识别，必须加上u 修饰符
+        var s = '𠮷';
+
+        /^.$/.test(s) // false
+        /^.$/u.test(s) // true
+
+      // （2）Unicode 字符表示法
+        // ES6新增使用大括号表示Unicode 字符，这种表示法在正则中必须加上 u 修饰符
+        /\u{61}/.test('a') // false
+        /\u{61}/u.test('a') // true
+        /\u{20BB7}/u.test('𠮷') // true
+
+      // （3）量词
+      // 使用 u 修饰符后，所有量词都会正确识别码点大于 0xFFFF 的Unicode 字符
+      /a{2}/.test('aa') // true
+      /a{2}/u.test('aa') // true
+      /𠮷{2}/.test('𠮷𠮷') // false
+      /𠮷{2}/u.test('𠮷𠮷') // true
+      // 只有在使用 u 修饰符的情况下，Unicode 表达式当中的大括号才会被正确解读
+
+      // （4）预定义模式
+
+      // （5） i 修饰符
+      
+    </script>
 </body>
 </html>
