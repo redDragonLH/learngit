@@ -61,4 +61,4 @@ var cookie = (function(){
 // 使用通过cookie单例所暴露的set方法来设置一个cookie
 cookie.set("name","lh");
 // 检查时候已经正确设置
-console.log(cookie.get("name"))
+console.log(cookie.get("name"));
