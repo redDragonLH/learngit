@@ -73,3 +73,57 @@ companyFactory = (function(){
     }
   };
 }());
+
+// 实现享元模式的第三阶段，使得对象的创建可以按照低效模式相同的方法进行
+// 实现最高效的数据储存处理，且从终端用户的角度看来，这种处理是透明的
+
+// 创建一个对象，当中提供了保存员工数据的方法以及按员工的 employeeId 来返回每个对象的数据的方法
+// 简化终端开发者的代码
+
+employee = (function(){
+  // 声明一个变量，作为数据储存区来存放所有创建的员工对象
+  var employee = {},
+      employeeCount = 0;
+  return {
+    // 建立一个方法，用于往数据储存区添加员工对象，把参数所提供的数据传入Person和 Company所对应的工厂，保存所生成的对象至本地区域
+    add: function(data) {
+      // 根据所提供的参数数据，相应地创建或查找Person类对象，Company类地对象
+      var person = personFactory.creatPerson({
+        ssId: data.ssId,
+        name: data.name
+      }),
+      company = companyFactory.creatCompany({
+        name: data.companyName,
+        address: data.companyAddress,
+        country: data.companyCountry
+      });
+
+      // 保存此对象至本地数据存储区，此对象含有employeeId,occupation,以及员工所任职地公司，还有员工唯一个人信息数据
+      employees[data.employeeId] = {
+        employeeId: data.employeeId,
+        occupation: data.occupation,
+        person: person,
+        company: company
+      };
+
+      employeeCount++;
+    },
+    // 建立一个方法，用于根据员工地employeeId来返回员工地名称-从相关联地Person对象中获取人名数据
+    getName: function(employeeId) {
+      return employees[employeeId].person.name;
+    },
+    // 根据employeeId返回职位
+    getOccupation: function(employeeId){
+      return employees[employeeId].occupation;
+    },
+    // 返回任职公司地址
+    getCompany: function(employeeId) {
+      var company = employees[employeeId].company;
+      return [company.name,company.address,company.country].join(",");
+    },
+    // 获取员工数量
+    getCount:function(){
+      return employeeCount;
+    }
+  };
+}());
