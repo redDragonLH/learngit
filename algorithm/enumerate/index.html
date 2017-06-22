@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>枚举-算法拾遗</title>
+  <style media="screen">
+    li{
+      list-style-type: none;
+    }
+    span{
+      padding: 4px;
+    }
+  </style>
+</head>
+<script type="text/javascript" src="enumerate.js"></script>
+
+<body>
+  <div class="enumerate">
+    <h2>枚举</h2>
+    <div class="wenti">
+      <p>熄灯问题的js解法:</p>
+    </div>
+    <dic class="centent">
+      <div>初始灯的状态</div>
+      <ul id="enumerate_start">
+
+      </ul>
+      <div>需要摁下的按钮</div>
+      <ul id="enumerate_end">
+
+      </ul>
+      <script type="text/javascript">
+      var arr=[[0,1,1,0,1,0],[1,0,0,1,1,1],[0,0,1,0,0,1],[1,0,0,1,0,1],[0,1,1,1,0,0]]
+        enumerate.start(arr)
+      </script>
+    </dic>
+  </div>
+
+</body>
+</html>
