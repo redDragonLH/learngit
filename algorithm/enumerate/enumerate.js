@@ -77,5 +77,5 @@ function my_console(id,arr){
   }
 }
 
-window.enumerate = enumerate;
+window.enumerate = new enumerate();
 })(window);

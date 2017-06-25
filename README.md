@@ -1,9 +1,8 @@
-#练习本
+# 练习本
 
-##js react
-##php
+## js react
+## php
 
-##parallax  视差滚动
+## parallax  视差滚动
 
-## algorithm
-算法
+## algorithm  算法
