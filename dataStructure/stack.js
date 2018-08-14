@@ -1,5 +1,6 @@
 /**
  * 栈 js 实现
+ * 注： 先进后出
  */
 
 class Stack{
@@ -12,6 +13,9 @@ class Stack{
   }
   pop(){
     return this.array.pop()
+  }
+  isEmpty(){
+    return this.array.length >= 1?true:false;
   }
   log(){
     console.log(this.array);
