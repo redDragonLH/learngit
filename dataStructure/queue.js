@@ -9,7 +9,7 @@ class Queue{
     key? this.array.unshift(key): '';
   }
   push(key){
-    return this.array.unshift(key);
+    return this.array.push(key);
   }
   pop(){
     return this.array.shift();
