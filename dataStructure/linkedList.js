@@ -51,7 +51,7 @@ class SingleLinked{
         node = node.next;
     }
     return node;
-}
+  }
   find(key){
     var node = this.list
     while(node.key != key){
@@ -157,11 +157,87 @@ class DoublyList {
   }
 }
 let doublyList = new DoublyList(3)
-doublyList.log()
+// doublyList.log()
 doublyList.insert(10,null,true)
-doublyList.log()
+// doublyList.log()
 doublyList.insert(11,2,true)
-doublyList.log()
+// doublyList.log()
 // console.log(doublyList.getLength());
 doublyList.delete(2)
-doublyList.log()
+// doublyList.log()
+
+/**
+ * ---------------
+ * 循环链表
+ * ---------------
+ */
+/**
+ * 单循环链表
+ */
+class SingleCycleList {
+  constructor( key ) {
+    this.count = 0;
+    this.head = null;
+    key ? this.insert(key) : '';
+  }
+  insert( key, needSetKey ){
+    let node = new SingleLinkedNode(key);
+    if(!this.head){
+      this.head = node;
+    } else{
+      let needSetNode = this.find(needSetKey);
+      if(!needSetNode) return needSetNode;
+      if(needSetNode.next){
+        node.next = needSetNode.next;
+        needSetNode.next = node;
+      }else{
+        needSetNode.next = node;
+        node.next = this.head
+      }
+    }
+    this.count++
+  }
+  delete( key ){
+    let Prevnode = this.findPrev( key );
+    if(!Prevnode)return Prevnode;
+    
+    Prevnode.next = Prevnode.next.next;
+    this.count--;
+  }
+  find( key ){
+    let count = 0;
+    let node = this.head;
+    while( node.key != key ){
+      if( count > this.count) return false;
+      node = node.next;
+      count++
+    }
+    return node;
+  }
+  findPrev( key ) {
+    let count = 0;
+    var node = this.head;
+    while (node.next.key != key){
+      if(count >= this.count) return false;
+        node = node.next;
+        count++
+    }
+    return node;
+  }
+  log(){
+    console.log(this.head);
+  }
+}
+let singleCycleList = new SingleCycleList(2)
+// singleCycleList.log();
+singleCycleList.insert(3,2)
+// singleCycleList.log();
+singleCycleList.insert(5,3)
+// singleCycleList.log();
+singleCycleList.delete(10)
+// singleCycleList.log();
+singleCycleList.insert(6,5)
+
+/**
+ * 双向循环链表
+ */
