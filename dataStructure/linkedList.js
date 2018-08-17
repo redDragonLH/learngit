@@ -241,3 +241,78 @@ singleCycleList.insert(6,5)
 /**
  * 双向循环链表
  */
+class DoublyCycleList {
+  constructor( key ) {
+    this.count = 0;
+    this.head = null;
+    key ? this.insert(key) : '';
+  }
+  insert( key, setKEY ){
+    let node = new DoublyListNode( key );
+    if( !this.head ){
+      this.head = node;
+      this.count++;
+    }else{
+      let needSetnode = this.find( setKEY );
+      if (!needSetnode) return needSetnode;
+      node.next = needSetnode.next;
+      node.prev = needSetnode;
+      needSetnode.next = node;
+      this.count++
+      if(!node.next) node.next = needSetnode;
+      if(!needSetnode.prev) needSetnode.prev = node;
+    }
+  }
+  delete( key ){
+    let node = this.find(key);
+    if( !node ) return false;
+    let next = node.next;
+    node.prev.next = node.next;
+    node.next.prev = node.prev;
+    this.count--;
+  }
+  find( key ){
+    let isKeep = true,
+        prev = this.head,
+        next = this.head,
+        count = 0,
+        tolal = this.count/2 ;
+    while(count <= tolal){
+      if(count == tolal && prev.key != key && next.key != key) return false;
+      if(prev != null && prev.key == key) return prev;
+      else if(next!= null && next.key == key) return next;
+      
+      if( prev != null) prev = prev.prev;
+      if( next!= null) next = next.next;
+      count++
+    }
+    if(!prev && ! next) return false;
+  }
+  log(){
+    // console.log(this.head);
+    let node =this.head,
+        count = this.count
+    while ( count ) {
+      node = node.next
+      console.log(node.key);
+      count--
+    }
+  }
+  getLength(){
+    console.log(this.count);
+    return this.count
+  }
+}
+let doublyCycleList = new DoublyCycleList(3);
+let arr = [1,3,5,7,9]
+arr.map(function(e,i){
+  doublyCycleList.insert( e,3 )
+})
+// doublyCycleList.getLength()
+// doublyCycleList.log();
+// console.log('---');
+// doublyCycleList.delete(3)
+// doublyCycleList.log();
+// console.log(doublyCycleList.delete(30));
+// console.log('---');
+// doublyCycleList.log();
