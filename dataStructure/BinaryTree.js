@@ -1,3 +1,6 @@
+/**
+ * 二叉树 js实现
+ */
 ;(function(){
 class Node{
   constructor( key ){
@@ -6,6 +9,11 @@ class Node{
     this.right = null
   }  
 }
+/**
+ * 二叉搜索树的插入方式
+ *
+ * 二叉树应该是按照从左到右，顺序放置节点，不会考虑内容大小
+ */
 const insertNode = function(node, newNode){
   if(newNode.key <= node.key){ // 小的节点放在左边
     if(node.left === null){ //左节点没有直接放在左边
@@ -162,4 +170,12 @@ var arr = [9,6,3,8,12,15]
 binaryTree.inOrderTraverse()
 binaryTree.preOrderTraverse()
 binaryTree.postOrderTraverse()
+
+/**
+ * 二叉搜索树
+ */
+
+/**
+ * 二叉堆
+ */
 })();
