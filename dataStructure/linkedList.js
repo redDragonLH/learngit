@@ -303,11 +303,11 @@ class DoublyCycleList {
     return this.count
   }
 }
-let doublyCycleList = new DoublyCycleList(3);
-let arr = [1,3,5,7,9]
-arr.map(function(e,i){
-  doublyCycleList.insert( e,3 )
-})
+// let doublyCycleList = new DoublyCycleList(3);
+// let arr = [1,3,5,7,9]
+// arr.map(function(e,i){
+//   doublyCycleList.insert( e,3 )
+// })
 // doublyCycleList.getLength()
 // doublyCycleList.log();
 // console.log('---');
@@ -316,3 +316,18 @@ arr.map(function(e,i){
 // console.log(doublyCycleList.delete(30));
 // console.log('---');
 // doublyCycleList.log();
+
+/**
+ * 块状链表
+ *
+ * 以文本编辑需求为模拟实现一个块链
+ * (在内存层面，数组和字符串都是连续的存放在内存中的内容，所以对它俩的操作十分相像)
+ * 按行拆块，操作每行就是操作这个块的内容，
+ *
+ * 问题1：判断所操做的是第几行并是第几个块
+ * 预想解决办法：
+ *  1，实时操作，耗性能
+ *  2， 每个块里带个行号变量，有增删需要全部都改
+ */
+
+
