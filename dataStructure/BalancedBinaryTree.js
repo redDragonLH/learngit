@@ -8,114 +8,85 @@
 
 /**
  * AVL 平衡二叉树
+ * 
  */
 /**
- * 第三方的节点组织方式，节点内容放在本类内，而不是新建一个节点类
- * 此方式组织结构清晰，类内方法跟随节点，
- * 但本人认为可能会过多占用内存（原型方法不会过多占用内存，比预计的要占用的少很多）
- *
- * 把节点分离出来的组织方式，虽然结构不甚清晰，
- * 操作节点必须配合另一个类，但应该是在我认知内最省内存的方法（性价比存疑）
+ * 网上找的 C版 改的
+ * https://blog.csdn.net/u014634338/article/details/42465089
  */
-class BalanceTreeNode {
-  constructor(data) {
-    this.data = data;
-    this.bf = 0;
-  }
-  setL( node ){
-    this.lchild = node;
-  }
-  setR( node ){
-    this.rchild = node;
-  }
-  search( key ){
-    if( key == this.data ){
-      return {find:true,node:this};
-    }else if( key < this.data ){
-      if( !this.lchild ){
-        return {find:false,node:this}
-      }
-      return this.lchild.search( key )
-    }else{
-      if( !this.rchild ){
-        return{find:false,node:this}
-      }
-       return this.rchild.search(key);
-    }
-  }
-  insert( key ){
-    let searchResult = this.search( key );
-    if( !searchResult.find ){
-      let s = new BalanceTreeNode( key );
-      if( key < searchResult.node.data){
-        searchResult.node.lchild = s;
-      }else{
-        searchResult.node.rchild = s;
-      }
-      return true;
-    }
-    return false;
-  }
-  delete(){
-    if( !this.rchild ){
-      this.data = this.lchild ? this.lchild.data: null
-      this.lchild = this.lchild ?this.lchild.lchild : null
-      this.rchild = this.lchild ?this.lchild.rchild : null
-      return this;
-    }else{
-      if(!this.rchild.lchild){
-        this.data = this.rchild.data
-        this.rchild = this.rchild.rchild
-        return this.rchild;
-      }
-      let q = this;
-      let s = this.rchild;
-      while( s.rchild ){
-        q = s;
-        s = s.rchild;
-      }
-      this.data = s.data;
-      if( q != this ){
-        q.rchild = s.lchild;
-      } else {
-        q.lchild = s.lchild;
-      }
-    }
-  }
-  deleteKey( key ){
-    if( this.data == key ){
-      this.delete()
-    }else if ( this.data > key ) {
-      this.lchild.deleteKey(key)
-    }else{
-      this.rchild.deleteKey(key)
-    }
+
+class AVLNode {
+  constructor(val) {
+    this.depth = 0;
+    this.parent = null
+    this.key = val;
+    this.lchild = null;
+    this.rchild = null;
   }
 }
-let balanceTreeNode = new BalanceTreeNode(10);
-balanceTreeNode.insert(9)
-// console.log(balanceTreeNode);
-balanceTreeNode.insert(11)
-// console.log(balanceTreeNode);
-balanceTreeNode.insert(8)
-// console.log(balanceTreeNode);
-balanceTreeNode.insert(12)
-// console.log(balanceTreeNode);
-balanceTreeNode.insert(7)
-// console.log(balanceTreeNode);
-balanceTreeNode.insert(13)
-// console.log(balanceTreeNode);
-balanceTreeNode.insert(6)
-// console.log(balanceTreeNode);
-balanceTreeNode.insert(14)
-// console.log(balanceTreeNode);
-balanceTreeNode.deleteKey(14)
-balanceTreeNode.deleteKey(6)
-balanceTreeNode.deleteKey(13)
-balanceTreeNode.deleteKey(7)
-balanceTreeNode.deleteKey(12)
-balanceTreeNode.deleteKey(8)
-balanceTreeNode.deleteKey(11)
-balanceTreeNode.deleteKey(9)
-console.log('--delete--');
-console.log(balanceTreeNode);
+
+
+class BalancedBinaryTree {
+  constructor( val ) {
+    this.root = null;
+    val ? this.insert( val ): '';
+  }
+  /**
+   * 向AVL二叉树插入值
+   * @param  {string|number} val 需要插入的值
+   * @return {object}    根节点
+   */
+  insert( val ){
+    let temp;
+    let node = new AVLNode( val );
+    //插入节点
+    temp = insert_val( this.root, node, null ); // 调用真正的插入函数
+    if( temp ){
+      this.update_depth( temp );
+      this.root = AVLTree( root, temp ); // 检查树是否需要调整
+    }else temp = null;
+    
+    return this.root
+  }
+  // 更新节点深度
+  update_depth( node ){
+    if( !node ) return false;
+    else{
+      let depth_Lchild = this.get_balance( node.lchild ); // 左节点深度
+      let depth_Rchild = this.get_balance( node.rchild ); // 右节点深度
+      node.depth = max( depth_Lchild,depth_Rchild ) + 1;
+    }
+  }
+  // 获取节点深度
+  get_balance( node ){
+    if (node == NULL)
+    return 0;
+    return node.depth;
+  }
+  // 返回当前平衡因子
+  is_balance( node ){
+    if( !node ) return false;
+    else return get_balance( node.lchild) - get_balance(node.rchild);
+  }
+  /**
+   * AVL树调整函数
+   * @param  {object} node 需要插入的节点
+   * @return {object}    根节点
+   */
+  AVLTree(node){
+    let balance = 0; // 平衡因子
+    while( node != null ){ //检查其祖先是否需要调整，更新
+      this.update_depth(node); // 更新当前节点的高度信息
+      balance = this.is_balance( node ); // 获取当前节点的平衡因子情况
+      if(balance > 1 || balance < -1){ // 平衡因子超标情况
+        if( balance > 1 ) { //左子树高
+          if( this.is_balance( node.lchild) > 0 ) node = this.LL_rotate( node ); //LL型
+          else node = this.LR_rotate( node ); // LR型
+        }
+      }
+    }
+  }
+  LL_rotate(node){
+    
+  }
+}
