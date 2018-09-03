@@ -38,6 +38,7 @@ function AVLTree( root, node ){
         if( is_balance( node.lchild) > 0 ) node = LL_rotate( node ); //LL型
         else node = LR_rotate( node ); // LR型
       }else{ // 右子树高
+        // console.log(node);
         if( is_balance( node.rchild) < 0 ) node = RR_rotate( node ) //RR型
         else node = RL_rotate( node ); // RL型
       }
@@ -56,10 +57,10 @@ function AVLTree( root, node ){
 function update_depth( node ){
   if( !node ) return false;
   else{
-    console.log(node);
     let depth_Lchild = get_balance( node.lchild ); // 左节点深度
     let depth_Rchild = get_balance( node.rchild ); // 右节点深度
     node.depth = max( depth_Lchild,depth_Rchild ) + 1;
+    
   }
 }
 // 返回当前平衡因子
@@ -68,7 +69,7 @@ function is_balance( node ){
   else return get_balance( node.lchild) - get_balance(node.rchild);
 }
 // RR型调整函数
-function RR_rotate( node ){
+function RR_rotate( node ){  
   // node 为离操作节点最近的失衡节点
   
   let parent = son = null;
@@ -106,12 +107,13 @@ function RR_rotate( node ){
   return son;
 }
 // LR型 先左旋，在右旋
-function LR_rotate( node ){
+function LR_rotate( node ){  
   RR_rotate( node.lchild );
   return LL_rotate( node );
 }
 
 function LL_rotate( node ){
+  
   // node 为离操作节点最近的失衡节点
   let parent = null,
       son = null;
@@ -149,6 +151,7 @@ function LL_rotate( node ){
   return son;
 }
 function RL_rotate( node ){
+  
     LL_rotate( node.rchild );
     return RR_rotate( node );
   }
@@ -207,20 +210,22 @@ function find_min( node ){
   }
   return node;
 }
-function preOrder( node  ){
+// 前序
+function preOrder( node  , pos){
     if( !node ) return false;
-    console.log( node.val + '-' + node.depth );
+    console.log( node.val + '-' + node.depth + '-'+ pos );
     
-    preOrder( node.lchild )
-    preOrder( node.rchild )
+    preOrder( node.lchild ,'l')
+    preOrder( node.rchild ,'r')
   }
-function inOrder( node ){
+// 中序
+function inOrder( node , pos){
     if( !node ) return false;
-    inOrder( node.lchild );
+    inOrder( node.lchild ,'l');
     
-    console.log( node.val + '-' + node.depth );
+    console.log( node.val + '-' + node.depth + '-'+ pos );
     
-    inOrder( node.lchild );
+    inOrder( node.rchild , 'r');
   }
 // 获取节点深度
 function get_balance( node ){
@@ -273,15 +278,15 @@ class BalancedBinaryTree {
     if(newNode.val <= root.val){ // 小的节点放在左边
       if(root.lchild === null){ //左节点没有直接放在左边
         root.lchild = newNode;
-        newNode = parent;
-        return newNode;
+        newNode.parent = parent;
+        return root;
       } else { // 左树有内容的话再搜索下一层的节点
         return this.insert_val(root.lchild, newNode, root)
       }
     } else { // 大的key 放在右边
       if(root.rchild === null){
         root.rchild = newNode
-        newNode = parent;
+        newNode.parent = parent;
         return root;
       } else { // 搜索下一层
         return this.insert_val( root.rchild, newNode, root )
@@ -346,9 +351,13 @@ class BalancedBinaryTree {
   find_min( node ){
     return find_min( node )
   }
+  
+  //前序
   preOrder(){
     preOrder( this.root  )
   }
+  
+  //中序
   inOrder( node ){
     inOrder( this.root )
   }
@@ -357,6 +366,7 @@ class BalancedBinaryTree {
 let balancedBinaryTree = new BalancedBinaryTree(3);
 balancedBinaryTree.insert(4);
 balancedBinaryTree.insert(5);
+// console.log(balancedBinaryTree.root);
 balancedBinaryTree.insert(7);
 balancedBinaryTree.insert(9);
 balancedBinaryTree.insert(12);
@@ -365,6 +375,11 @@ balancedBinaryTree.insert(14);
 balancedBinaryTree.insert(15);
 balancedBinaryTree.insert(16);
 balancedBinaryTree.insert(17);
+balancedBinaryTree.insert(10);
+balancedBinaryTree.insert(18);
+balancedBinaryTree.insert(19);
+balancedBinaryTree.insert(8);
+balancedBinaryTree.insert(6);
 balancedBinaryTree.preOrder();
 
 
