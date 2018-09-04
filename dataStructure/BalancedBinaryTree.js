@@ -70,6 +70,8 @@ function is_balance( node ){
 }
 // RR型调整函数
 function RR_rotate( node ){  
+  console.log('rr');
+  
   // node 为离操作节点最近的失衡节点
   
   let parent = son = null;
@@ -108,12 +110,26 @@ function RR_rotate( node ){
 }
 // LR型 先左旋，在右旋
 function LR_rotate( node ){  
+  console.log('lr');
+  
   RR_rotate( node.lchild );
   return LL_rotate( node );
 }
 
 function LL_rotate( node ){
   
+  /**
+   * 主要操作是把问题节点与此节点的左节点互换位置
+   * 
+   */
+/**
+ * 1. 获取node的 父元素 与有问题的左子节点
+ * 2. 如果node节点的左节点也就是 son 的右节点 存在则把右节点挂载到node的右节点
+ * 3. son 节点的右节点挂载到node 的左节点 
+ * 4. 把node 挂载到son的右节点
+ * 5. 把son节点挂载到 node的父节点上
+ * 6, 把node的父级指向son ，node原来的左子节点
+ */
   // node 为离操作节点最近的失衡节点
   let parent = null,
       son = null;
@@ -121,7 +137,7 @@ function LL_rotate( node ){
   // 获取失衡节点的父节点
   parent = node.parent;
   // 获取失衡节点的左节点
-  son = node.lchild;
+  son = node.lchild;  // 问题节点
   
   // 设置 son 节点右子节点的父指针
   if(son.rchild) son.rchild.parent = node;
@@ -151,7 +167,7 @@ function LL_rotate( node ){
   return son;
 }
 function RL_rotate( node ){
-  
+  console.log('rl');
     LL_rotate( node.rchild );
     return RR_rotate( node );
   }
@@ -366,22 +382,22 @@ class BalancedBinaryTree {
 let balancedBinaryTree = new BalancedBinaryTree(3);
 balancedBinaryTree.insert(4);
 balancedBinaryTree.insert(5);
-// console.log(balancedBinaryTree.root);
 balancedBinaryTree.insert(7);
 balancedBinaryTree.insert(9);
 balancedBinaryTree.insert(12);
 balancedBinaryTree.insert(13);
 balancedBinaryTree.insert(14);
-balancedBinaryTree.insert(15);
-balancedBinaryTree.insert(16);
-balancedBinaryTree.insert(17);
-balancedBinaryTree.insert(10);
-balancedBinaryTree.insert(18);
-balancedBinaryTree.insert(19);
-balancedBinaryTree.insert(8);
-balancedBinaryTree.insert(6);
-balancedBinaryTree.preOrder();
+// balancedBinaryTree.insert(15);
+// balancedBinaryTree.insert(16);
+// balancedBinaryTree.insert(17);
+// balancedBinaryTree.insert(10);
+// balancedBinaryTree.insert(18);
+// balancedBinaryTree.insert(19);
+// balancedBinaryTree.insert(8);
+// balancedBinaryTree.insert(6);
+balancedBinaryTree.inOrder();
 
+// console.log(balancedBinaryTree.root);
 
 
 
