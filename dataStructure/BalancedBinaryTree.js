@@ -117,7 +117,7 @@ function LR_rotate( node ){
 }
 
 function LL_rotate( node ){
-  
+  console.log('ll');
   /**
    * 主要操作是把问题节点与此节点的左节点互换位置
    * 
