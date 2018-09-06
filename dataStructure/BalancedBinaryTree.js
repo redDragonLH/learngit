@@ -38,7 +38,6 @@ function AVLTree( root, node ){
         if( is_balance( node.lchild) > 0 ) node = LL_rotate( node ); //LL型
         else node = LR_rotate( node ); // LR型
       }else{ // 右子树高
-        // console.log(node);
         if( is_balance( node.rchild) < 0 ) node = RR_rotate( node ) //RR型
         else node = RL_rotate( node ); // RL型
       }
@@ -230,6 +229,7 @@ function find_min( node ){
 function preOrder( node  , pos){
     if( !node ) return false;
     console.log( node.val + '-' + node.depth + '-'+ pos );
+  
     
     preOrder( node.lchild ,'l')
     preOrder( node.rchild ,'r')
@@ -242,7 +242,16 @@ function inOrder( node , pos){
     console.log( node.val + '-' + node.depth + '-'+ pos );
     
     inOrder( node.rchild , 'r');
-  }
+}
+function showNodeStructure(node){
+  console.log('node: '+node.val);
+  var parent_val = node.parent != null ? node.parent.val : 'null';
+  var lchild_val = node.lchild != null ? node.lchild.val : 'null';
+  var rchild_val = node.rchild != null ? node.rchild.val : 'null';
+  console.log('node.parent: ' + parent_val);
+  console.log('node.lchild: '+ lchild_val);
+  console.log('node.rchild: '+ rchild_val);
+}
 // 获取节点深度
 function get_balance( node ){
     if (node == null)
@@ -291,10 +300,12 @@ class BalancedBinaryTree {
     return this.root
   }
   insert_val(root, newNode, parent ){
+    
+    
     if(newNode.val <= root.val){ // 小的节点放在左边
       if(root.lchild === null){ //左节点没有直接放在左边
         root.lchild = newNode;
-        newNode.parent = parent;
+        newNode.parent = root;
         return root;
       } else { // 左树有内容的话再搜索下一层的节点
         return this.insert_val(root.lchild, newNode, root)
@@ -302,7 +313,7 @@ class BalancedBinaryTree {
     } else { // 大的key 放在右边
       if(root.rchild === null){
         root.rchild = newNode
-        newNode.parent = parent;
+        newNode.parent = root;
         return root;
       } else { // 搜索下一层
         return this.insert_val( root.rchild, newNode, root )
@@ -387,17 +398,15 @@ balancedBinaryTree.insert(9);
 balancedBinaryTree.insert(12);
 balancedBinaryTree.insert(13);
 balancedBinaryTree.insert(14);
-// balancedBinaryTree.insert(15);
-// balancedBinaryTree.insert(16);
-// balancedBinaryTree.insert(17);
-// balancedBinaryTree.insert(10);
-// balancedBinaryTree.insert(18);
-// balancedBinaryTree.insert(19);
-// balancedBinaryTree.insert(8);
-// balancedBinaryTree.insert(6);
+balancedBinaryTree.insert(15);
+balancedBinaryTree.insert(16);
+balancedBinaryTree.insert(17);
+balancedBinaryTree.insert(10);
+balancedBinaryTree.insert(18);
+balancedBinaryTree.insert(19);
+balancedBinaryTree.insert(8);
+balancedBinaryTree.insert(6);
 balancedBinaryTree.inOrder();
-
-// console.log(balancedBinaryTree.root);
 
 
 
