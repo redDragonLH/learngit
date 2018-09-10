@@ -176,7 +176,7 @@ function RL_rotate( node ){
 function remove_val( root, node ){
   let parent = node.parent;
   temp = null;
-  
+  console.log(root);
   // 只有左孩子
   if( node.rchild == null && node.lchild != null ){
     temp == node;
@@ -240,8 +240,8 @@ function preOrder( node  , pos){
 function inOrder( node , pos){
     if( !node ) return false;
     inOrder( node.lchild ,'l');
-    
-    console.log( node.val + '-' + node.depth + '-'+ pos );
+    showNodeStructure(node)
+    // console.log( node.val + '-' + node.depth + '-'+ pos );
     
     inOrder( node.rchild , 'r');
 }
@@ -356,15 +356,14 @@ class BalancedBinaryTree {
   remove(node, val ){
     let temp = null;
     // 查找节点
-    if( node )  return null;
-    else if( node.val < val ) remove( node.rchild, val ) // 在右子树查找
-    else if( node.val > val ) remove( node.lchild, val ) // 在左子树查找
+    if( !node )  return null;
+    else if( node.val < val ) return this.remove( node.rchild, val ) // 在右子树查找
+    else if( node.val > val ) return this.remove( node.lchild, val ) // 在左子树查找
     else temp = node; // 找到
-    
     if(temp){
       if( !node.parent ){
         let tmp = null;
-        tmp = remove_val( node, temp ) //执行删除
+        tmp = this.remove_val( temp ) //执行删除
         return AVLTree(node, tmp); // 更新AVL 树
       }
       return temp;
@@ -409,6 +408,9 @@ balancedBinaryTree.insert(19);
 balancedBinaryTree.insert(8);
 balancedBinaryTree.insert(6);
 balancedBinaryTree.inOrder();
+console.log('-------------');
+balancedBinaryTree.remove(balancedBinaryTree.root ,6);
+// balancedBinaryTree.inOrder();
 
 
 
