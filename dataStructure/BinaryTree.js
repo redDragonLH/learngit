@@ -29,18 +29,25 @@ const insertNode = function(node, newNode){
     }
   }
 }
+function showNodeStructure(node){
+  console.log('node: '+node.key);
+  var lchild_val = node.left != null ? node.left.key : 'null';
+  var rchild_val = node.right != null ? node.right.key : 'null';
+  console.log('node.lchild: '+ lchild_val);
+  console.log('node.rchild: '+ rchild_val);
+}
 // 中序遍历 左-根-右
 const  inOrderTraverseNode = function( node ){
   if( node !== null ){
     inOrderTraverseNode(node.left)
-    console.log(node.key);
+    showNodeStructure(node);
     inOrderTraverseNode(node.right)
   }
 }
 // 先序遍历 根-左-右
-const preOrderTraverse = function( node ){
+const preOrderTraverseNode = function( node ){
   if( node !== null ){
-    console.log(node.key)
+    showNodeStructure(node)
     preOrderTraverseNode(node.left)
     preOrderTraverseNode(node.right)
   }
@@ -50,7 +57,8 @@ const postOrderTraverseNode = function( node ){
   if( node !== null ){
     postOrderTraverseNode( node.left )
     postOrderTraverseNode( node.right )
-    console.log( node.key )
+    showNodeStructure(node)
+  }
 }
 // 查找最小值
 const minNode = function( node ){
@@ -97,7 +105,7 @@ const removeNode = function( node, key){
     node.right = removeNode( node.right, key )
     return node
   } else {
-    // 需要移除的节点时一个叶子节点
+    // 需要移除的节点没有一个叶子节点
     if( node.left === null && node.right === null ) {
       node = null
       return node
@@ -113,7 +121,7 @@ const removeNode = function( node, key){
     // 需要移除的节点包含两个子节点
     let aux = findMinNode( node.right )
     node.key = aux.key
-    node.right = removeNode( node.right, axu.key )
+    node.right = removeNode( node.right, aux.key )
     return node
   }
 }
@@ -162,14 +170,18 @@ class BinaryTreeNode {
 }
 let binaryTree = new BinaryTreeNode();
 
-var arr = [9,6,3,8,12,15]
+var arr = [9,6,3,8,12,15,20,22,18,19,17]
 
-// arr.map(item => {
-//        binaryTree.insert(item) 
-//   });
-binaryTree.inOrderTraverse()
+arr.map(item => {
+       binaryTree.insert(item) 
+  });
+// binaryTree.inOrderTraverse()
+// console.log('--------');
 binaryTree.preOrderTraverse()
-binaryTree.postOrderTraverse()
+binaryTree.remove(6)
+console.log('--------');
+binaryTree.preOrderTraverse()
+// binaryTree.postOrderTraverse()
 
 /**
  * 二叉搜索树

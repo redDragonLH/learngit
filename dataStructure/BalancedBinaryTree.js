@@ -172,31 +172,34 @@ function RL_rotate( node ){
     LL_rotate( node.rchild );
     return RR_rotate( node );
   }
-
 function remove_val( root, node ){
   let parent = node.parent;
   temp = null;
-  console.log(root);
   // 只有左孩子
   if( node.rchild == null && node.lchild != null ){
-    temp == node;
-    node = node.lchild;  // 指向左孩子
-    node.parent = temp.parent;
-    temp = null;
-    update_depth( node ) // 更新当前节点信息
+    if (parent.lchild.val == node.val) { // 如果是父元素的左节点
+      parent.lchild = node.lchild;
+      node.lchild.parent = parent
+    }else{ // 父元素右节点
+      parent.rchild = node.lchild;
+      node.lchild.parent = parent // 越过当前节点，逻辑上删除
+    }
+    update_depth( parent ) // 更新当前节点信息
   }else if( node.lchild == null && node.rchild != null ){ //只有右孩子
-    temp == node;
-    node = node.rchild;  // 指向右孩子
-    node.parent = temp.parent;
-    temp = null;
-    update_depth( node ) // 更新当前节点信息
+    if (parent.lchild.val == node.val) {
+      parent.lchild = node.rchild;
+      node.rchild.parent = parent
+    }else{
+      parent.rchild = node.rchild;
+      node.rchild.parent = parent // 越过当前节点，逻辑上删除
+    }
+    update_depth( parent ) // 更新当前节点信息
   }else if( node.rchild == null && node.lchild == null){ // 叶子节点
     let parent = node.parent;
     if(parent){
-      if (parent.lchild == node){ //当前结点是父节点的左孩子
+      if (parent.lchild && parent.lchild.val == node.val){ //当前结点是父节点的左孩子
         parent.lchild = null;    //删掉左孩子
-      }
-      else{ //当前结点是父节点的右孩子
+      }else{ //当前结点是父节点的右孩子
         parent.rchild = null;
       }
       node = null;
@@ -206,15 +209,13 @@ function remove_val( root, node ){
     }
   }else { // 既有左又有右
     let tmp = find_min( node.rchild ) //找到替代元素。temp为叶子节点
-    node.val = tmp.val
-    //判断当前叶子结点是左孩子还是右孩子。
-    let parent = tmp.parent;
-    
-    if (parent.lchild == temp){
-      parent.lchild = null;
-    }else{
-      parent.rchild = null;
-    }
+    // node.val = tmp.val
+    let tmpparent = tmp.parent;
+    let parent = node.parent;
+    tmpparent.rchild = null; // 肯定是右节点
+    tmp.parent = parent; //把tmp拿出来，放到node位置
+    tmp.lchild = node.lchild;
+    tmp.rchild = node.rchild;
     tmp = null;
     update_depth( parent );
   }
@@ -230,8 +231,9 @@ function find_min( node ){
 // 前序
 function preOrder( node  , pos){
     if( !node ) return false;
-    console.log( node.val + '-' + node.depth + '-'+ pos );
+    // console.log( node.val + '-' + node.depth + '-'+ pos );
   
+    showNodeStructure(node)
     
     preOrder( node.lchild ,'l')
     preOrder( node.rchild ,'r')
@@ -240,8 +242,7 @@ function preOrder( node  , pos){
 function inOrder( node , pos){
     if( !node ) return false;
     inOrder( node.lchild ,'l');
-    showNodeStructure(node)
-    // console.log( node.val + '-' + node.depth + '-'+ pos );
+    console.log( node.val + '-' + node.depth + '-'+ pos );
     
     inOrder( node.rchild , 'r');
 }
@@ -361,12 +362,13 @@ class BalancedBinaryTree {
     else if( node.val > val ) return this.remove( node.lchild, val ) // 在左子树查找
     else temp = node; // 找到
     if(temp){
-      if( !node.parent ){
+      if( node.parent ){
         let tmp = null;
         tmp = this.remove_val( temp ) //执行删除
         return AVLTree(node, tmp); // 更新AVL 树
+      }else{
+        return this.root = null
       }
-      return temp;
     }
     return null;
   }
@@ -407,9 +409,11 @@ balancedBinaryTree.insert(18);
 balancedBinaryTree.insert(19);
 balancedBinaryTree.insert(8);
 balancedBinaryTree.insert(6);
-balancedBinaryTree.inOrder();
+balancedBinaryTree.preOrder();
 console.log('-------------');
 balancedBinaryTree.remove(balancedBinaryTree.root ,6);
+balancedBinaryTree.preOrder();
+console.log('-------------');
 // balancedBinaryTree.inOrder();
 
 
