@@ -18,7 +18,10 @@
  *
  * 调整情况见文档
  *
- * 
+ * 两种情况下可以直接退出向上回溯：
+ *
+ * 1. 插入更新时：如果当前节点的高度没有改变，则停止向上回溯父节点。
+ * 2. 删除更新时：如果当前节点的高度没有改变，且平衡值在 [-1, 1] 区间则停止回溯。
  */
 /**
  * 网上找的 C版 改的
@@ -41,7 +44,11 @@
 function AVLTree( root, node ){
   let balance = 0; // 平衡因子  
   while( node != null ){ //检查其祖先是否需要调整，更新
-    update_depth(node); // 更新当前节点的高度信息
+    // update_depth(node); // 更新当前节点的高度信息
+    if(isRunAVL(node) ){
+      return root;
+      break; // 退出
+    }
     balance = is_balance( node ); // 获取当前节点的平衡因子情况
     if(balance > 1 || balance < -1){ // 平衡因子超标情况
       if( balance > 1 ) { //左子树高
@@ -61,7 +68,13 @@ function AVLTree( root, node ){
   }
   return root;// 返回新根节点
 }
-
+// 插入更新时：如果当前节点的高度没有改变，则停止向上回溯父节点。
+function isRunAVL(node){
+  let old_depth = node.depth;
+  let new_depth = update_depth( node );
+  // console.log(old_depth+' && '+ new_depth);
+  return old_depth === new_depth ? true: false;
+}
 // 更新节点深度
 function update_depth( node ){
   if( !node ) return false;
@@ -69,8 +82,8 @@ function update_depth( node ){
     let depth_Lchild = get_balance( node.lchild ); // 左节点深度
     let depth_Rchild = get_balance( node.rchild ); // 右节点深度
     node.depth = max( depth_Lchild,depth_Rchild ) + 1;
-    
   }
+  return node.depth;
 }
 // 返回当前平衡因子
 function is_balance( node ){
@@ -304,7 +317,6 @@ class BalancedBinaryTree {
       temp = this.insert_val( this.root, node, null ); // 调用真正的插入函数
     }
     if( temp ){
-      update_depth( temp );
       this.root = this.AVLTree( temp ); // 检查树是否需要调整
     }else temp = null;
     
@@ -417,11 +429,11 @@ balancedBinaryTree.insert(18);
 balancedBinaryTree.insert(19);
 balancedBinaryTree.insert(8);
 balancedBinaryTree.insert(6);
-balancedBinaryTree.preOrder();
-console.log('-------------');
-balancedBinaryTree.remove(balancedBinaryTree.root ,6);
-balancedBinaryTree.preOrder();
-console.log('-------------');
+// balancedBinaryTree.preOrder();
+// console.log('-------------');
+// balancedBinaryTree.remove(balancedBinaryTree.root ,6);
+// balancedBinaryTree.preOrder();
+// console.log('-------------');
 // balancedBinaryTree.inOrder();
 
 
