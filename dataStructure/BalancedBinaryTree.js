@@ -91,6 +91,12 @@ function is_balance( node ){
   else return get_balance( node.lchild) - get_balance(node.rchild);
 }
 // RR型调整函数
+// 左旋
+/**
+ * 如支点节点的右节点，既即将替代支点的节点，如果有左节点，
+ * 可以挂载到支点节点的右节点因为支点右节点的值永远比左节点大
+ * 
+ */
 function RR_rotate( node ){  
   console.log('rr');
   
@@ -137,7 +143,7 @@ function LR_rotate( node ){
   RR_rotate( node.lchild );
   return LL_rotate( node );
 }
-
+ //  右旋
 function LL_rotate( node ){
   console.log('ll');
   /**
@@ -146,7 +152,7 @@ function LL_rotate( node ){
    */
 /**
  * 1. 获取node的 父元素 与有问题的左子节点
- * 2. 如果node节点的左节点也就是 son 的右节点 存在则把右节点挂载到node的右节点
+ * 2. 如果son 的右节点 存在则把右节点挂载到node的右节点
  * 3. son 节点的右节点挂载到node 的左节点 
  * 4. 把node 挂载到son的右节点
  * 5. 把son节点挂载到 node的父节点上
