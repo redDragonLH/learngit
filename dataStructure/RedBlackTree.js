@@ -29,6 +29,27 @@
  * http://www.cnblogs.com/skywang12345/p/3245399.html
  * https://blog.csdn.net/v_JULY_v/article/details/6105630
  */
+/**
+ * 左旋节点
+ * 将x的右子树绕x逆时针旋转，使得x的右子树成为x的父亲，同时修改相关节点的引用
+ * @param  {node} node 需左旋的节点
+ * @return {[type]}      [description]
+ * 
+ *       |                     |
+ *       x                     y
+ *     /  \     左旋         /  \
+ *    a    y   --->         x    c
+ *       /  \             /  \
+ *      b    c           a    b
+ * 
+ */
+
+/**
+ * 插入节点
+ * @param  {object} root    根节点
+ * @param  {object} newNode 需插入的节点
+ * @return {object | null}  返回插入节点或者空
+ */
 function insert_val(root,newNode){
   if(root.key > newNode.key){
     if(root.lchild )return insert_val(root.lchild,newNode)
@@ -82,6 +103,26 @@ class RedBlackTree{
     else if(root.key < key) return this.get(root.rchild,key);
     else if(root.key == key) return root;
     else return null;
+  }
+  rotateLeft(node){ // 此节点应为左旋将成为子节点的节点
+    if(!node) Error('node is not defined');
+    let rchild = node.rchild; // 提取右子节点
+    node.rchild = rchild.lchild; // 把右节点的子节点挂载到右子节点上
+    
+    if(rchild != null){
+      rchild.left.parent = node; // 不为空则父元素指向节点
+    }
+    
+    rchild.parent = node.parent; // 右子节点 挂载到它的父节点的父节点上，成为父节点，父节点成为左子节点
+    if(node.parent == null){
+      this.root = rchild;  // 成为根节点
+    }else if(node.parent.lchild == node){ // 确认新的父节点的位置
+      node.parent.lchild = rchild 
+    }else{
+      node.parent.rchild = rchild
+    }
+    rchild.lchild = node; // 当前节点正式成为子节点，父节点由原来它的右子节点
+    node.parent = rchild
   }
 }
 let redBlackTree = new RedBlackTree(3);
