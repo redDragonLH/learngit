@@ -34,34 +34,37 @@
 /**
  * 插入节点
  * @param  {object} root    根节点
- * @param  {object} newNode 需插入的节点
+ * @param  {number} key 需插入的数据
  * @return {object | null}  返回插入节点或者空
  */
-function insert_val(root,newNode){
-  if(root.key > newNode.key){
-    if(root.lchild )return insert_val(root.lchild,newNode)
+function insert_val(root,key){
+  let newNode = null;
+  if(root.key > key){
+    if(root.lchild )return insert_val(root.lchild,key)
     else {
-      root.lchild = newNode;
-      newNode.parent = root.lchild;
+      root.lchild = newNode = new RBNode(key , root);
     }
-  }else if(root.key < newNode.key){
-    if(root.rchild )return insert_val(root.rchild,newNode)
+  }else if(root.key < key){
+    if(root.rchild )return insert_val(root.rchild,key)
     else {
-      root.rchild = newNode;
-      newNode.parent = root.rchild;
+      root.rchild = newNode = new RBNode(key ,root);
     }
   }else{
     return false;
   }
   return newNode;
 }
+/**
+ * 节点类
+ */
  class RBNode {
-   constructor(key) {
+   constructor(key,parent=null, vla=null ) {                                        
      this.depth = 0;
-     this.parent = null
+     this.parent = parent
      this.key = key;
      this.lchild = null;
      this.rchild = null;
+     this.val = vla;
      this.color = 'B'; // black
    }
  }
@@ -72,15 +75,15 @@ class RedBlackTree{
     this.size = 0;
     key ? this.insert(key) : '';
   }
-  insert(key){
-    let newNode = new RBNode(key)
+  insert(key,obj=null){
     let temp = null;
-    if( !this.root ) this.root = newNode
-    else temp = insert_val(this.root,newNode)
+    if( !this.root ) this.root = temp = new RBNode(key)
+    else temp = insert_val(this.root,key)
     if(temp){
+      console.log(temp);
       this.size++
     }
-    return newNode;
+    return true;
   }
   get(key,root){
     if(key == null) Error('key is not defined');
@@ -158,5 +161,5 @@ class RedBlackTree{
 let redBlackTree = new RedBlackTree(3);
 redBlackTree.insert(4)
 redBlackTree.insert(2)
-console.log(redBlackTree.get(3));
+// console.log(redBlackTree.get(3));
 // console.log(redBlackTree.root);
