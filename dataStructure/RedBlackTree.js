@@ -29,20 +29,7 @@
  * http://www.cnblogs.com/skywang12345/p/3245399.html
  * https://blog.csdn.net/v_JULY_v/article/details/6105630
  */
-/**
- * 左旋节点
- * 将x的右子树绕x逆时针旋转，使得x的右子树成为x的父亲，同时修改相关节点的引用
- * @param  {node} node 需左旋的节点
- * @return {[type]}      [description]
- * 
- *       |                     |
- *       x                     y
- *     /  \     左旋         /  \
- *    a    y   --->         x    c
- *       /  \             /  \
- *      b    c           a    b
- * 
- */
+
 
 /**
  * 插入节点
@@ -104,6 +91,20 @@ class RedBlackTree{
     else if(root.key == key) return root;
     else return null;
   }
+  /**
+   * 左旋节点
+   * 将x的右子树绕x逆时针旋转，使得x的右子树成为x的父亲，同时修改相关节点的引用
+   * @param  {node} node 需左旋的节点
+   * @return {[type]}      [description]
+   * 
+   *       |                     |
+   *       x                     y
+   *     /  \     左旋         /  \
+   *    a    y   --->         x    c
+   *       /  \             /  \
+   *      b    c           a    b
+   * 
+   */
   rotateLeft(node){ // 此节点应为左旋将成为子节点的节点
     if(!node) Error('node is not defined');
     let rchild = node.rchild; // 提取右子节点
@@ -123,6 +124,35 @@ class RedBlackTree{
     }
     rchild.lchild = node; // 当前节点正式成为子节点，父节点由原来它的右子节点
     node.parent = rchild
+  }
+  /**
+   * 节点右旋
+   * @param  {object} node 需旋转的节点
+   * @return {object}      [description]
+   *
+   *        |                 |
+   *        x                 y
+   *       / \     右旋      / \
+   *      y   c   --->      a   x
+   *    /  \                   / \
+   *   a    b                 b   c
+   */
+  rotateRight(node){
+    if( !node ) Error('node is not defined');
+    let lchild = node.lchild;
+    node.lchild = lchild.rchild;
+    if( lchild.rchild !== null ) lchild.right.parent = node
+    
+    lchild.parent = node.parent;
+    if(node.parent == null ){
+      this.root = lchild;
+    }else if(node.parent.rchild == p ){
+      p.parent.rchild = lchild;
+    }else{
+      node.parent.rchild = lchild
+    }
+    lchild.rchild = node;
+    node.parent = lchild
   }
 }
 let redBlackTree = new RedBlackTree(3);
