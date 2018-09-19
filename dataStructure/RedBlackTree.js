@@ -1,7 +1,7 @@
 /**
- * 
+ *
  * 问题：AVL和红黑都是靠旋转节点平衡二叉树，那么两者的本质区别是什么
- * 
+ *
  */
 
 // ------------ 内容区----------------------
@@ -29,8 +29,75 @@
  * http://www.cnblogs.com/skywang12345/p/3245399.html
  * https://blog.csdn.net/v_JULY_v/article/details/6105630
  */
+const RED ='Red';
+const BLACK  ='Black';
 
+function error( str ){
+  return function(){
+     return console.error( str );
 
+  }
+}
+class errorClass {
+  constructor( str = null ) {
+    this.str = str;
+  }
+  error(){
+    if(this.str)  console.error( this.str );
+  }
+}
+
+let notDefined = error( 'node is not defined' )
+/**
+ * 获取父元素
+ * @param  {object} node 需要查找父节点的节点
+ * @return {object}      父节点
+ */
+function parentOf( node ){
+  if( !node ) return notDefined();
+  if( !node.parent ) return false;
+  return node.parent;
+}
+/**
+ * 获取左子元素
+ * @param  {object} node 需要查找左子元素的节点
+ * @return {object}      左子元素
+ */
+function leftOf( node ){
+  if( !node ) return notDefined();
+  if( !node.lchild ) return false;
+  return node.lchild;
+}
+/**
+ * 获取右子元素
+ * @param  {object} node 需要查找右子元素的节点
+ * @return {object}      右子元素
+ */
+function rightOf( node ){
+  if( !node ) return notDefined();
+  if( !node.rchild ) return false;
+  return node.rchild;
+}
+/**
+ * 获取节点的颜色
+ * @param  {object} node 需要查找颜色的节点
+ * @return {string}      颜色
+ */
+function colorOf( node ){
+  if( !node ) return notDefined();
+  return node.color;
+}
+let colorNotDefined = error( 'color is not defined' )
+/**
+ * 设置节点颜色
+ * @param {object} node  需要设置颜色的节点
+ * @param {string} color 颜色
+ */
+function setColor(node,color){
+  if( !node ) return notDefined();
+  if( !color ) return colorNotDefined();
+  return node.color = color;
+}
 /**
  * 插入节点
  * @param  {object} root    根节点
@@ -58,37 +125,36 @@ function insert_val(root,key){
  * 节点类
  */
  class RBNode {
-   constructor(key,parent=null, vla=null ) {                                        
+   constructor(key,parent=null, vla=null ) {
      this.depth = 0;
      this.parent = parent
      this.key = key;
      this.lchild = null;
      this.rchild = null;
      this.val = vla;
-     this.color = 'B'; // black
+     this.color = RED; // black
    }
  }
- 
+
 class RedBlackTree{
   constructor(key){
     this.root = null;
     this.size = 0;
     key ? this.insert(key) : '';
   }
-  insert(key,obj=null){
+  insert(key,obj = null){
     let temp = null;
-    if( !this.root ) this.root = temp = new RBNode(key)
-    else temp = insert_val(this.root,key)
+    if( !this.root ) this.root = temp = new RBNode(key);
+    else temp = insert_val(this.root,key);
     if(temp){
-      console.log(temp);
-      this.size++
+      this.size++;
     }
     return true;
   }
   get(key,root){
     if(key == null) Error('key is not defined');
     var root = root ? root : this.root;
-    
+
     if(root.key > key) return this.get(root.lchild,key);
     else if(root.key < key) return this.get(root.rchild,key);
     else if(root.key == key) return root;
@@ -99,29 +165,29 @@ class RedBlackTree{
    * 将x的右子树绕x逆时针旋转，使得x的右子树成为x的父亲，同时修改相关节点的引用
    * @param  {node} node 需左旋的节点
    * @return {[type]}      [description]
-   * 
+   *
    *       |                     |
    *       x                     y
    *     /  \     左旋         /  \
    *    a    y   --->         x    c
    *       /  \             /  \
    *      b    c           a    b
-   * 
+   *
    */
   rotateLeft(node){ // 此节点应为左旋将成为子节点的节点
     if(!node) Error('node is not defined');
     let rchild = node.rchild; // 提取右子节点
     node.rchild = rchild.lchild; // 把右节点的子节点挂载到右子节点上
-    
+
     if(rchild != null){
       rchild.left.parent = node; // 不为空则父元素指向节点
     }
-    
+
     rchild.parent = node.parent; // 右子节点 挂载到它的父节点的父节点上，成为父节点，父节点成为左子节点
     if(node.parent == null){
       this.root = rchild;  // 成为根节点
     }else if(node.parent.lchild == node){ // 确认新的父节点的位置
-      node.parent.lchild = rchild 
+      node.parent.lchild = rchild
     }else{
       node.parent.rchild = rchild
     }
@@ -145,7 +211,7 @@ class RedBlackTree{
     let lchild = node.lchild;
     node.lchild = lchild.rchild;
     if( lchild.rchild !== null ) lchild.right.parent = node
-    
+
     lchild.parent = node.parent;
     if(node.parent == null ){
       this.root = lchild;
@@ -156,6 +222,52 @@ class RedBlackTree{
     }
     lchild.rchild = node;
     node.parent = lchild
+  }
+  /**
+   * 节点调整函数
+   *  1. 改变某些节点的颜色，
+   *  2. 对某些节点进行旋转
+   * @param  {object} node
+   * @return {[type]}
+   */
+  fixAfterInsertion(node){
+    node.color = 'Red';
+    while( node != null && node != this.root && node.parent.color == 'Red'){
+      if( parentOf( node ) == leftOf( parentOf( parentOf( node ) ) ) ){
+        let rightUncle = rightOf( parentOf( parentOf( node ) ) ); // 获取节点的右侧叔叔节点
+        if(colorOf( rightUncle ) == RED ){ // 重新染色
+          setColor( parentOf(node), BLACK );
+          setColor( rightUncle, BLACK );
+          setColor( parentOf( parentOf( node ) ), RED );
+          node = parentOf( parentOf( node ) );
+        }else{
+          if( node == rightOf( parentOf(node ) ) ){
+            node = parentOf( node );
+            rotateLeft(node);
+          }
+          setColor( parentOf( node ) , BLACK );
+          setColor( parentOf( parentOf( node ) ), RED );
+          rotateRight( parentOf( parentOf( node ) ) );
+        }
+      } else {
+        let leftUncle = leftOf( parentOf( parentOf( node ) ) );
+        if(colorOf( leftUncle ) == RED ){
+          setColor( parentOf( node ), BLACK );
+          setColor( leftUncle , BLACK );
+          setColor( parentOf( parentOf(node) ) , RED );
+          node = parentOf( parentOf( node ) );
+        } else {
+          if( node == leftOf( parentOf( node ) ) ){
+            node = parentOf( node );
+            rotateRight( node );
+          }
+          setColor( parentOf( node ), BLACK);
+          setColor( parentOf( parentOf( node )), RED);
+          rotateLeft( parentOf( parentOf( node ) ) );
+        }
+      }
+    }
+    this.color = BLACK;
   }
 }
 let redBlackTree = new RedBlackTree(3);
