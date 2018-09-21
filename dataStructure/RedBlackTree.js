@@ -27,6 +27,7 @@
 /**
  * 例子:
  * http://www.cnblogs.com/skywang12345/p/3245399.html
+ * https://www.cnblogs.com/CarpenterLee/p/5503882.html
  * https://blog.csdn.net/v_JULY_v/article/details/6105630
  */
 const RED ='Red';
@@ -121,13 +122,44 @@ function insert_val(root,key){
   }
   return newNode;
 }
+
+function showNodeStructure(node){
+  if(typeof node != 'object') return false;
+  console.log('node: '+node.key);
+  var parent_val = node.parent != null ? node.parent.key : 'null';
+  var lchild_val = node.lchild != null ? node.lchild.key : 'null';
+  var rchild_val = node.rchild != null ? node.rchild.key : 'null';
+  console.log('node.parent: ' + parent_val);
+  console.log('------------');
+
+  console.log('node.lchild: '+ lchild_val);
+  console.log('node.rchild: '+ rchild_val);
+  console.log('node.color: '+ node.color);
+  console.log('------------------------');
+}
+// 中序遍历 左-根-右
+const  inOrderTraverseNode = function( node ){
+  if( node !== null ){
+    inOrderTraverseNode(node.lchild);
+    showNodeStructure(node);
+    inOrderTraverseNode(node.rchild);
+  }
+};
+// 先序遍历 根-左-右
+const preOrderTraverseNode = function( node ){
+  if( node !== null ){
+    showNodeStructure(node);
+    preOrderTraverseNode(node.lchild);
+    preOrderTraverseNode(node.rchild);
+  }
+};
 /**
  * 节点类
  */
  class RBNode {
    constructor(key,parent=null, vla=null ) {
      this.depth = 0;
-     this.parent = parent
+     this.parent = parent;
      this.key = key;
      this.lchild = null;
      this.rchild = null;
@@ -140,13 +172,14 @@ class RedBlackTree{
   constructor(key){
     this.root = null;
     this.size = 0;
-    key ? this.insert(key) : '';
+    key ? this.insert(key) : null;
   }
   insert(key,obj = null){
     let temp = null;
     if( !this.root ) this.root = temp = new RBNode(key);
     else temp = insert_val(this.root,key);
     if(temp){
+      this.fixAfterInsertion(temp)
       this.size++;
     }
     return true;
@@ -175,11 +208,12 @@ class RedBlackTree{
    *
    */
   rotateLeft(node){ // 此节点应为左旋将成为子节点的节点
-    if(!node) Error('node is not defined');
+    if(!node) return false;
     let rchild = node.rchild; // 提取右子节点
-    node.rchild = rchild.lchild; // 把右节点的子节点挂载到右子节点上
+    node.rchild = typeof rchild.lchild == 'object' ?  rchild.lchild : null; // 把右节点的子节点挂载到右子节点上
 
-    if(rchild != null){
+    if(rchild != null && rchild.left != undefined){
+      console.log(rchild.left);
       rchild.left.parent = node; // 不为空则父元素指向节点
     }
 
@@ -207,7 +241,7 @@ class RedBlackTree{
    *   a    b                 b   c
    */
   rotateRight(node){
-    if( !node ) Error('node is not defined');
+    if( !node ) return false;
     let lchild = node.lchild;
     node.lchild = lchild.rchild;
     if( lchild.rchild !== null ) lchild.right.parent = node
@@ -215,8 +249,8 @@ class RedBlackTree{
     lchild.parent = node.parent;
     if(node.parent == null ){
       this.root = lchild;
-    }else if(node.parent.rchild == p ){
-      p.parent.rchild = lchild;
+    }else if(node.parent.rchild == node ){
+      node.parent.rchild = lchild;
     }else{
       node.parent.rchild = lchild
     }
@@ -243,11 +277,11 @@ class RedBlackTree{
         }else{
           if( node == rightOf( parentOf(node ) ) ){
             node = parentOf( node );
-            rotateLeft(node);
+            this.rotateLeft(node);
           }
           setColor( parentOf( node ) , BLACK );
           setColor( parentOf( parentOf( node ) ), RED );
-          rotateRight( parentOf( parentOf( node ) ) );
+          this.rotateRight( parentOf( parentOf( node ) ) );
         }
       } else {
         let leftUncle = leftOf( parentOf( parentOf( node ) ) );
@@ -259,19 +293,30 @@ class RedBlackTree{
         } else {
           if( node == leftOf( parentOf( node ) ) ){
             node = parentOf( node );
-            rotateRight( node );
+            this.rotateRight( node );
           }
           setColor( parentOf( node ), BLACK);
           setColor( parentOf( parentOf( node )), RED);
-          rotateLeft( parentOf( parentOf( node ) ) );
+          this.rotateLeft( parentOf( parentOf( node ) ) );
         }
       }
     }
     this.color = BLACK;
   }
+  inOrderTraverse(){
+    inOrderTraverseNode( this.root )
+  }
+  preOrderTraverse (){
+    preOrderTraverseNode( this.root )
+  }
 }
 let redBlackTree = new RedBlackTree(3);
-redBlackTree.insert(4)
-redBlackTree.insert(2)
+redBlackTree.insert(4);
+redBlackTree.insert(2);
+redBlackTree.insert(10);
+redBlackTree.insert(8);
+redBlackTree.insert(5);
+redBlackTree.insert(6);
+redBlackTree.preOrderTraverse();
 // console.log(redBlackTree.get(3));
 // console.log(redBlackTree.root);
