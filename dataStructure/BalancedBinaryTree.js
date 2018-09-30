@@ -3,7 +3,7 @@
  *
  * 二叉搜索树的改进
  * 
- * 常用实现方法有红黑树、AVL、替罪羊树?、Treap、伸展树
+ * 常用实现方法有红黑树、AVL、替罪羊树?、树堆（Treap）、伸展树（splay tree）
  */
 
 /**
@@ -441,11 +441,3 @@ balancedBinaryTree.insert(6);
 // balancedBinaryTree.preOrder();
 // console.log('-------------');
 // balancedBinaryTree.inOrder();
-
-
-
-
-
-
-
-
