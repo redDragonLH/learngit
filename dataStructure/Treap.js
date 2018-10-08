@@ -54,13 +54,50 @@ class Treap{
    * @param  {object} node [description]
    * @return {[type]}      [description]
    */
-  rotate_right(node){
-    let x= node.left;
+  rotate_right( node ){
+    let x = node.left;
     node.left = x.right;
     x.right = node;
     node = x;
   }
   insert(node,key,priority){
-    
+    if( this.root == null ){
+      this.root = new TreapNode(key);
+      this.root.priority = priority;
+      this.key = key;
+    }else if(key < this.root.key){
+      treap_insert( this.root.left, key,priority );
+      if( root.left.priority < this.root.priority){
+        this.rotate_right( this.root );
+      }
+    }else{
+      treap_insert( this.root.right, key, priority );
+      if( root.right.priority ){
+        rotate_left( this.root );
+      }
+    }
+  }
+  treap_delete( root, key){
+    if( root != null ){
+      if( key < root.key ){
+        treap_delete( root.left ,key );
+      }else if ( key > root.key ) {
+        treap_delete( root.right,key );
+      }else{
+        if( root.left == null ){
+          root = root.right;
+        }else if ( root.right == null ) {
+          root = root.left;
+        }else{
+          if( root.left.priority < root.right.priority ){
+            rotate_right( root );
+            treap_delete( root.right, key );
+          }else{
+            rotate_left( root );
+            treap_delete(root.left, key);
+          }
+        }
+      }
+    }
   }
 }
