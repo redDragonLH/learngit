@@ -24,9 +24,14 @@
 /**
  * https://blog.csdn.net/K346K346/article/details/50808879
  */
+
+function insert_val(node,pos,key,priority){
+  node[pos] = new TreapNode(key);
+  node[pos].priority = priority;
+}
 class TreapNode {
-  constructor() {
-    this.key = null; // 关键字
+  constructor(key = null) {
+    this.key = key; // 关键字
     this.priority = null; //随机优先级
     this.left = null;
     this.right = null;
@@ -36,7 +41,7 @@ class TreapNode {
 class Treap{
   constructor(key = null){
     this.root = null; // 根节点
-    if(key) this.root = new TreapNode(key);
+    // if(key) this.root = new TreapNode(key);
   }
   /**
    * 左旋
@@ -60,20 +65,22 @@ class Treap{
     x.right = node;
     node = x;
   }
-  insert(node,key,priority){
-    if( this.root == null ){
+  insert(node,key,priority,root,pos){
+    if( node == null && pos == null ){
       this.root = new TreapNode(key);
       this.root.priority = priority;
-      this.key = key;
-    }else if(key < this.root.key){
-      treap_insert( this.root.left, key,priority );
-      if( root.left.priority < this.root.priority){
-        this.rotate_right( this.root );
+      this.root.key = key;
+    }else if(node == null && pos ){
+       insert_val(root,pos,key,priority);
+    }else if(key < node.key){
+      this.insert( node.left, key,priority ,node,'left');
+      if( node.left.priority < node.priority){
+        this.rotate_right( node );
       }
     }else{
-      treap_insert( this.root.right, key, priority );
-      if( root.right.priority ){
-        rotate_left( this.root );
+      this.insert( node.right, key, priority ,node,'right');
+      if( node.right.priority ){
+        this.rotate_left( node );
       }
     }
   }
@@ -100,4 +107,25 @@ class Treap{
       }
     }
   }
+  in_order(node){
+    if(!node) return false;
+    this.in_order(node.left);
+    console.log(node.key);
+    this.in_order(node.right);
+  }
+  depth(node){
+    if( node == null )
+       return -1;
+    let l = this.depth( node.left );
+    let r = this.depth( node.right );
+  }
 }
+
+let treap = new Treap();
+// treap.insert(treap.root,3,4,null)
+// treap.in_order(treap.root)
+for (var i = 0; i < 11; i++) {
+    let round = Math.round(Math.random()*10)
+  treap.insert(treap.root,i,i,treap.root,null)
+}
+treap.in_order(treap.root)
