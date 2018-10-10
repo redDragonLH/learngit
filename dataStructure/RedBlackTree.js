@@ -213,7 +213,6 @@ class RedBlackTree{
     node.rchild = typeof rchild.lchild == 'object' ?  rchild.lchild : null; // 把右节点的子节点挂载到右子节点上
 
     if(rchild != null && rchild.left != undefined){
-      console.log(rchild.left);
       rchild.left.parent = node; // 不为空则父元素指向节点
     }
 

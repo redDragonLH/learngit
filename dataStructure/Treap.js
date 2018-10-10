@@ -24,15 +24,29 @@
 /**
  * https://blog.csdn.net/K346K346/article/details/50808879
  */
-
+ function showNodeStructure(node){
+   if(typeof node != 'object') return false;
+   console.log('node: '+node.key);
+   var parent_val = node.parent != null ? node.parent.key : 'null';
+   var lchild_val = node.left != null ? node.left.key : 'null';
+   var rchild_val = node.right != null ? node.right.key : 'null';
+   console.log('node.parent: ' + parent_val);
+   console.log('------------');
+ 
+   console.log('node.lchild: '+ lchild_val);
+   console.log('node.rchild: '+ rchild_val);
+   console.log('------------------------');
+ }
 function insert_val(node,pos,key,priority){
   node[pos] = new TreapNode(key);
   node[pos].priority = priority;
+  node[pos].parent = node;
 }
 class TreapNode {
   constructor(key = null) {
     this.key = key; // 关键字
     this.priority = null; //随机优先级
+    this.parent = null;
     this.left = null;
     this.right = null;
   }
@@ -40,8 +54,8 @@ class TreapNode {
 
 class Treap{
   constructor(key = null){
+    this.num = 0
     this.root = null; // 根节点
-    // if(key) this.root = new TreapNode(key);
   }
   /**
    * 左旋
@@ -51,8 +65,19 @@ class Treap{
   rotate_left(node){
     let x = node.right;
     node.right = x.left;
+    if(x.left){
+      x.left.parent = node;
+    }
+    let nodeP = node.parent;
     x.left = node;
-    node = x;
+    node.parent = x;
+    // node = x;
+    x.parent = nodeP;
+    if(nodeP.left != null && nodeP.left.key == node.key){
+      nodeP.left = x;
+    }else{
+      nodeP.right = x;
+    }
   }
   /**
    * 右旋
@@ -62,24 +87,37 @@ class Treap{
   rotate_right( node ){
     let x = node.left;
     node.left = x.right;
+    if( x.right ){
+      x.right.parent = node;
+    }
+    let nodeP = node.parent;
+    
     x.right = node;
-    node = x;
+    node.parent = x;
+    x.parent = nodeP;
+    if(typeof nodeP.left != null && nodeP.left.key == node.key){
+      nodeP.left = x;
+    }else{
+      nodeP.right = x;
+    }
   }
   insert(node,key,priority,root,pos){
     if( node == null && pos == null ){
       this.root = new TreapNode(key);
       this.root.priority = priority;
       this.root.key = key;
+      this.num++
     }else if(node == null && pos ){
        insert_val(root,pos,key,priority);
+       this.num++
     }else if(key < node.key){
       this.insert( node.left, key,priority ,node,'left');
-      if( node.left.priority < node.priority){
+      if( node.left.priority < node.priority && node.parent){
         this.rotate_right( node );
       }
     }else{
       this.insert( node.right, key, priority ,node,'right');
-      if( node.right.priority ){
+      if( node.right.priority < node.priority && node.parent){
         this.rotate_left( node );
       }
     }
@@ -110,8 +148,15 @@ class Treap{
   in_order(node){
     if(!node) return false;
     this.in_order(node.left);
-    console.log(node.key);
+    showNodeStructure(node)
     this.in_order(node.right);
+  }
+  pre_Order( node ){
+    if( node !== null ){
+      showNodeStructure(node);
+      this.pre_Order(node.left);
+      this.pre_Order(node.right);
+    }
   }
   depth(node){
     if( node == null )
@@ -122,10 +167,10 @@ class Treap{
 }
 
 let treap = new Treap();
-// treap.insert(treap.root,3,4,null)
-// treap.in_order(treap.root)
-for (var i = 0; i < 11; i++) {
-    let round = Math.round(Math.random()*10)
-  treap.insert(treap.root,i,i,treap.root,null)
+
+for (var i = 0; i < 50; i++) {
+    let round = Math.round(Math.random()*100)
+    console.log(round);
+  treap.insert(treap.root,i,round,treap.root,null)
 }
-treap.in_order(treap.root)
+treap.pre_Order(treap.root)
