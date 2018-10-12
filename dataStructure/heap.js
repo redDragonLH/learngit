@@ -83,7 +83,7 @@
      * 找到最后一个节点，对删除节点进行替换，然后对被替换节点的现节点与左右子树进行对比，大的上升，小的下降
      */
    delete(value){
-     if(this.list.length == 0){
+     if(this.list.length == 1){
        return false;
      }
      //得到数组中这个元素下标
@@ -122,6 +122,9 @@
      
      return true;
    }
+   getLength(){
+     return this.list.length;
+   }
    order(){
      this.list.map(x=> console.log(x));
    }
@@ -133,3 +136,81 @@
 //  }
 //   maxheap.order()
 // console.log(maxheap.delete(96));
+
+/**
+ * 最小堆
+ * 
+ * 最小堆，每一个结点的值都小于其左右子树的值，
+ */
+
+class MinHeap {
+  constructor() {
+    this.list= [null];
+  }
+  insert( value ){
+    // 新插入的元素首先放在数组最后，保持完全二叉树的特性
+    this.list.push(value)
+    // 获取最后一个元素的在数组中的索引位置,注意是从index=1的位置开始添加，因此最后一个元素的位置是size-1
+    let index = this.list.length - 1;
+    //  其父节点位置
+    let pIndex = Math.floor( index / 2 );
+    
+    //在数组范围内，比较这个插入值和其父结点的大小关系，小于父结点则用父结点替换当前值，index位置上升为父结点
+    while( index > 1 ){
+      //  插入节点大于等于其父节点，则不用调整
+      if(value > this.list[pIndex]){
+        break;
+      }else{
+        // 依次把父节点较大的值替换成插入值
+        this.list[index] = this.list[pIndex];
+        // 向上升一层
+        index = pIndex;
+        // 新的父节点
+        pIndex = Math.floor( index / 2 );
+      }
+    }
+    // 最终找到index 的位置，把值放进去
+    this.list[ index ] = value;
+  }
+  delete(value){
+    if( this.list.length == 1 ) {
+      return false
+    }
+    // 得到数组中这个元素的下标
+    let index = this.list.indexOf( value );
+    if( index == -1 ){ // 被删除元素不在数组中，即删除元素不在堆中
+      return false;
+    }
+    
+    // 获取最后一个元素的在数组中的索引位置,注意是从index=1的位置开始添加，因此最后一个元素的位置是size-1
+    let lastIndex = this.list.length -1;
+    
+    let temp = this.list[ lastIndex ];
+    // 用最后一个元素替换被删除的位置
+    this.list[index] = temp;
+    
+    let parent;
+    for ( parent = index; parent *2 <= this.list.length -1;parent = index) {
+      // 当前节点左子树下标
+      index = parent * 2;
+      // 左子树下标不等于数组长度，因此必然有右子树 ,则左右子树比较大小
+      if( index != this.list.length -1 && this.list[ index ] > this.list[ index + 1 ] ){
+        // 如果右子树小，则下标指向右子树
+        index = index + 1;
+      }
+      if( temp < this.list[ index ]){
+        //当前结点小于其左右子树，则不用调整，直接退出
+        break;
+        
+      } else {
+        // 子树上移，替换当前结点
+        this.list[ parent ] == this.list[ index ];
+      }
+    }
+    // parent 就是替换结点最终该处的位置
+    this.list[ parent ] = temp;
+    // 移除数组最后一个元素
+    this.list.pop();
+    return false;
+  }
+}
