@@ -78,19 +78,58 @@
    }
    /**
      * 堆的任意值的删除操作
-     * @param value
-     * @return
+     * 
+     * 删除内部节点，不能简单删除，否则所有节点全部上移，打乱内容，
+     * 找到最后一个节点，对删除节点进行替换，然后对被替换节点的现节点与左右子树进行对比，大的上升，小的下降
      */
    delete(value){
+     if(this.list.length == 0){
+       return false;
+     }
+     //得到数组中这个元素下标
+     let index = this.list.indexOf(value)
+     if(index == -1){ // 被删除元素不在数组中，即删除元素不在堆中
+       return false;
+     }
+     // 获取最后一个元素的在数组中的索引位置,注意是从index=1的位置开始添加
+     let lastIndex = this.list.length - 1;
+     let temp = this.list[lastIndex];
+     // 用最后一个元素替换被删除的位置
+     this.list[index] = lastIndex;
      
+     let parent;
+     for (parent = index; parent *2 <= this.list.length - 1; parent = index) {
+       //当前节点左子树下标
+       index = parent * 2;
+       // 左子树不等于数组长度，因此必然有右子树，则左右子树比较大小，这里的-1，是因为数组下标 =1 开始
+       if( index != this.list.length -1 && this.list[index] < this.list[index +1]){
+         // 如果右子树大，则下标指向右子树
+         index += 1;
+       }
+       
+       if( temp > this.list[index] ){
+         // 当前节点大于其左右子树，则不用调整，直接退出
+         break;
+       }else{
+         //子树上移，替换当前节点
+         this.list[parent] = this.list[index];
+       }
+     }
+     // parent 就是替换节点最终该处的位置
+     this.list[parent] = temp;
+     // 移除数组最后一个元素
+     this.list.pop()
+     
+     return true;
    }
    order(){
      this.list.map(x=> console.log(x));
    }
  }
 　
- let maxheap = new Maxheap();
- for (var i = 0; i < 50; i++) {
-   maxheap.insert(Math.round(Math.random()*100));
- }
-  maxheap.order()
+//  let maxheap = new Maxheap();
+//  for (var i = 0; i < 50; i++) {
+//    maxheap.insert(Math.round(Math.random()*100));
+//  }
+//   maxheap.order()
+// console.log(maxheap.delete(96));
