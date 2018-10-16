@@ -1,4 +1,10 @@
 /**
+ * ----------------------------
+ * 废弃
+ * ----------------------------
+ */
+
+/**
  * 树堆
  */
 /**
@@ -60,7 +66,6 @@ class Treap{
   /**
    * 左旋
    * @param  {object} node [description]
-   * @return {[type]}      [description]
    */
   rotate_left(node){
     let x = node.right;
@@ -82,7 +87,6 @@ class Treap{
   /**
    * 右旋
    * @param  {object} node [description]
-   * @return {[type]}      [description]
    */
   rotate_right( node ){
     let x = node.left;
