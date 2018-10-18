@@ -11,6 +11,13 @@
  * value 是要维护的值，weight 是随机生成的值。由于随机生成的堆使整棵树变得平衡
  */
 /**
+ * 参考：  
+ * 左旋右旋：https://blog.csdn.net/yang_yulei/article/details/46005845
+ * 代码结构： http://www.voidcn.com/article/p-xesroiyq-gh.html
+ */
+
+
+/**
  * 实际插入方法
  * @param  {node} root     父节点
  * @param  {number} key      存储的关键字
@@ -20,8 +27,7 @@ function insert( root, key, priority){
   if( key < root.key ){
     root.left ? insert( root.left, key, priority) : root.left = new TreapNode( priority, key, root );
     if(root.left.priority < root.priority){
-      // 右旋
-      rotate_right(root);
+      rotate_left(root);
     }
     return true;
     
@@ -29,7 +35,7 @@ function insert( root, key, priority){
     root.right ? insert( root.right, key, priority) : root.right = new TreapNode( priority, key, root );
     if(root.right.priority < root.priority){
       // 左旋
-      rotate_left(root);
+      rotate_right(root);
     }
     return true;
     
@@ -53,7 +59,7 @@ function insert( root, key, priority){
      }else{
        if( !root.left ){
          root = root.right;
-       }else if (! root.right ) {
+       }else if ( !root.right ) {
          root = root.left;
        }else{
          // 先旋转
@@ -82,45 +88,57 @@ function insert( root, key, priority){
  * @param  {object} root 需要旋转的父元素
  */
 function rotate_right( root ){
-  let x = root.left;// 提取左节点
-  if(x.right){ // 如果父元素的左节点的右节点存在
-    root.left = x.right;// 则把 它赋值给父元素的左节点（提升一个层级）
-    x.right.parent = root;
-  } 
-  let oldParent = root.parent;
-  
-  if(x){
-    x.right = root;
-    root.parent = x;
-    x.parent = oldParent;
-  }
-  if(oldParent.left.key == root.key){
-    oldParent.left = x;
-  }else{
-    oldParent.right = x;
-  }
+  /**
+   * 右旋
+   * 1. root 的右子节点替换 root
+   * 2. root 挂载到root 的右子元素
+   * 3. root 的右节点的左节点存在的话挂载到roto的右节点
+   */
+   let rlnode = root.right.left,
+       oldParent = root.parent, // root的父元素
+       rnode = root.right;
+   rnode.parent = oldParent;
+   if(oldParent === null )return false
+   if(oldParent.left !== null && oldParent.left.key == root.key){
+     oldParent.left = rnode
+   }else{
+     oldParent.right = rnode
+   }
+   rnode.left = root
+   root.parent = rnode;
+   if(rlnode){
+     root.right = rlnode;
+   }
 }
 /**
  * 左旋转
+ *
+ * 
  * @param  {object} root 需要旋转的父元素
  */
 function rotate_left( root ){
-  let x = root.right;
-  if(x.left){
-    root.right = x.left;
-    x.left.parent = root;
-  }
-  let oldParent = root.parent;
+  /**
+   * 左旋：
+   * 1. 根节点转移到左子节点的右子节点
+   * 2. 左子节点替换根节点
+   * 3. 左子节点如果有右节点则挂载到根节点的左子节点
+   * 
+   */
+  let lrnode = root.left.right, //  ruot 左子元素的右子元素，位置会被root 占，先提出来
+      oldParent = root.parent, // root的父元素
+      rlnode = root.left; // root的左子元素，会代替root的位置
+  rlnode.parent = oldParent; // 左子节点挂载到根元素的父元素
   
-  if(x){
-    x.left = root;
-    root.parent = x;
-    x.parent = oldParent;
-  }
-  if(oldParent.left.key == root.key){
-    oldParent.left = x;
+  if(oldParent.left.key = root.key){
+    oldParent.left = root.left
   }else{
-    oldParent.right = x;
+    oldParent.right = root.left;
+  }
+  rlnode.right = root;
+  root.parent  = rlnode;
+  
+  if(lrnode){
+    root.left = lrnode;
   }
 }
 /**
@@ -134,8 +152,8 @@ class TreapNode {
     this.priority = priority; // 优先级
     this.key = key; // 存储的关键字
     this.node = node;
-    this.left = undefined;
-    this.right = undefined;
+    this.left = null;
+    this.right = null;
     this.parent = parent;
   }
 }
@@ -175,9 +193,19 @@ class Treap {
       this.num--;
     }
   }
+  order(root){
+    if(root){
+      console.log(root.key);
+      console.log(root);
+      console.log('----------');
+      this.order(root.left)
+      this.order(root.right)
+    }
+  }
 }
 
 let treap = new Treap();
-treap.insert(1,1);
-treap.insert(2,2);
-console.log(treap.root);
+for (var i = 0; i < 10; i++) {
+  treap.insert(i,Math.round(Math.random()*100));
+}
+treap.order(treap.root)
