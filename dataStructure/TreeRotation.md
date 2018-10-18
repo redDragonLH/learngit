@@ -6,3 +6,4 @@
 
 ## 左旋和右旋
 左旋（逆时针方向） 右旋（顺时针方向）
+![左旋右旋](https://github.com/redDragonLH/ldle/blob/master/dataStructure/img/Treerotation.png?raw=true)
