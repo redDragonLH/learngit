@@ -1,6 +1,6 @@
 /**
  * 树堆 treap
- * 
+ *
  */
 
 /**
@@ -11,7 +11,7 @@
  * value 是要维护的值，weight 是随机生成的值。由于随机生成的堆使整棵树变得平衡
  */
 /**
- * 参考：  
+ * 参考：
  * 左旋右旋：https://blog.csdn.net/yang_yulei/article/details/46005845
  * 代码结构： http://www.voidcn.com/article/p-xesroiyq-gh.html
  */
@@ -23,22 +23,22 @@
  * @param  {number} key      存储的关键字
  * @param  {number} priority 优先级
  */
-function insert( root, key, priority){
+function insert( root, key, priority,rootnode){
+  var newroot;
   if( key < root.key ){
-    root.left ? insert( root.left, key, priority) : root.left = new TreapNode( priority, key, root );
+    root.left ? insert( root.left, key, priority, rootnode) : root.left = new TreapNode( priority, key, root );
     if(root.left.priority < root.priority){
-      rotate_left(root);
+      newroot = rotate_left(root,rootnode);
     }
-    return true;
-    
+    return newroot;
+
   }else if( key > root.key ){
-    root.right ? insert( root.right, key, priority) : root.right = new TreapNode( priority, key, root );
+    root.right ? insert( root.right, key, priority,rootnode) : root.right = new TreapNode( priority, key, root );
     if(root.right.priority < root.priority){
-      // 左旋
-      rotate_right(root);
+      newroot = rotate_right(root,rootnode);
     }
-    return true;
-    
+    return newroot;
+
   }else{
     return false;
   }
@@ -87,58 +87,71 @@ function insert( root, key, priority){
  *             root.left.right
  * @param  {object} root 需要旋转的父元素
  */
-function rotate_right( root ){
+function rotate_right( root, rootnode ){
   /**
    * 右旋
    * 1. root 的右子节点替换 root
    * 2. root 挂载到root 的右子元素
    * 3. root 的右节点的左节点存在的话挂载到roto的右节点
    */
+
+
    let rlnode = root.right.left,
        oldParent = root.parent, // root的父元素
        rnode = root.right;
    rnode.parent = oldParent;
-   if(oldParent === null )return false
+
+   rnode.left = root
+   root.parent = rnode;
+   if(rlnode){
+     root.right = rlnode;
+     rlnode.parent = root
+   }
+   if(oldParent === null ){
+     return rnode;
+   }
    if(oldParent.left !== null && oldParent.left.key == root.key){
      oldParent.left = rnode
    }else{
      oldParent.right = rnode
    }
-   rnode.left = root
-   root.parent = rnode;
-   if(rlnode){
-     root.right = rlnode;
-   }
 }
 /**
  * 左旋转
  *
- * 
+ *
  * @param  {object} root 需要旋转的父元素
  */
-function rotate_left( root ){
+function rotate_left( root, rootnode ){
   /**
    * 左旋：
    * 1. 根节点转移到左子节点的右子节点
    * 2. 左子节点替换根节点
    * 3. 左子节点如果有右节点则挂载到根节点的左子节点
-   * 
+   *
    */
+
   let lrnode = root.left.right, //  ruot 左子元素的右子元素，位置会被root 占，先提出来
       oldParent = root.parent, // root的父元素
       rlnode = root.left; // root的左子元素，会代替root的位置
   rlnode.parent = oldParent; // 左子节点挂载到根元素的父元素
-  
+
+
+  rlnode.right = root;
+  root.parent  = rlnode;
+
+  if(lrnode){
+    root.left = lrnode;
+    lrnode.parent = root
+  }
+
+  if(oldParent === null ){
+    return rlnode;
+  }
   if(oldParent.left.key = root.key){
     oldParent.left = root.left
   }else{
     oldParent.right = root.left;
-  }
-  rlnode.right = root;
-  root.parent  = rlnode;
-  
-  if(lrnode){
-    root.left = lrnode;
   }
 }
 /**
@@ -152,9 +165,9 @@ class TreapNode {
     this.priority = priority; // 优先级
     this.key = key; // 存储的关键字
     this.node = node;
+    this.parent = parent;
     this.left = null;
     this.right = null;
-    this.parent = parent;
   }
 }
 
@@ -180,9 +193,10 @@ class Treap {
       this.root = new TreapNode( priority, key, node );
       isInsert = true;
     }else{
-      isInsert = insert(this.root, key, priority );
+      isInsert = insert(this.root, key, priority , this);
     }
     if(isInsert){
+      isInsert.key ? this.root = isInsert :'';
       this.num++;
     }
   }
@@ -196,7 +210,6 @@ class Treap {
   order(root){
     if(root){
       console.log(root.key);
-      console.log(root);
       console.log('----------');
       this.order(root.left)
       this.order(root.right)
@@ -205,7 +218,12 @@ class Treap {
 }
 
 let treap = new Treap();
-for (var i = 0; i < 10; i++) {
+for (var i = 0; i < 4; i++) {
   treap.insert(i,Math.round(Math.random()*100));
 }
 treap.order(treap.root)
+// console.log(treap.root);
+// console.log('------------');
+// console.log(treap.root.left);
+// console.log('------------');
+// console.log(treap.root.right);
