@@ -7,7 +7,7 @@ class Node{
     this.key = key,
     this.left = null,
     this.right = null
-  }  
+  }
 }
 /**
  * 二叉搜索树的插入方式
@@ -84,7 +84,7 @@ const maxNode = function( node ){
 const searchNode = function( node, key ){
   if( node === null ) {
     return false
-  } 
+  }
   if ( key < node.key ){
     return searchNode( node.left, key )
   } else if ( key > node.key ) {
@@ -112,19 +112,19 @@ const removeNode = function( node, key){
     }
     // 需要移除的节点包含一个子节点
     if ( node.left === null ) {
-      node = node.right 
+      node = node.right
       return node
     } else if ( node.right === null ) {
-      node = node.left
-      return node
+      node = node.left;
+      return node;
     }
     // 需要移除的节点包含两个子节点
-    let aux = findMinNode( node.right )
-    node.key = aux.key
-    node.right = removeNode( node.right, aux.key )
-    return node
+    let aux = findMinNode( node.right );
+    node.key = aux.key;
+    node.right = removeNode( node.right, aux.key );
+    return node;
   }
-}
+};
 const findMinNode = function( node ) {
   if (node ){
     while (node && node.left !== null ) {
@@ -153,7 +153,7 @@ class BinaryTreeNode {
     preOrderTraverseNode( this.root )
   }
   postOrderTraverse (){
-    postOrderTraverseNode( this.root )  
+    postOrderTraverseNode( this.root )
   }
   findMin (){
     return minNode( this.root )
@@ -162,7 +162,7 @@ class BinaryTreeNode {
     return maxNode( this.root )
   }
   search (key) {
-    return searchNode( this.root, key ) 
+    return searchNode( this.root, key )
   }
   remove (key) {
     removeNode( this.root, key)
@@ -173,7 +173,7 @@ let binaryTree = new BinaryTreeNode();
 var arr = [9,6,3,8,12,15,20,22,18,19,17]
 
 arr.map(item => {
-       binaryTree.insert(item) 
+       binaryTree.insert(item)
   });
 // binaryTree.inOrderTraverse()
 // console.log('--------');

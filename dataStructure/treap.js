@@ -29,14 +29,24 @@
 function insert( root, key, priority,rootnode){
   var newroot;
   if( key < root.key ){
-    root.left ? insert( root.left, key, priority, rootnode) : root.left = new TreapNode( priority, key, root );
+
+    if(root.left) {
+       return insert( root.left, key, priority, rootnode);
+     }else {
+       root.left = new TreapNode( priority, key, root );
+     }
+
     if(root.left.priority < root.priority){
       newroot = rotate_left(root,rootnode);
     }
     return newroot;
 
   }else if( key > root.key ){
-    root.right ? insert( root.right, key, priority,rootnode) : root.right = new TreapNode( priority, key, root );
+    if(root.right) {
+      return  insert( root.right, key, priority,rootnode);
+     }else{
+        root.right = new TreapNode( priority, key, root );
+     }
     if(root.right.priority < root.priority){
       newroot = rotate_right(root,rootnode);
     }
@@ -98,13 +108,13 @@ function rotate_right( root, rootnode ){
    * 3. root 的右节点的左节点存在的话挂载到roto的右节点
    */
 
-
+//  预计： 单提出来占用内存过多
    let rlnode = root.right.left,
        oldParent = root.parent, // root的父元素
        rnode = root.right;
    rnode.parent = oldParent;
 
-   rnode.left = root
+   rnode.left = root  /// root
    root.parent = rnode;
    if(rlnode){
      root.right = rlnode;
@@ -133,13 +143,14 @@ function rotate_left( root, rootnode ){
    * 3. 左子节点如果有右节点则挂载到根节点的左子节点
    *
    */
+   console.log(root);
 
   let lrnode = root.left.right, //  ruot 左子元素的右子元素，位置会被root 占，先提出来
       oldParent = root.parent, // root的父元素
       rlnode = root.left; // root的左子元素，会代替root的位置
   rlnode.parent = oldParent; // 左子节点挂载到根元素的父元素
 
-
+  root.left.right = null;
   rlnode.right = root;
   root.parent  = rlnode;
 
@@ -199,6 +210,7 @@ class Treap {
       isInsert = insert(this.root, key, priority , this);
     }
     if(isInsert){
+      // console.log(isInsert);
       isInsert.key ? this.root = isInsert :'';
       this.num++;
     }
@@ -212,7 +224,7 @@ class Treap {
   }
   order(root){
     if(root){
-      console.log(root.key);
+      console.log(root);
       console.log('----------');
       this.order(root.left)
       this.order(root.right)
@@ -224,9 +236,5 @@ let treap = new Treap();
 for (var i = 0; i < 4; i++) {
   treap.insert(i,Math.round(Math.random()*100));
 }
-treap.order(treap.root)
+// treap.order(treap.root)
 // console.log(treap.root);
-// console.log('------------');
-// console.log(treap.root.left);
-// console.log('------------');
-// console.log(treap.root.right);
