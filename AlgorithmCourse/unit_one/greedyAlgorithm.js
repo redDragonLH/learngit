@@ -87,6 +87,27 @@ function choosefunc2(objs, c){
   }
   return index;
 }
+/**
+ * 第三种策略是定义一个价值密度的概念，每次选择都选价值密度最高的物品
+ *
+ * 每单位重量有多少价值
+ */
+function choosefunc3(objs, c){
+  let index = -1; // -1 表示背包容量已满
+  let mp = 0;
+  // 每单位重量有多少价值
+  for (var i = 0; i < objs.length; i++) {
+    objs[i].si = objs[i].price/objs[i].weight;
+  }
+  
+  for (var i = 0; i < objs.length; i++) {
+    if(objs[i].status === 0 && objs[i].si > mp ){
+      mp = objs[i].si;
+      index = i;
+    }
+  }
+  return index;
+}
  let wi=[35,30,60,50,40,10,25];
  let pi=[10,40,30,50,35,40,30];
  let pack = new Pack();
@@ -96,4 +117,5 @@ function choosefunc2(objs, c){
  // console.log(pack.objs);
  console.log(GreedyAlgo(pack,choosefunc1));
  console.log(GreedyAlgo(pack,choosefunc2));
+ console.log(GreedyAlgo(pack,choosefunc3));
 console.log(pack.objs);
