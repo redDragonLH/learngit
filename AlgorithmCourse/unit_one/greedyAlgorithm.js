@@ -66,12 +66,21 @@ function choosefunc1(objs, c){
 }
 /**
  * 第二种策略是根据物品重量选择，每次都选择重量最轻的物品
+ * 
+ * 选择最小数毕竟麻烦
  */
 function choosefunc2(objs, c){
   let index = -1; // -1 表示背包容量已满
-  let mp = objs[0].weight;
+  let mp = 0;
   for (var i = 0; i < objs.length; i++) {
-    if(objs[i].status === 0 && objs[i].weight < mp){
+    if(objs[i].status === 0){
+      mp = objs[i].weight;
+      break;
+    }
+  }
+  
+  for (var i = 0; i < objs.length; i++) {
+    if(objs[i].status === 0 && (objs[i].weight < mp || objs[i].weight === mp)){
       mp = objs[i].weight;
       index = i;
     }
@@ -87,3 +96,4 @@ function choosefunc2(objs, c){
  // console.log(pack.objs);
  console.log(GreedyAlgo(pack,choosefunc1));
  console.log(GreedyAlgo(pack,choosefunc2));
+console.log(pack.objs);
