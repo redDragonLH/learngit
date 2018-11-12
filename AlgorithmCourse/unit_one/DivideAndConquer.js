@@ -51,3 +51,25 @@ console.log(quick_sort(intArray));
  *
  */
 
+
+
+
+
+/**
+ * 练习，二分查找
+ * 从储存在数组中的有序排列中找到指定的数
+ */
+function binarySearch( arr, target ){
+  let pivotIndex = Math.floor(arr.length / 2);
+  if(arr[pivotIndex] === target) return pivotIndex;
+  if(arr.length == 1 && arr[pivotIndex] !== target) return false;
+  
+  if(arr[pivotIndex] > target){
+    arr = arr.splice(0,pivotIndex);
+  }else{
+    arr = arr.splice(pivotIndex,arr.length);
+  }
+   return binarySearch( arr, target )
+}
+let binarySearchArr = [1,2,3,4,5,6,7,8,9];
+console.log(binarySearch( binarySearchArr, 1 ));
