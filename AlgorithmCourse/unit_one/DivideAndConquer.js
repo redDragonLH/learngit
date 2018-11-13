@@ -114,6 +114,7 @@ function permutation(str,result){
 }
 // console.log(permutation("1234",[]));
 /**
+ * https://segmentfault.com/a/1190000013434175
  * 递归版，没有问题
  */
 function permutate(str) {
