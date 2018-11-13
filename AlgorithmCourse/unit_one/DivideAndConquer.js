@@ -31,8 +31,8 @@ function quick_sort(array) {
 }
 
 let intArray = [12, 56, 22, 78, 102, 6, 90, 57, 29];
-console.log(intArray);
-console.log(quick_sort(intArray));
+// console.log(intArray);
+// console.log(quick_sort(intArray));
 
 
 /**
@@ -51,9 +51,93 @@ console.log(quick_sort(intArray));
  *
  */
 
+/**
+ *
+ * 有问题
+
+function swap(chList,pos1,pos2){
+  if(pos1 !== pos2){
+    chListA = chList.split('');
+    let tmp = chListA[pos1];
+    chListA[pos1] = chListA[pos2];
+    chListA[pos2] = tmp;
+    chList = chListA.join('');
+  }
+  return chList;
+}
 
 
 
+function permutation(chList,begin,end){
+  if(begin == end){ // 就剩一个字符，直接输出结果
+    console.log(chList);
+  }
+  for (var i = begin; i <= end; i++) { // 循环，从传入的开始到结束
+    chList = swap(chList, begin, i); //位置不一样则调换 字符串位置
+    permutation(chList, begin+1, end); // 起始位置 +1 继续递归
+    chList = swap(chList, begin, i); // 
+  }
+}
+let chList = '12';
+permutation(chList, 0, chList.length); // 把字符串与 起始字符位置和字符串长度也就是最后字符位置传入 
+**/
+
+/**
+ * 尾递归版本
+ * 依旧有问题 ，内存不够~~
+ */
+function permutation(str,result){
+  'use strict';
+  let tempArr = [];
+  // 终止条件str长度为 0
+  if(str.length == 0){
+    console.log(result);
+    return result;
+  } else {
+    // 第一次递归，插入首字母
+    if(result.length === 0){
+      tempArr.push(str[0]);
+    }else{
+      for (var i = 0; i < result.length; i++) {
+        let item = result[i];
+        let itemLen = item.length;
+        for (var j = 0; j < itemLen + 1; j++) {
+          let temp = item.slice(0,j) + str[0] + item.slice(j);
+          tempArr.push(temp);
+        }
+      }
+    }
+    // 递归截取第一个字符串的字符
+    return permutation(str.slice(0),tempArr);
+  }
+  
+}
+// console.log(permutation("1234",[]));
+/**
+ * 递归版，没有问题
+ */
+function permutate(str) {
+    //保存每一轮递归的排列结果
+    var result = []; // result不会覆盖上一次递归调用的数据，因为递归阶段不会进行数据处理，虽然全部初始化但是没有使用，在递归的后一阶段才会处理，那时result 已经全部初始化，
+    //初始条件：长度为1
+    if (str.length == 1) {
+        return [str]
+    } else {
+        //求剩余子串的全排列,对每个排列进行遍历
+        // 先在这个地方递归 直到 str 变为 1 个字符 
+        // 然后把这个字符串包装成数组返回进行下一阶段的处理
+        var preResult = permutate(str.slice(1)); // 传入的字符串是去掉第一位后的字符串
+        for (var j = 0; j < preResult.length; j++) {
+            for (var k = 0; k < preResult[j].length + 1; k++) {
+                //将首字母插入k位置  
+                var temp = preResult[j].slice(0, k) + str[0] + preResult[j].slice(k);
+                result.push(temp);
+            }
+        }
+        return result;
+    }
+}
+console.log(permutate('1234'));
 
 /**
  * 练习，二分查找
@@ -72,4 +156,4 @@ function binarySearch( arr, target ){
    return binarySearch( arr, target )
 }
 let binarySearchArr = [1,2,3,4,5,6,7,8,9];
-console.log(binarySearch( binarySearchArr, 1 ));
+// console.log(binarySearch( binarySearchArr, 1 ));
