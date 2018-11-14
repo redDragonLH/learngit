@@ -115,19 +115,31 @@ function permutation(str,result){
 // console.log(permutation("1234",[]));
 /**
  * https://segmentfault.com/a/1190000013434175
- * 递归版，没有问题
+ * 递归版，没有问题、
+ *
+ * 解决思路：使用递归的方式在中部进行字符串分解，剩最后一个后返回数据并且在上一层递归中组合被去掉的 字符串首字母进行循环，拼接。
+ *           拼接完的字符串作为在当前字符串长度内已经排列完毕的字符串数组返回到上一层递归进行下一次循环
+ * 
+ * 
  */
 function permutate(str) {
     //保存每一轮递归的排列结果
-    var result = []; // result不会覆盖上一次递归调用的数据，因为递归阶段不会进行数据处理，虽然全部初始化但是没有使用，在递归的后一阶段才会处理，那时result 已经全部初始化，
+    var result = []; // 返回值
     //初始条件：长度为1
+    // 递归 函数每次减少一个首字母，最后减少到一个字母，才开始进行排列计算
     if (str.length == 1) {
         return [str]
     } else {
         //求剩余子串的全排列,对每个排列进行遍历
         // 先在这个地方递归 直到 str 变为 1 个字符 
         // 然后把这个字符串包装成数组返回进行下一阶段的处理
-        var preResult = permutate(str.slice(1)); // 传入的字符串是去掉第一位后的字符串
+        
+        // 每次递归减少一个字符串，
+        var preResult = permutate(str.slice(1)); // 传入的字符串是去掉第一位后的字符串,也就是固定第一位的字符串，返回数组
+        // 递归的返回值处理后，每次返回增加一个字符串
+        // 每次返回完善一个字符，到最后一个字符组合完毕，然后开始最后的循环排列(缺少 str[0] ,在循环内添加处理)
+        
+        // preResult 返回值从一个字符开始每次都会在循环中排列完毕所以每次在已经排列好，没有重复的的字符串内每个位置插入被去掉的 str[0]，
         for (var j = 0; j < preResult.length; j++) {
             for (var k = 0; k < preResult[j].length + 1; k++) {
                 //将首字母插入k位置  
@@ -138,7 +150,7 @@ function permutate(str) {
         return result;
     }
 }
-console.log(permutate('1234'));
+permutate('1234');
 
 /**
  * 练习，二分查找
