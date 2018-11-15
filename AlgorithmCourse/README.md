@@ -3,4 +3,7 @@
 
 ## unit 1
 
-### 贪婪法(Greedy Algorithm) (未完)
+### 贪婪法(Greedy Algorithm)
+### 分治法(Divide and Conquer)
+### 迭代法(Iterative Method)
+### 动态规划（Dynamic Programming）
