@@ -7,3 +7,8 @@
 ### 分治法(Divide and Conquer)
 ### 迭代法(Iterative Method)
 ### 动态规划（Dynamic Programming）
+### 穷举法(Exhaustive method)
+
+## unit 2 迭代法
+
+### 非线性方程与牛顿迭代法 
