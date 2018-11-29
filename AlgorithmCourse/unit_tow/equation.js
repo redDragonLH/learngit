@@ -26,6 +26,25 @@ function DichotomyEquation(a, b ,f){
      return (2.0*x*x + 3.2*x - 1.8);
  }
  
- /**
-  * 牛顿迭代法
-  */
+/**
+* 牛顿迭代法
+*/
+function CalcDerivative(f, x){
+    return (f(x + 0.000005) - f(x - 0.000005)) / 0.00001;
+}
+ let INVALID_VALUE = 0;
+ let MAX_RUN_LOOP = 1; // number
+function NewtonRaphson() {
+  let x = INVALID_VALUE;
+  let count = 0;
+  do{
+    let x1 = x0 - f(x0) / CalcDerivative(f,x0);
+    if(Math.fabs(x1-x0) < PRECISION){
+      x = x1;
+      break;
+    }
+    x0 = x1;  //更新迭代变量
+    count++;
+  } while(count < MAX_RUN_LOOP);
+  return x;
+}
