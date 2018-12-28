@@ -5,10 +5,10 @@
  *最终的装配时间 = 每次移动底盘需要的时间 + 在每个工作站的装配时间
  * 
  */
-
+ const STATIONS = 6;
 //  测试数据
 const program_T = {
-    assemble_time: [[7, 9, 3, 4, 8, 4 ],[8, 5, 6, 4, 5, 7]], // 装配时间
+    assemble_time: [ [7, 9, 3, 4, 8, 4 ],[8, 5, 6, 4, 5, 7]], // 装配时间
     transport_time: [[0, 2, 3, 1, 3, 4 ], [0, 2, 1, 2, 2, 1]], // 换站时间
     enter_time: [2, 4],
     exit_time: [3, 2 ]
@@ -43,5 +43,15 @@ let Result_T = {
  * @return {[type]}         [description]
  */
 function search_stations_sequence(rt, para, line, station){
-    
+    if(static === (STATIONS - 1)){ //1. 完成装配，整理一次结果，退出当前递归子结构
+        rt.fs += para.assemble_time[line][station]; // 更新时间
+        rt.fs += para.exit_time[line]; // 更新时间
+        rt.line[static] = line; // 更新站点
+        if(rt.fs < rt.ffs){  // 当前穷举到的路径时间开销更小
+            rt.ffs = rt.fs;
+            memmove(rt.fline, rt.line, STATIONS )
+        }
+        return;
+    }
+    //  2, 记录中间结果到 line 属性中
 }
