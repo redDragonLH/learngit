@@ -34,6 +34,10 @@ let Result_T = {
  *
  * 
  */
+
+function memmove(toArr,arr,num){
+    arrayObj.slice(start, [end]);
+}
 /**
  * [search_stations_sequence description]
  * @param  {array} rt      Result_T
@@ -49,7 +53,8 @@ function search_stations_sequence(rt, para, line, station){
         rt.line[static] = line; // 更新站点
         if(rt.fs < rt.ffs){  // 当前穷举到的路径时间开销更小
             rt.ffs = rt.fs;
-            memmove(rt.fline, rt.line, STATIONS )
+            rt.fline = rt.line.slice(0, STATIONS)
+            // memmove(rt.fline, rt.line, STATIONS )
         }
         return;
     }
