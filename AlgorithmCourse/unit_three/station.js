@@ -6,6 +6,7 @@
  * 
  */
  const STATIONS = 6;
+ const LINES = 2;
 //  测试数据
 const program_T = {
     assemble_time: [ [7, 9, 3, 4, 8, 4 ],[8, 5, 6, 4, 5, 7]], // 装配时间
@@ -47,10 +48,10 @@ function memmove(toArr,arr,num){
  * @return {[type]}         [description]
  */
 function search_stations_sequence(rt, para, line, station){
-    if(static === (STATIONS - 1)){ //1. 完成装配，整理一次结果，退出当前递归子结构
+    if(station === (STATIONS - 1)){ //1. 完成装配，整理一次结果，退出当前递归子结构
         rt.fs += para.assemble_time[line][station]; // 更新时间
         rt.fs += para.exit_time[line]; // 更新时间
-        rt.line[static] = line; // 更新站点
+        rt.line[station] = line; // 更新站点
         if(rt.fs < rt.ffs){  // 当前穷举到的路径时间开销更小
             rt.ffs = rt.fs;
             rt.fline = rt.line.slice(0, STATIONS)
@@ -59,4 +60,20 @@ function search_stations_sequence(rt, para, line, station){
         return;
     }
     //  2, 记录中间结果到 line 属性中
+    var curCost = rt.fs + para.assemble_time[line][station];
+    
+    rt.line[station] = line;
+    
+    //  3 调整 line 和 station 参数，完成递归子结构的动作
+    // 选择本装配线的下一个装配站，开销忽略不计
+    rt.fs = curCost;
+    rt.fs += para.transport_time[line][station + 1 ];
+    var nextline = (line + 1) % LINES;
+    search_stations_sequence(rt, para, nextline, station + 1);
 }
+
+function print_result(Result_T){
+  
+}
+    Result_T.fs = program_T.enter_time[0];  //装配线1的进入开销
+    search_stations_sequence(Result_T, program_T, 0, 0); //从第一条装配线开始
