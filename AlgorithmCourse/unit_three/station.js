@@ -67,6 +67,9 @@ function search_stations_sequence(rt, para, line, station){
     //  3 调整 line 和 station 参数，完成递归子结构的动作
     // 选择本装配线的下一个装配站，开销忽略不计
     rt.fs = curCost;
+    search_stations_sequence(rt, para, line, station + 1);
+    // 
+    rt.fs = curCost;
     rt.fs += para.transport_time[line][station + 1 ];
     var nextline = (line + 1) % LINES;
     search_stations_sequence(rt, para, nextline, station + 1);
@@ -77,3 +80,6 @@ function print_result(Result_T){
 }
     Result_T.fs = program_T.enter_time[0];  //装配线1的进入开销
     search_stations_sequence(Result_T, program_T, 0, 0); //从第一条装配线开始
+    Result_T.fs = program_T.enter_time[1];  //装配线1的进入开销
+    search_stations_sequence(Result_T, program_T, 1, 0); //从第一条装配线开始
+    console.log(Result_T);
