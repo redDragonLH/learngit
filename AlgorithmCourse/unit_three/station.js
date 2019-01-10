@@ -49,7 +49,6 @@ function memmove(toArr,arr,num){
  */
 function search_stations_sequence(rt, para, line, station){
     if(station === (STATIONS - 1)){ //1. 完成装配，整理一次结果，退出当前递归子结构
-      console.log(rt);
         rt.fs += para.assemble_time[line][station]; // 更新时间
         rt.fs += para.exit_time[line]; // 更新时间
         rt.line[station] = line; // 更新站点
@@ -88,6 +87,6 @@ function print_result(Result_T){
 }
     Result_T.fs = program_T.enter_time[0];  //装配线1的进入开销
     search_stations_sequence(Result_T, program_T, 0, 0); //从第一条装配线开始
-    // Result_T.fs = program_T.enter_time[1];  //装配线1的进入开销
-    // search_stations_sequence(Result_T, program_T, 1, 0); //从第一条装配线开始
-    // console.log(Result_T);
+    Result_T.fs = program_T.enter_time[1];  //装配线1的进入开销
+    search_stations_sequence(Result_T, program_T, 1, 0); //从第一条装配线开始
+    console.log(Result_T);

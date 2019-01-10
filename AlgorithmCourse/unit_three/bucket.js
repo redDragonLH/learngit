@@ -16,6 +16,12 @@ class ACTION {
         this.water;
     }
 }
+class BucketsState {
+  constructor() {
+    this.m_buckets = [];
+    this.m_curAction;
+  }
+}
 function getWater(state,table){
     if(state[table[0]].m_water){
         var to = state[table[1]].m_capicity - state[table[1]].m_water;
