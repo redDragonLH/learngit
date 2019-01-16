@@ -1,50 +1,41 @@
 /**
  * 三桶等分8桶水
  */
-
+// import * from './bucket_state.js'; // es6
+let STATE = require('./bucket_state');  // nodejs
 
 const action_table = [[0, 1],[0, 2],[1, 0],[1,2],[2,0],[2,1]];
 
+let b_capicity = [8, 5, 3],
+    b_init     = [8, 0, 0],
+    b_final    = [4, 4, 0];
 
-function getWater(state,table){
-    if(state[table[0]].m_water){
-        var to = state[table[1]].m_capicity - state[table[1]].m_water;
-        if(to){
-          return state[table[0]].m_water > to ? to : state[table[0]].m_water
-        }else{
-            return 0;
-        }
-    }else{
-        return 0;
-    }
+let sd = 200.9;
+
+function IsProcessedState(states, newState){
+  let it = '';
 }
-/**
- * 倒水动作
- * @constructor
- */
-function takeAction(state,table){
-    for (var i = 0; i < table.length; i++) {
-        var action = new ACTION();
-        action.form = table[i][0];
-        action.to = table[i][1];
-        action.water = getWater(state,table[i]);
-        console.log(action.water);
-    }
-}
-/**
- * 输入数据初始化
- */
-function initData(data){
-    var bucket = [];
-    for (var i = 0; i < data.length; i++) {
-        bucket.push(new Bucket(data[i]))
-    }
-    return bucket;
+function IsFinalState(state){
+  for (var i = 0; i < BUCKETS_COUNT; i++) {
+    state.GetBucket(i).GetWater() != b_final[i];
+    return false;
+  }
+  return true;
 }
 
-function Buckets(data){
-    var bucket = initData(data);
-    var newbucket = takeAction(bucket,action_table)
-    
+function SearchState(states){
+  let current = states[states.length -1];
+  if(IsFinalState(current)){ // 结束状态
+    console.log(states);
+  }
+  for (var i = 0; i < action_table.length; i++) {
+    let next;
+    if(current.takeAction(act[0],act[1], next)){
+      if( !IsProcessedState(states, next)){
+        states.push(next);
+        SearchState(states)
+        states.pop();
+      }
+    }
+  }
 }
-Buckets([[8,8],[5,0],[3,0]])

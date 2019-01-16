@@ -5,25 +5,25 @@ class Bucket{
         this.m_capicity = data[0];
         this.m_water = data[1];
     }
-    isFull:function(){
+    isFull(){
       return this.m_capicity === this.m_water;
     }
-    hasWater: function(){
+    hasWater(){
       return this.m_water > 0;
     }
-    getSpace: function(){
+    getSpace(){
       return this.m_capicity - this.m_water;
     }
-    getWater: function(){
+    getWater(){
       return this.m_water;
     }
-    addWater: function(water){
+    addWater(water){
       var space = this.m_capicity - this.m_water;
       if( space > 0 ){
         this.m_water += (space > water) ? water :space;
       }
     }
-    dumpWater: function(water){
+    dumpWater(water){
       if(this.m_water >= water){
         this.m_water -= water;
       }else{
@@ -42,19 +42,19 @@ class BucketsState {
     this.m_buckets = array;
     this.m_curAction = ACTION;
   }
-  setBuckets: function(array){
+  setBuckets(array){
     this.m_buckets.concat(array)
     this.setAction(8, -1, 0);
   }
-  setAction: function(w, f, t){
+  setAction(w, f, t){
     this.m_curAction.water = w;
     this.m_curAction.from  = f;
     this.m_curAction.to    = t;
   }
-  PrintStates: function(){
+  PrintStates(){
     
   }
-  operator: function(state){
+  operator(state){
     for (var i = 0; i < this.m_buckets.length; i++) {
       if( this.m_buckets[i].getWater() != state.m_buckets[i].getWater() ){
         return false;
@@ -63,7 +63,7 @@ class BucketsState {
     return true;
   }
   /*从from到to倒水，返回成功，得到新的状态next*/
-  takeAction:function(from, to, next){
+  takeAction(from, to, next){
     var next = this;
     
     var bfrom = next.getBucket(from),
@@ -79,3 +79,7 @@ class BucketsState {
     return false;
   }
 }                                                  
+exports.BucketsState = BucketsState;
+exports.Bucket = Bucket;
+exports.BUCKETS_COUNT = BUCKETS_COUNT;
+exports.ACTION = ACTION;
