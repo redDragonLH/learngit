@@ -39,3 +39,21 @@ function SearchState(states){
     }
   }
 }
+
+
+class findName {
+  constructor(match) {
+    this.m_match = match;
+  }
+  operator(item){
+    return (m_match == item);
+  }
+}
+
+function IsSameString(str1,str2){
+  return str1 === str2; 
+}
+
+function IsSameBucketState(state1,state2){
+  return state1.IsSameState(state2)
+}
