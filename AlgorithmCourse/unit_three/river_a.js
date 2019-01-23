@@ -140,7 +140,8 @@ function SearchStates( states ){
   
   let next;
   for (var i = 0; i < Action.length; i++) {
-    array[i]
+    let act = Action[i];
+    if(act())
   }
 }
 
