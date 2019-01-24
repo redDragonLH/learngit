@@ -14,13 +14,13 @@ class ItemState {
     this.curAction;
   }
   IsSameState(state){
-    return (farmer == state.farmer) && (wolf == state.wolf) && (sheep == state.sheep) && (vegetable == state.vegetable);
+    return (this.farmer == state.farmer) && (this.wolf == state.wolf) && (this.sheep == state.sheep) && (this.vegetable == state.vegetable);
   }
   PrintStates(){
     
   }
   IsFinalState(){
-    return ( (farmer == LOCATION.RIGHT) && (wolf == LOCATION.RIGHT) && (sheep == LOCATION.RIGHT) && (vegetable == LOCATION.RIGHT) );
+    return ( (this.farmer == LOCATION.RIGHT) && (this.wolf == LOCATION.RIGHT) && (this.sheep == LOCATION.RIGHT) && (this.vegetable == LOCATION.RIGHT) );
   }
 }
 
@@ -61,17 +61,17 @@ function ProcessFarmerGoTakeVegetable(current, next){
   
   next.farmer = LOCATION.RIGHT;
   next.vegetable = LOCATION.RIGHT;
-  next.curAction = Action.GO_WITH_VEGETABLE();
+  next.curAction = Action.GO_WITH_VEGETABLE;
   
   return IsCurrentStateValid(next);
 }
 function ProcessFarmerBack(current, next){
   if(current.farmer != LOCATION.RIGHT) return false;
   
-  next.current;
+  next = current;
   
   next.farmer = LOCATION.LEFT;
-  next.curAction = Action.BACK_SELF();
+  next.curAction = Action.BACK_SELF;
   
   return IsCurrentStateValid(next);
 }
@@ -83,6 +83,7 @@ function ProcessFarmerBackTakeWolf(current, next){
   next.farmer = LOCATION.LEFT;
   next.wolf = LOCATION.LEFT;
   next.curAction = Action.BACK_WITH_WOLF;
+  return IsCurrentStateValid(next);
 }
 function ProcessFarmerBackTakeSheep(current, next){
   if(current.farmer != LOCATION.RIGHT || current.sheep != LOCATION.RIGHT) return false;
@@ -93,7 +94,7 @@ function ProcessFarmerBackTakeSheep(current, next){
   next.sheep = LOCATION.LEFT;
   next.curAction = Action.BACK_WITH_SHEEP;
   
-  return IsCurrentStateValid( next )；
+  return IsCurrentStateValid( next );
 }
 function ProcessFarmerBackTakeVegetable(current, next){
   if((current.farmer != LOCATION.RIGHT) || (current.vegetable != LOCATION.RIGHT)) return false;
@@ -117,8 +118,14 @@ function ProcessFarmerBackTakeVegetable(current, next){
         BACK_WITH_VEGETABLE: ProcessFarmerBackTakeVegetable,
 }
 function IsProcessedState(states, newstates){
-  let it
-  return it != states.end();
+  let it;
+  for (let index of states) {
+    console.log(index);
+    if(item.IsSameState(newState)){
+      
+    }
+  }
+  return it != states.length-1;
 }
 function IsCurrentStateValid(current){
   if(current.wolf === current.sheep && current.sheep !== current.farmer){
@@ -127,21 +134,29 @@ function IsCurrentStateValid(current){
   if( current.vegetable === current.sheep && current.sheep != current.farmer){
     return false;
   }
-  return true;
+  return current;
 }
 
 
 function SearchStates( states ){
-  let current = states.back();
-  if(current.IsFinalState(){
-    console.log('ok');
+  let current = states.pop();
+console.log(states);
+  if(current.IsFinalState()){
+    console.log(current);
     return false;
-  })
-  
-  let next;
-  for (var i = 0; i < Action.length; i++) {
-    let act = Action[i];
-    if(act())
+  }
+  var next;
+  for( let act in Action ){
+    next = Action[act](current, next);
+    if(next && typeof next === 'object'){
+      if(!IsProcessedState(states, next)){
+        states.push(next);
+        SearchStates( states );
+         states.pop();
+      }
+    }
   }
 }
-
+let states = []
+states.push(new ItemState())
+SearchStates( states )
