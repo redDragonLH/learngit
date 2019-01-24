@@ -117,12 +117,11 @@ function ProcessFarmerBackTakeVegetable(current, next){
         BACK_WITH_SHEEP: ProcessFarmerBackTakeSheep,
         BACK_WITH_VEGETABLE: ProcessFarmerBackTakeVegetable,
 }
-function IsProcessedState(states, newstates){
+function IsProcessedState(states, newState){
   let it;
-  for (let index of states) {
-    console.log(index);
-    if(item.IsSameState(newState)){
-      
+  for (var i = 0; i < states.length; i++) {
+    if(states[i].IsSameState(newState)){
+      it = i;
     }
   }
   return it != states.length-1;
@@ -139,8 +138,7 @@ function IsCurrentStateValid(current){
 
 
 function SearchStates( states ){
-  let current = states.pop();
-console.log(states);
+  let current = states[states.length-1];
   if(current.IsFinalState()){
     console.log(current);
     return false;
@@ -152,7 +150,7 @@ console.log(states);
       if(!IsProcessedState(states, next)){
         states.push(next);
         SearchStates( states );
-         states.pop();
+        states.pop();
       }
     }
   }
