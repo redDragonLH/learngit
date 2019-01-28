@@ -1,7 +1,14 @@
 
 /**
  * 狼、羊、菜和农夫过河问题 js 实现部分
+ *
+ * 剪枝很坑，现在也不完美
  */
+/**
+ * 这个问题最重要的是设计数据结构，好让它进行动作循环
+ * 
+ */
+// 位置
  LOCATION = {
    LEFT: 'left',
    RIGHT: 'right',
@@ -15,13 +22,13 @@ class ItemState {
     this.type; // 为防止陷入同一种状态来去循环，进行判断，不允许同一种状态来了再回去~~，1 为农夫，2为农夫与狼，3为农夫与羊，4为农夫于菜
     this.curAction;
   }
-  IsSameState(state){
+  IsSameState(state){ // 相同状态判断
     return (this.farmer == state.farmer) && (this.wolf == state.wolf) && (this.sheep == state.sheep) && (this.vegetable == state.vegetable);
   }
   PrintStates(){
     
   }
-  IsFinalState(){
+  IsFinalState(){ // 完成状态判断
     return ( (this.farmer == LOCATION.RIGHT) && (this.wolf == LOCATION.RIGHT) && (this.sheep == LOCATION.RIGHT) && (this.vegetable == LOCATION.RIGHT) );
   }
 }
@@ -110,6 +117,7 @@ function ProcessFarmerBackTakeVegetable(current, next){
 
   return IsCurrentStateValid(next);
 }
+// 动作对应表
  let Action = {
         GO_SELF : ProcessFarmerGo,
         GO_WITH_WOLF: ProcessFarmerGoTakeWolf,
