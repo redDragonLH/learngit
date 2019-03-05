@@ -12,21 +12,39 @@
  *  5. 遍历 N-1 个斜率值，重复第 2~4步，直到每个斜率都统计过一遍；
  *  6. 最后统计遍历表，找出计数值最高的斜率值和其对应的所有点信息
  */
+// 浮点数精度范围 0.00000001
 const EPS = 1e-8;
+/**
+ * 判断浮点数是否相等
+ * @author liuhe
+ * @anotherdate 2019-03-05T10:19:36+080
+ * @param       {number}                v1 
+ * @param       {number}                v2 
+ * @return      {Boolean}                  两个浮点数是否相等
+ *
+ * 计算机储存浮点数十多的二进制形式，它和逻辑上理解的十进制小数存在表达误差，
+ * 有的十进制小数无法用二进制小数精确表达（0.1 + 0.2 != 0.3）
+ *
+ * 对于浮点数，只要在精度要求的误差范围内，就可认为相等
+ */
 function isEqualFloat(v1,v2){
   if(Math.abs( v1-v2 ) < EPS){
     return true;
   }
   return false
 }
+/**
+ * 单个点的结构
+ */
 class Point {
   constructor(x,y) {
     this.x = x;
     this.y = y;
   }
 };
-let points = [];
-
+/**
+ * 两个点的斜率与 与第二个点的下标
+ */
 class Slope {
   constructor(k,p_idx) {
     this.k = k;
