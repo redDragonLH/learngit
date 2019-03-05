@@ -13,9 +13,8 @@
  *  6. 最后统计遍历表，找出计数值最高的斜率值和其对应的所有点信息
  */
 const EPS = 1e-8;
-console.log(EPS);
 function isEqualFloat(v1,v2){
-  if(Math.abs( v1-v2 )){
+  if(Math.abs( v1-v2 ) < EPS){
     return true;
   }
   return false
@@ -54,27 +53,31 @@ function exchange(slopes, m, n){
   let tmp = slopes[m];
   slopes[m] = slopes[n];
   slopes[n] = tmp;
+  return slopes
 }
 function partion(slopes,p,r){
   let x = slopes[r].k,
       j = p;
       for (var i = 0; i < r; i++) {
         if(slopes[i].k < x){
-          if(I != j){
-            exchange(slopes, i, j)
+          if(i != j){
+           slopes = exchange(slopes, i, j)
           }
           j++
         }
       }
-      exchange(slopes, j, r)
-      return i;
+      slopes = exchange(slopes, j, r)
+      return {slopes: slopes,i:i};
 }
 
 function quick_sort(slopes, p, r){
   if(p < r){
-    let mid = partion(slopes, p, r);
+    let obj = partion(slopes, p, r);
+    let mid = obj.i;
+    slopes = obj.slopes;
     quick_sort(slopes, p, mid - 1);
     quick_sort(slopes, mid + 1, r);
+    return slopes
   }
 }
 
@@ -91,35 +94,48 @@ function getMaxPointList(slopes){
         max_len = len;
         max_start_pos = start_pos;
       }
-      start_pos = s;
+      start_pos = i;
       len = 1;
     }else {
       len++;
     }
   }
-  return new Slope_Rec(max_start_pos,max_len);
+  return new Slope_Rec({start_idx:max_start_pos,count:max_len});
 }
 
 
 function straightLine(points, n, pts){
+  let slopes = [];
   for (var i = 0; i < n; i++) {
-    let slopes = [];
+    slopes = [];
     for (var j = 0; j < n; j++) {
       if(i == j){
         continue;
       }
       let k = calcSlope(points[i], points[j])
-      slopes.push({k,j})
+      slopes.push(new Slope(k,j))
     }
-    quick_sort(slopes,0.slopes.length - 1);
-    
-    let posi = new Slope_Rec(GetMaxPointList(slopes));
+    slopes = quick_sort(slopes,0,slopes.length - 1);
+
+    let posi = getMaxPointList(slopes);
     if(posi.count > pts.length){
-      pts = 0;
+      pts = [];
       pts.push(i);
-      for (var p = posi.start_idx; p < posi.start_idx; p++) {
+      for (var p = posi.start_idx; p < (posi.start_idx + posi.count); p++) {
         pts.push(slopes[p].p_idx);
       }
     }
   }
+  return {points: pts,allPoint:slopes};
+}
+
+let outPoints =  [[1301.0, 1256.0], [21.0, 28.0], [6222.0, 52.0], [-7071.0, -6264.0], [-6406.0, -1183.0],[-912.0, -1741.0], [39.0, 58.0], [3.0, -2.0], [57.0, 88.0], [1502.0, -7726.0],[30.0, 43.0], [-6932.0, 363.0], [-4422.0, -5669.0], [12.0, 13.0], [5874.0, -9005.0],[48.0, 73.0], [-2358.0, 129.0], [7703.0, 1806.0], [-3559.0, -1078.0], [-4808.0, -2166.0]] ;
+let outPointsObJ = outPoints.map(function(e){
+  return new Point(e[0],e[1])
+})
+let pts = [];
+let objs = straightLine(outPointsObJ,outPointsObJ.length,pts)
+console.log(objs.points);
+for (var i = 0; i < objs.points.length; i++) {
+  console.log(objs.allPoint[objs.points[i]]);
 }
