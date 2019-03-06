@@ -51,43 +51,90 @@ class Slope {
     this.p_idx = p_idx;
   }
 }
-
+/**
+ * 斜率数组排序后某个数值的开始位置以及数量
+ */
 class Slope_Rec {
   constructor(obj) {
     this.start_idx = obj.start_idx;
     this.count= obj.count;
   }
 }
+/**
+ * 获取斜率
+ * @author liuhe
+ * @anotherdate 2019-03-06T09:11:39+080
+ * @param       {object}                p0 第一个点位置
+ * @param       {object}                p1 第二个点位置
+ * @return      {number}                   斜率或者Number.MAX_VALUE
+ */
 function calcSlope(p0,p1){
   if(isEqualFloat(p0.x,p1.x)){ // 点的 x坐标相等，斜率无穷大
     return Number.MAX_VALUE; // 最大值
   }
   return (p1.y - p0.y) / (p1.x - p0.x);
 }
+/**
+ * 斜率比较
+ * @author liuhe
+ * @anotherdate 2019-03-06T09:12:51+080
+ * @param       {[type]}                s1 [description]
+ * @param       {[type]}                s2 [description]
+ * @return      {[type]}                   [description]
+ */
 function  less_slope(s1,s2){
   return s1.k < s2.k;
 }
+/**
+ * 排序的一部分，大小判定后更换位置饿函数
+ * @author liuhe
+ * @anotherdate 2019-03-06T09:13:10+080
+ * @param       {array}                slopes 排序数组
+ * @param       {number}                m      互换点
+ * @param       {number}                n      呼唤点
+ * @return      {array}                       排序后的数组
+ */
 function exchange(slopes, m, n){
+  if(!slopes[m] || !slopes[n]) return slopes;
   let tmp = slopes[m];
   slopes[m] = slopes[n];
   slopes[n] = tmp;
   return slopes
 }
+/**
+ * [partion description]
+ * @author liuhe
+ * @anotherdate 2019-03-06T09:15:41+080
+ * @param       {[type]}                slopes [description]
+ * @param       {[type]}                p      [description]
+ * @param       {[type]}                r      [description]
+ * @return      {[type]}                       [description]
+ */
 function partion(slopes,p,r){
   let x = slopes[r].k,
       j = p;
-      for (var i = 0; i < r; i++) {
-        if(slopes[i].k < x){
+      for (var i = 0; i < r; i++) { // 循环slopes 从r开始的位置
+        if(slopes[i].k < x){ // 判断r往后的位置的k是否比r位置小
           if(i != j){
-           slopes = exchange(slopes, i, j)
+           slopes = exchange(slopes, i, j)// 判断成功则变换位置
           }
           j++
         }
       }
-      slopes = exchange(slopes, j, r)
-      return {slopes: slopes,i:i};
+      if(j < slopes.length){ 
+        slopes = exchange(slopes, j, r);
+      }
+      return {slopes: slopes,i:j};
 }
-
+/**
+ * 排序入口
+ * @author liuhe
+ * @anotherdate 2019-03-06T09:28:38+080
+ * @param       {[type]}                slopes [description]
+ * @param       {[type]}                p      [description]
+ * @param       {[type]}                r      [description]
+ * @return      {[type]}                       [description]
+ */
 function quick_sort(slopes, p, r){
   if(p < r){
     let obj = partion(slopes, p, r);
@@ -98,7 +145,14 @@ function quick_sort(slopes, p, r){
     return slopes
   }
 }
-
+/**
+ * 获取最多共线点的列表
+ * 使用的是排序后的数组
+ * @author liuhe
+ * @anotherdate 2019-03-06T09:30:55+080
+ * @param       {[type]}                slopes [description]
+ * @return      {class}                       [description]
+ */
 function getMaxPointList(slopes){
   let max_len = 0,
       max_start_pos = 0,
@@ -107,8 +161,8 @@ function getMaxPointList(slopes){
       start_pos = 0;
   
   for (var i = 1; i < slopes.length; i++) {
-    if(!isEqualFloat(slopes[i].k,slopes[i - 1].k)){
-      if(len > max_len){
+    if(!isEqualFloat(slopes[i].k,slopes[i - 1].k)){ // 两点斜率不相等
+      if(len > max_len){ // 获取的是连续的相等斜率
         max_len = len;
         max_start_pos = start_pos;
       }
@@ -121,6 +175,15 @@ function getMaxPointList(slopes){
   return new Slope_Rec({start_idx:max_start_pos,count:max_len});
 }
 
+/**
+ * 主体函数
+ * @author liuhe
+ * @anotherdate 2019-03-06T09:41:13+080
+ * @param       {array}                points 点数组
+ * @param       {number}                n      数组长度
+ * @param       {array}                pts    点下标数组
+ * @return      {object}                       斜率数组与点下标数组
+ */
 
 function straightLine(points, n, pts){
   let slopes = [];
@@ -153,7 +216,7 @@ let outPointsObJ = outPoints.map(function(e){
 })
 let pts = [];
 let objs = straightLine(outPointsObJ,outPointsObJ.length,pts)
-console.log(objs.points);
+
 for (var i = 0; i < objs.points.length; i++) {
   console.log(objs.allPoint[objs.points[i]]);
 }
