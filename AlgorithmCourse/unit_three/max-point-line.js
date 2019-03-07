@@ -113,7 +113,7 @@ function exchange(slopes, m, n){
 function partion(slopes,p,r){
   let x = slopes[r].k,
       j = p;
-      for (var i = 0; i < r; i++) { // 循环slopes 从r开始的位置
+      for (var i = p; i < r; i++) { // 循环slopes 从r开始的位置
         if(slopes[i].k < x){ // 判断r往后的位置的k是否比r位置小
           if(i != j){
            slopes = exchange(slopes, i, j)// 判断成功则变换位置
@@ -121,7 +121,7 @@ function partion(slopes,p,r){
           j++
         }
       }
-      if(j < slopes.length){ 
+      if(j < slopes.length-1){ 
         slopes = exchange(slopes, j, r);
       }
       return {slopes: slopes,i:j};
