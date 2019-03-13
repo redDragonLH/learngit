@@ -81,7 +81,7 @@ class AStar {
     }
   }
   ExtractMiniFromOpen(/*ANODE*/ node){
-    
+    let fin = this.m_open.
   }
   IsNodeExistInClose(row,col){
     
