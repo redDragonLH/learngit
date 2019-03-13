@@ -309,13 +309,14 @@ class RedBlackTree{
     preOrderTraverseNode( this.root )
   }
 }
-let redBlackTree = new RedBlackTree(3);
-redBlackTree.insert(4);
-redBlackTree.insert(2);
-redBlackTree.insert(10);
-redBlackTree.insert(8);
-redBlackTree.insert(5);
-redBlackTree.insert(6);
-redBlackTree.preOrderTraverse();
+module.exports = RedBlackTree;
+// let redBlackTree = new RedBlackTree(3);
+// redBlackTree.insert(4);
+// redBlackTree.insert(2);
+// redBlackTree.insert(10);
+// redBlackTree.insert(8);
+// redBlackTree.insert(5);
+// redBlackTree.insert(6);
+// redBlackTree.preOrderTraverse();
 // console.log(redBlackTree.get(3));
 // console.log(redBlackTree.root);
