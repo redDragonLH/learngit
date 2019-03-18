@@ -3,6 +3,41 @@
  */
 const RedBlackTree = require('../../dataStructure/RedBlackTree');
 
+/**
+ * 指向红黑树最左边的节点
+ * @anotherdate 2019-03-18T09:49:07+080
+ * @return      {[type]}                []
+ */
+RedBlackTree.begin = () => {
+  if(this.root){
+    let left = this.root;
+    while (left) {
+      if(left.lchild){
+        left = left.lchild;
+      }else if(left.rchild){
+        left = left.rchild;
+      }else{
+        break; 
+      }
+    }
+    return left;
+  }
+}
+RedBlackTree.end = () => {
+  if(this.root){
+    let right = this.root;
+    while (right) {
+      if(right.rchild){
+        right = right.rchild;
+      }else if(right.lchild){
+        right = right.lchild;
+      }else{
+        break; 
+      }
+    }
+    return right;
+  }
+}
 function manhattanDistance(n1, n2){
   return Math.abs(n1.row - n2.row ) + Math.abs(n1.col - n2.col);
 }
@@ -60,7 +95,6 @@ class AStar {
     })
     this.m_open.insert(source);
     let cur_node = new ANODE({});
-    
     while(this.ExtractMiniFromOpen(cur_node)){
       this.m_close.push(cur_node)
       if(cur_node == target){
@@ -81,7 +115,11 @@ class AStar {
     }
   }
   ExtractMiniFromOpen(/*ANODE*/ node){
-    let fin = this.m_open.
+    let fin = this.m_open.begin();
+    if(fin === m_open.end()){
+      return false;
+    }
+    
   }
   IsNodeExistInClose(row,col){
     
