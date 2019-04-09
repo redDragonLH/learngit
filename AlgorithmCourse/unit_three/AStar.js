@@ -8,10 +8,61 @@
  * 再从这个位置进行搜索直到目标。在启发式搜索中，对位置的估价是十分重要
  *    估价函数： 从当前节点移动到目标节点的预估费用
  */
+/**
+ *  F = G + H;
+ *  
+ */
+
+
+const MAP = [
+    [ ' ',' ','X','X','X',' ','#',' ' ],
+    [ ' ',' ','X','X',' ',' ',' ',' ' ],
+    [ ' ',' ','X',' ',' ','X','X','X' ],
+    [ 'X','X','X','X',' ','X','X','X' ],
+    [ 'X','?',' ','X',' ','X','X','X' ],
+    [ 'X','X','X','X',' ',' ',' ',' ' ],
+    [ ' ',' ',' ','X','X','X',' ',' ' ],
+    [ ' ',' ',' ','X','X','X',' ','@' ]
+  ]
+
+let getPoint = (flag, map) =>{
+  let point = [];
+  map.some((item, index, array) => {
+    for (var i = 0; i < item.length; i++) {
+      if(item[i] === flag){
+        console.log(item[i]);
+        point = [index,i];
+        break;
+      }
+    }
+  })
+  return point;
+}
+const STARFLAG = '@';
+let satrPoint = getPoint(STARFLAG, MAP);
+
+const ENDFLAG = '#';
+let endPoint = getPoint(ENDFLAG, MAP);
+
+const computeH = (star, end) => {
+ return  Math.abs(star[0] - end[0]) + Math.abs(star[1] - end[1]) * 10;
+};
+
 class Astar {
-  constructor() {
-    this.map = []; // 地图展开为二维数组
+  constructor(map, star, end) {
+    this.map = map; // 地图展开为二维数组
     this.openList = []; //
     this.closeList = []; //
+    this.star = star;
+    this.end = end;
+    this.H = computeH(this.star, this.end);
+    this.G = {
+      0: 10,
+      1: 14,
+    };
+    this.point = {
+      pos: [],
+      parent: {},
+    };
   }
 }
