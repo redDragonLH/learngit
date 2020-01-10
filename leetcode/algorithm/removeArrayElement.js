@@ -23,7 +23,7 @@ var removeElement = function(nums, val) {
 };
 
 /** 
- * 其他思路 1
+ * 其他思路 1 拷贝覆盖不相等的数据
  * 
  * 双指针：快慢针
  * 
@@ -47,6 +47,28 @@ var removeElement2 = function(nums, val) {
 };
 console.log(removeElement2([0,1,2,2,3,0,4,2],2));
 
+/**
+ * 思路2： 拷贝覆盖相等的数字
+ * 适合在需要移除的数据较少时使用
+ */
+/**
+ * 思路2 java代码
+ * 
+ class Solution {
+   public int removeElement(int[] nums, int val){
+     int ans = nums.length;
+     for (int i = 0; i < ans;) {
+      if (nums[i] === val) {
+       nums[i] = nums[ans - 1];
+       ans--
+      } else {
+       i++;
+      }
+     }
+     return ans;
+   }
+ }
+ */
  /**
   * 这种问题其实没要求数组的内容，所以不必要删除，保证length正确以及数据位置从头开始排，使用替换是最好的
   * 
