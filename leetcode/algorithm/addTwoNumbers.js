@@ -30,23 +30,41 @@ function ListNode(val) {
  * @return {ListNode}
  */
 const addTwoNumbers = function(l1, l2) {
- let l1S = getVal(l1)
- let l2S = getVal(l2)
- let z = BigInt(Number(l1S) + Number(l2S))
- return setList(z)
+   let compList = (l1,l2,index) => {
+      if(l1 && l2){
+         let num = Number(l1.val) + Number( l2.val) + index;
+         return {
+            val: num % 10,
+            next: compList(l1.next,l2.next, parseInt(num / 10))
+         }
+      } else if ((l1 || l2) && (index > 0)) {
+         let num = (l1 ? l1.val : l2.val) + index;
+         return {
+            val: num % 10,
+            next: compList(l1?l1.next: null,l2?l2.next:null, parseInt(num / 10))
+         }
+      } else if(!(l1 || l2) && (index > 0)) {
+         return {
+            val: index,
+            next: null
+         }
+      } else if((l1 || l2) && (index === 0)) {
+         return l1 ? l1 : l2;
+      }
+   }
+return compList(l1, l2,0);
+      
 };
-let BigTen = BigInt(10)
 
 function setList(num){
- 
- if(num > BigTen){
+ if(num.length > 1){
   return {
-   val: num % BigTen,
-   next: setList(BigInt(parseInt(num / BigTen)))
+   val: num.pop(),
+   next: setList(num)
   }
  }else {
   return {
-   val: num,
+   val: num.pop(),
    next: null
   }
  }
@@ -58,8 +76,9 @@ function getVal(list){
  }
  return '' + list.val
 }
-[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]
-[5,6,4]
+let l1= [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]
+let l2 = [5,6,4]
 
-console.log(addTwoNumbers(setList(BigInt(1000000000000000000000000000001)),setList(BigInt(564))));
+// console.log(addTwoNumbers(setList(l1),setList(l2)));
 // setList(1000000000000000000000000000001)
+addTwoNumbers(setList(l1),setList(l2))
