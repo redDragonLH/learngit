@@ -79,5 +79,32 @@ var singleNumberBylist = function(nums) {
 
   return 2 * setSum - sum;
  }
- console.log(singleNumberByMath([4,1,2,1,2]));
+//  console.log(singleNumberByMath([4,1,2,1,2]));
  
+ /**
+  * 题解 3 
+  * 
+  * 位操作——异或
+  * 
+  * 异或：对于两个操作数其中只有一个1时，结果为1，否则为0
+  * 
+  * 概念：
+  * 
+  * 如果对0和二进制位做XOR运算，得到的仍然是这个二进制位： a^0=a
+  * 
+  * 如果对相同的二进制位做XOR运算，返回的结果是0 ：a^a = 0
+  * 
+  * XOR 满足交换律和结合律： a^b^a = (a^a)^b=0^b=b
+  * 
+  * 所以: 我们只需要将所有的数进行 XOR 操作，得到那个唯一的数字。
+  */
+ var singleNumberByBit = function(nums) {
+    let result = 0;
+    nums.forEach(i => {
+      result = result ^ i;
+      console.log(result);
+      
+    })
+    return result;
+ }
+ console.log(singleNumberByBit([4,1,2,1,2]));
