@@ -70,19 +70,19 @@ var merge = function(nums1, m, nums2, n) {
    * 没用第三个指针，用第三个的见官方题解
    */
   var mergeByPointer = function(nums1, m, nums2, n) {
-    let p1 = m - 1;
-    let p2 = n - 1;
+    let p1 = m - 1; // nums1 最后一位
+    let p2 = n - 1; // nums2 最后一位
     
     for (let i = nums1.length -1 ; i >= 0 ; i--) {
-      if(p1 > -1 && p2 > -1){
-        if(nums1[p1] > nums2[p2]) {
+      if(p1 > -1 && p2 > -1){ // 判断 两个数组是否都没处理完
+        if(nums1[p1] > nums2[p2]) {// 没有的话进行对比
           nums1[i] = nums1[p1];
           p1--;
         }else {
           nums1[i] = nums2[p2];
           p2--;
         }
-      } else if(p1 > -1) {
+      } else if(p1 > -1) { // 不全了之后判断需要处理的剩余数据
         break; // nums1 剩下直接返回，因为不需要动了
       } else if(p2 > -1) {
         nums1[i] = nums2[p2];
