@@ -36,3 +36,59 @@ var isSameTree = function(p, q) {
   preOrderTraverseNode(p, q);
   return q1q1;
 };
+
+/**
+ * 迭代法
+ * 
+ * 从根开始，每次迭代将当前结点从双向队列弹出，然后，判断
+ * 
+ * * p 和 q 不是等于none
+ * * p.val 等于 q.val
+ *  
+ * 若以上均满足，则压入子节点
+ * 
+ * java 代码
+ * 
+ * class Solution {
+ *    public boolean check(TreeNode p,TreeNode q) {
+ *      // p and q are null
+ *      if(p == null && q == null) return true;
+ *      // one of p and q is null
+ *      if(q == null || p == null) return false;
+ *      if(p.val !== q.val) return false;
+ *      return true;
+ *    }
+ *    public boolean isSameTree(TreeNode p, TreeNode q) {
+ *      if(p == null && q == null) return true;
+ *      if(!check(p,q)) return false;
+ * 
+ *      // init depues
+ *      ArrayDeque<TreeNode> deqP = new ArrayDeque<TreeNode>(); // 声明 双端队列
+ *      ArrayDeque<TreeNode> deqQ = new ArrayDeque<TreeNode>();
+ * 
+ *      deqP.addLast(p);
+ *      deqQ.addLast(q);
+ * 
+ *      while (!deqP.isEmpty()){
+ *        p = deqP.removeFirst();
+ *        q = deqQ.removeFirst();
+ * 
+ *        if(!check(p,q)) return false;
+ *        if(p != null) {
+ *           // in Java nulls are not allowed in Deque
+ *           if(!check(p.left,q.left)) return false;
+ *           if(p.left != null) {
+ *             deqP.addLast(p.left);
+ *             depQ.addLast(q.left); 
+ *           }
+ *           if(!check(p.right,q.right)) return false;
+ *           if(p.right != null) {
+ *              deqP.addLast(p.right);
+ *              deqQ.addLast(q.right);
+ *            }
+ *        }
+ *      }
+ *      return true;
+ *    }
+ * }
+ */
