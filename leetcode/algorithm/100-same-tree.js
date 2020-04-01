@@ -92,3 +92,21 @@ var isSameTree = function(p, q) {
  *    }
  * }
  */
+
+ /**
+  * 优秀题解摘抄
+  * 
+  * 运行时间最短
+  */
+ var isSameTree = function(p, q) {
+  if (p === null && q === null) return true; // 同时为空则为 true
+  if (p === null || q === null) return false; // 只有一个为空则为false
+  return (p.val === q.val) // return返回 判断值 与 递归内的计算
+      && isSameTree(p.left, q.left)
+      && isSameTree(p.right, q.right)
+};
+/**
+ * 备注： 
+ * 
+ * 我想不到的最优雅的代码~~
+ */
