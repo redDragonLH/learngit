@@ -1,10 +1,10 @@
 /**
  * 二叉树 js实现
  */
-;(function(){
+
 class Node{
-  constructor( key ){
-    this.key = key,
+  constructor( val ){
+    this.val = val,
     this.left = null,
     this.right = null
   }
@@ -15,7 +15,7 @@ class Node{
  * 二叉树应该是按照从左到右，顺序放置节点，不会考虑内容大小
  */
 const insertNode = function(node, newNode){
-  if(newNode.key <= node.key){ // 小的节点放在左边
+  if(newNode.val <= node.val){ // 小的节点放在左边
     if(node.left === null){ //左节点没有直接放在左边
       node.left = newNode;
     } else { // 左树有内容的话再搜索下一层的节点
@@ -30,11 +30,12 @@ const insertNode = function(node, newNode){
   }
 }
 function showNodeStructure(node){
-  console.log('node: '+node.key);
-  var lchild_val = node.left != null ? node.left.key : 'null';
-  var rchild_val = node.right != null ? node.right.key : 'null';
+  console.log('node: '+ node.val);
+  var lchild_val = node.left != null ? node.left.val : 'null';
+  var rchild_val = node.right != null ? node.right.val : 'null';
   console.log('node.lchild: '+ lchild_val);
   console.log('node.rchild: '+ rchild_val);
+  console.log('-------------------');
 }
 // 中序遍历 左-根-右
 const  inOrderTraverseNode = function( node ){
@@ -66,7 +67,7 @@ const minNode = function( node ){
     while (node && node.left !== null ) {
       node = node.left
     }
-    return node.key
+    return node.val
   }
   return null
 }
@@ -76,33 +77,33 @@ const maxNode = function( node ){
     while ( node && node.right !== null ){
       node = node.right
     }
-    return node.key
+    return node.val
   }
   return null
 }
 // 搜索
-const searchNode = function( node, key ){
+const searchNode = function( node, val ){
   if( node === null ) {
     return false
   }
-  if ( key < node.key ){
-    return searchNode( node.left, key )
-  } else if ( key > node.key ) {
-    return searchNode( node.right, key )
+  if ( val < node.val ){
+    return searchNode( node.left, kvaley )
+  } else if ( val > node.val ) {
+    return searchNode( node.right, val )
   } else {
     return true
   }
 }
 // 移除节点
-const removeNode = function( node, key){
+const removeNode = function( node, val){
   if( node == null) {
     return null
   }
-  if( key < node.key ){
-    node.left = removeNode( node.left, key)
+  if( val < node.val ){
+    node.left = removeNode( node.left, val)
     return node
-  } else if( key > node.key ){
-    node.right = removeNode( node.right, key )
+  } else if( val > node.val ){
+    node.right = removeNode( node.right, val )
     return node
   } else {
     // 需要移除的节点没有一个叶子节点
@@ -120,8 +121,8 @@ const removeNode = function( node, key){
     }
     // 需要移除的节点包含两个子节点
     let aux = findMinNode( node.right );
-    node.key = aux.key;
-    node.right = removeNode( node.right, aux.key );
+    node.val = aux.val;
+    node.right = removeNode( node.right, aux.val );
     return node;
   }
 };
@@ -138,8 +139,8 @@ class BinaryTreeNode {
   constructor(){
     this.root = null;
   }
-  insert( key ){
-    let newNode = new Node( key )
+  insert( val ){
+    let newNode = new Node( val )
     if( this.root === null ){ // 根节点
       this.root = newNode;
     } else {
@@ -161,26 +162,26 @@ class BinaryTreeNode {
   findMax (){
     return maxNode( this.root )
   }
-  search (key) {
-    return searchNode( this.root, key )
+  search (val) {
+    return searchNode( this.root, val )
   }
-  remove (key) {
-    removeNode( this.root, key)
+  remove (val) {
+    removeNode( this.root, val)
   }
 }
-let binaryTree = new BinaryTreeNode();
+// let binaryTree = new BinaryTreeNode();
 
-var arr = [9,6,3,8,12,15,20,22,18,19,17]
+// var arr = [9,6,3,8,12,15,20,22,18,19,17]
 
-arr.map(item => {
-       binaryTree.insert(item)
-  });
+// arr.map(item => {
+//        binaryTree.insert(item)
+//   });
 // binaryTree.inOrderTraverse()
 // console.log('--------');
-binaryTree.preOrderTraverse()
-binaryTree.remove(6)
-console.log('--------');
-binaryTree.preOrderTraverse()
+// binaryTree.preOrderTraverse()
+// binaryTree.remove(6)
+// console.log('--------');
+// binaryTree.preOrderTraverse()
 // binaryTree.postOrderTraverse()
 
 /**
@@ -190,4 +191,10 @@ binaryTree.preOrderTraverse()
 /**
  * 二叉堆
  */
-})();
+
+module.exports = {
+  BinaryTreeNode,
+  inOrderTraverseNode,
+  preOrderTraverseNode,
+  postOrderTraverseNode
+ }
