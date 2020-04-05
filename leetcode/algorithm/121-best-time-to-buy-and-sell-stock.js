@@ -12,11 +12,13 @@
  * * 中 大 小 ，小后边没了，小 数会刷新数据，这样导致flag 更新之后 到头了或者更小，最后返回0
  * * 
  * 必须考虑各种情况，不能再有了小数之后立即清空，可能前部分的差更大
+ * 
  * @param {number[]} prices
  * @return {number}
  */
 var maxProfit = function(prices) {
     let min = prices[0]; // 初始化 最小数为 第一天数据，否则判断出问题
+    // max 变量有点多余
     let max = 0;
     let cha = 0; // 最大差数据，因为可能有山峰状数据，所以差值必须滞后，不能最后计算
     prices.map((e, i) => {
