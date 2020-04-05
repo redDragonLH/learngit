@@ -39,4 +39,31 @@ var maxProfit = function(prices) {
  */
 let nums = [7,1,5,3,6,4];
 // let nums = [1,2,3,4,5];
-console.log(maxProfit(nums));
+// console.log(maxProfit(nums));
+
+/**
+ * 峰谷法
+ * 
+ * 需要考虑到紧跟谷的每一个峰值以最大化利润。如果我们试图条狗其中一个峰值来获取更多利润，那么我们最终将失去其中一笔交易中获得的利润，从而导致总利润的降低
+ * 
+ */
+
+ /**
+  * 方法三 
+  * 
+  * 我们可以简单的继续在斜坡上爬升并持续增加从连续交易中获得的利润，而不是在谷之后寻找每个峰值，
+  * 但是不需要跟踪峰值对应的成本以及最大利润，但是我们可以直接持续增加数组的连续数字之间的差值，如果第二个数字大于第一个数字，我们获得的总和将是最大的利润
+  * 
+  * 简单来说就是轮询计算相邻两个数字的差值是否为正，如为正说明正在上涨，可以卖掉，然后 买入，检查下一个节点是否上涨，再次决定是否卖出
+  * class Solution {
+  *     public maxProfit(int[] prices) {
+  *         int maxProfit = 0;
+  *         for (int i = 1; i < prices.length; i++ ) {
+  *             if( proices[i] > prices[i - 1]) {
+  *                 maxprofit += prices[i] - prices[i - 1]
+  *             }
+  *         }
+  *         return maxprofit
+  *     }
+  * }
+  */
