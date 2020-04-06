@@ -18,9 +18,10 @@
  * @param {string} s
  * @return {boolean}
  */
-var isPalindrome = function(s) {    
+var isPalindrome = function(s) {
     let lows = s.toLowerCase();
     let low = lows.length-1;
+    if(low < 0) return true;
     let fast = 0;
     for (let i = low; i >= 0; i--) {
         let islow = !isValid(lows[low]);
@@ -40,6 +41,9 @@ var isPalindrome = function(s) {
     }
     return true;
 };
+/**
+ * 判断方法 传入字符串是否需要显式转为 ascii码，与运行时提升不明显，因为判断时还是会隐式转换，甚至判断会多次隐式转换（不知引擎是否缓存） 
+ */
 let isValid = (str) => {
     let AscStr = str.charCodeAt();
     return (48 <= AscStr && AscStr <=57) || (97 <= AscStr && AscStr <= 122);
@@ -57,3 +61,43 @@ let isValid = (str) => {
  * 内存消耗 :36.3 MB, 在所有 JavaScript 提交中击败了97.87%的用户
  */
 
+ /**
+  * 改良版： 判断改为正则
+  * 
+  * 内存使用量升高严重
+  */
+ var isPalindromeByReg = function(s) {    
+    let lows = s.toLowerCase();
+    let low = lows.length-1;
+    if(low < 0) return true;
+    let fast = 0;
+    for (let i = low; i >= 0; i--) {
+        let islow = !/\w/.test(lows[low]);
+        let isfast = !/\w/.test(lows[fast])
+        if(isfast || islow){
+            islow && low--;
+            isfast && fast++;
+            continue;
+        }
+        if(lows[low] !== lows[fast]) {
+            return false;
+        } else {
+            low--;
+            fast++;
+        }
+
+    }
+    return true;
+};
+// let str =  "A man, a plan, a canal: Panama";
+let str = "race a car";
+console.log(isPalindromeByReg(str));
+/**
+ * 改为正则后 内存使用量升高严重，只增加 为空判断 提升也不明显
+ */
+
+
+/**
+ *  又新想法， 循环改为 while 是否对性能有提升 
+ * （经简单调查，好像也不是很明显）
+ */
