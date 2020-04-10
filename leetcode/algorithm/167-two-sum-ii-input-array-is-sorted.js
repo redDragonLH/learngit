@@ -42,3 +42,37 @@ console.log(twoSum(arr,tagn));
  * 时间复杂的: O(n) 循环遍历整个表
  * 空间复杂度： O(n) 需要额外的 对象存放每个元素计算出来的数据
  */
+
+/**
+ * 第三方题解： 双指针法
+ * 
+ * 使用两个指针，初始分别唯一第一个元素和最后一个元素位置，比较这两个元素之和与目标值的大小。如果和等于目标值，则可以返回数据，结束循环
+ * 
+ * 如果比目标值小，就将较小元素指针增加一，如果比目标值大，则将较大指针减小一。
+ * 
+ * 备注： 升序排列 这个条件肯定是有用的，这这种题解就很好的使用了这个条件，时空间复杂度降到了 O(1)
+ */
+/**
+ * 双指针法 java 代码
+ * 
+ * class Solution {
+ *  public int[] towSum(int[] number,int target) {
+ *      int low = 0;
+ *      int high = numbers.length - 1;
+ *      while(number[low] + numbers[high] != target) {
+ *        if(numbers[low] + numbers[high] < target) {
+ *          low++;
+ *        } else if(numbers[low] + numbers[high] > target) {
+ *          high--;
+ *        }
+ *      }
+ *      return new int[]{low + 1, hight + 1};
+ *    }
+ * }
+ */
+
+ /**
+  * 第三方题解： 二分法
+  * 
+  * 待续
+  */
