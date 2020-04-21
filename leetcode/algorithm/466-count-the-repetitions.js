@@ -7,6 +7,8 @@
  * 请你找出一个可以满足使[S2,M] 从 S1 获得的最大整数 M 。
  */
 /**
+ * 暴力循环法
+ * 
  * @param {string} s1
  * @param {number} n1
  * @param {string} s2
@@ -59,3 +61,8 @@ console.log(getMaxRepetitions('aaa',3,'aa',1));
  * 执行用时 :5496 ms, 在所有 JavaScript 提交中击败了10.00%的用户
  * 内存消耗 :343.7 MB, 在所有 JavaScript 提交中击败了100.00%的用户
  */
+
+ /**
+  * 官方题解： 循环节
+  * 循环节： 是在一段字符串里面循环出现的一段子字符串
+  */
