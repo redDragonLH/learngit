@@ -16,26 +16,26 @@
  * to https://segmentfault.com/a/1190000012864957#articleHeader6
  */
 function LCS( str1, str2 ){
-  var rows = str1.split('');
-  rows.unshift('');
+  var rows = str1.split(''); // 按照单字符分成数组
+  rows.unshift(''); // 头部插入一个空字符
   var cols = str2.split('');
   cols.unshift('');
   var m = rows.length,
       n = cols.length,
-      dp = [];
+      dp = []; // 组成一个二维数组 
   for (var i = 0; i < m; i++) {
-    dp[i] = [];
-    for (var j = 0; j < m; j++) {
+    dp[i] = []; // 定义二维数组(第一维是rows 的下标，第二维是cols 的下标，保存的数据是 从开始到现在的相等的字符的数量)
+    for (var j = 0; j < n; j++) {
       if( i === 0 || j === 0 ){
-        dp[i][j] = 0;
-        continue;
+        dp[i][j] = 0; // 跳过第一个元素（第一个元素都是 空字符吧，那为什么要插入呢）
+        continue; // 跳到下次循环
       }
-      if(rows[i] === cols[j]){
-        dp[i][j] = dp[i-1][j-1] + 1; //  对角 +1
+      if(rows[i] === cols[j]){ // 如果两个数组中对应元素相等
+        dp[i][j] = dp[i-1][j-1] + 1; //  对角 +1， 已经是第几个相等的字符吧
       }else{
-        dp[i][j] = Math.max( dp[i-1][j],dp[i][j-1] );
+        dp[i][j] = Math.max( dp[i-1][j],dp[i][j-1] ); // 没增加，保持以前的数据
       }
     }
   }
-   return dp[i-1][j-1];
+   return dp[i-1][j-1]; // 最后的数据就是最长公共字串的数量
 }
