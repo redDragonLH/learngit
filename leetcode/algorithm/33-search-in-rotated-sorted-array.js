@@ -56,7 +56,6 @@ var searchfail2 = function(nums, target) {
         if(nums[mid] === target) {
             pos = mid;
         }
-
         if((nums[mid] - nums[start] > 0 && (nums[mid] >= target && nums[start] <= target) ) || (nums[mid] - nums[start] < 0 && nums[start] >= target || nums[mid] <= target)) {
             end = mid
             mid = Number.parseInt((mid - start) /2)
@@ -69,7 +68,14 @@ var searchfail2 = function(nums, target) {
     return pos;
 };
 // console.log(searchfail2([1,3],1))
+/**
+ * 问题检查
+ * 
+ * 
+ */
 
+
+ 
 /**
  * 官方题解 c 改版
  * 
@@ -78,12 +84,9 @@ var searchfail2 = function(nums, target) {
  * @param {*} target 
  */
 var search = function(nums, target) {
-    let pos = -1;
-    if(nums.length<2){
-        if(nums[0] === target) pos = 0;
-        return pos;
-    }
     let n = nums.length
+    if (!n) return -1;
+    if (n == 1) return nums[0] == target ? 0 : -1;
     let l = 0;
     let r = n -1;
     while(l <= r) {
