@@ -5,10 +5,10 @@
 const PRECISION = 0.000000001;
 
 function DichotomyEquation(a, b ,f){
-  let mid = (a + b ) / 2.0;
+  let mid = (a + b ) / 2.0; // 获取中位数
   
-  while((b - a) > PRECISION){
-    if(f(a) * f(mid) < 0.0){ // 迭代递推
+  while((b - a) > PRECISION){ // 终止条件，b,a 差在可接受误差范围内，小数运算精度有问题，不能判断是否等于 0 
+    if(f(a) * f(mid) < 0.0){ // 迭代递推,确定答案在那边
       b = mid
     }else{
       a = mid;
@@ -34,7 +34,7 @@ function CalcDerivative(f, x){
 }
  let INVALID_VALUE = 0;
  let MAX_RUN_LOOP = 1; // number
-function NewtonRaphson() {
+function NewtonRaphson(f,x0) {
   let x = INVALID_VALUE;
   let count = 0;
   do{
