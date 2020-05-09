@@ -5,8 +5,9 @@
  *最终的装配时间 = 每次移动底盘需要的时间 + 在每个工作站的装配时间
  * 
  */
- const STATIONS = 6;
- const LINES = 2;
+ const STATIONS = 6; // 每条线6个装配站 // 有点多余
+ const LINES = 2; // 2个装配线  // 有点多余，都可以在函数内计算出来
+
 //  测试数据
 const program_T = {
     assemble_time: [ [7, 9, 3, 4, 8, 4 ],[8, 5, 6, 4, 5, 7]], // 装配时间
@@ -14,12 +15,12 @@ const program_T = {
     enter_time: [2, 4],
     exit_time: [3, 2 ]
 }
-// 遍历结果的数据结构
+// 遍历时保存数据的结构，当前以及最优
 let Result_T = {
     line: [], //遍历过程中的当前结果记录
-    fs: 0,
+    fs: 0,//遍历过程中的当前结果记录
     fline: [], //当前已知的最优结果
-    ffs: 0
+    ffs: 0 //当前已知的最优结果
 }
 
 /**
@@ -88,5 +89,5 @@ function print_result(Result_T){
     Result_T.fs = program_T.enter_time[0];  //装配线1的进入开销
     search_stations_sequence(Result_T, program_T, 0, 0); //从第一条装配线开始
     Result_T.fs = program_T.enter_time[1];  //装配线1的进入开销
-    search_stations_sequence(Result_T, program_T, 1, 0); //从第一条装配线开始
+    search_stations_sequence(Result_T, program_T, 1, 0); //从第二条装配线开始
     console.log(Result_T);
