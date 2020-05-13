@@ -22,13 +22,13 @@ let levelOrder = (root) => {
     let inOrderTraverseNode = (node, level = 0) => {
         if( node !== null ){
             nodearray[level] ? nodearray[level].push(node.val) : nodearray[level] = [node.val]
-            level = level++;
+            level++;
             inOrderTraverseNode(node.left,level)
             inOrderTraverseNode(node.right,level)
           }
     }
     inOrderTraverseNode(root)
-console.log(nodearray);
+    return nodearray;
 
 };
 
