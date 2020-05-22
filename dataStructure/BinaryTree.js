@@ -38,6 +38,12 @@ function showNodeStructure(node){
   console.log('-------------------');
 }
 // 中序遍历 左-根-右
+/**
+ * 顺序：
+ *  1. 先递归地遍历左子树
+ *  2. 随后遍历根节点
+ *  3. 最递归地遍历右子树
+ */
 const  inOrderTraverseNode = function( node ){
   if( node !== null ){
     inOrderTraverseNode(node.left)
@@ -46,6 +52,12 @@ const  inOrderTraverseNode = function( node ){
   }
 }
 // 先序遍历 根-左-右
+/**
+ * 顺序：
+ *  1. 先遍历根节点
+ *  2. 随后递归的遍历左子树‘
+ *  3. 最后递归遍历右子树
+ */
 const preOrderTraverseNode = function( node ){
   if( node !== null ){
     showNodeStructure(node)
