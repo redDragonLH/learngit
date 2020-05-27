@@ -31,16 +31,33 @@ var subarraySum = function(nums, k) {
 /**
  * 前缀和 + 哈希表优化
  * 
+ * 前缀和： 从0 - i （0 < i < length）的数据之和
  * 
+ * pre[i] = pre[i−1] + nums[i]
+ * 子数组 [i,j] 的和 pre[i] − pre[j−1] == k
+ * 移项 pre[j−1] == pre[i] − k
  */
 
 var subarraySum = function(nums, k) {
-    const mp = new Map();
-    mp.set(0, 1);
+    /**
+     * map 优点
+     * 
+     * 1. 不会像 object一样包含从原型链继承的键值数据
+     * 2. 键可以是任意值，object只能是string 或 symbol
+     * 3. Map的键是有序的，
+     * 4. Map的键值对的数量可以使用 size 属性获取，object就得自己数
+     * 5. Map 是 iterable 的，所以可以直接被迭代。object 必须获取键然后才能迭代
+     * 6. 在频繁增删键值对的场景下表现更好
+     */
+
+    const mp = new Map(); // 定义数据结构
+    mp.set(0, 1); // // 对于下标为 0 的元素，前缀和为 0，个数为 1
     let count = 0, pre = 0;
-    for (const x of nums) {
-        pre += x;
-        if (mp.has(pre - k)) count += mp.get(pre - k);
+    for (const x of nums) { // 迭代数组
+        pre += x; //迭代到当前的数据的和
+
+        // 先获得前缀和为 pre - k 的个数，加到计数变量里
+        if (mp.has(pre - k)) count += mp.get(pre - k); // 不怕有重复的吗，
         if (mp.has(pre)) mp.set(pre, mp.get(pre) + 1);
         else mp.set(pre, 1);
     }
