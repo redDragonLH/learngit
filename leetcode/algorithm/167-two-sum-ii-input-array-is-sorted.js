@@ -25,7 +25,7 @@ var twoSum = function (numbers, target) {
     if( str!== undefined) {
       return [str,i + 1]
     } else {
-      obj[target - numbers[i]] = i + 1
+      obj[target - numbers[i]] = i + 1;
     }
   }
   return tag;
