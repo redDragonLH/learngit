@@ -24,6 +24,7 @@ var translateNum = function(num) {
     return dp(array);
 };
 const dp = (arr,i=0) => {
+    // 因为可能剩两个或一个，所以不能判断当前的i 等于总数，并且所有的路线都会超出总数，那么我们判断 i 大于等于总数即可
     if(arr.length-1 <= i) return 1;
     // 0 需要单独判断
     if(arr[i]=== 0 || arr[i] > 2 || (arr[i] === 2 && arr[i+1]>5) ) {
@@ -36,4 +37,31 @@ console.log(translateNum(506));
 /**
  * 执行用时 :76 ms, 在所有 JavaScript 提交中击败了21.41%的用户
  * 内存消耗 :32.4 MB, 在所有 JavaScript 提交中击败了100.00%的用户
+ */
+
+/**
+ * 官方题解的详细思路及解法
+ * 
+ * 使用滚动数组
+ * 
+class Solution {
+    public int translateNum(int num) {
+        String src = String.valueOf(num);
+        int p = 0, q = 0, r = 1;
+        for (int i = 0; i < src.length(); ++i) {
+            p = q; 
+            q = r; 
+            r = 0;
+            r += q;
+            if (i == 0) {
+                continue;
+            }
+            String pre = src.substring(i - 1, i + 1);
+            if (pre.compareTo("25") <= 0 && pre.compareTo("10") >= 0) {
+                r += p;
+            }
+        }
+        return r;
+    }
+}
  */
