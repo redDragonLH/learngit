@@ -47,3 +47,44 @@ const getOverstep = (val, obj) => {
  * 执行用时 :728 ms, 在所有 JavaScript 提交中击败了28.36%的用户
  * 内存消耗 :47.9 MB, 在所有 JavaScript 提交中击败了100.00%的用户
  */
+
+ /**
+  * 单调栈解法
+  * 
+  * 维护一个存储下标的单调栈，从栈底到栈顶的下标对应的温度列表中的温度依次递减。如果一个下标在单调栈里，则表示尚未找到下一次温度更高的下标
+  * 
+  * 正向遍历温度列表。对于温度列表中的每个元素 T[i]，如果栈为空，则直接将 i 进栈，
+  * 如果栈不为空，则比较栈顶元素 prevIndex 对应的温度 T[prevIndex] 和当前 温度 T[i]，
+  * 如果 T[i] > T[prevIndex],则将 prevIndex 移除，并将 prevIndex 对应的等待天数赋值为 i - prevIndex.
+  * 重复上述操作直到栈为空或者栈顶元素对应的温度小于等于当前温度，然后将 i 进栈
+  * 
+  * 由于单调栈满足从栈底到栈顶元素对应的温度递减，因此每次有元素进栈时，会将温度更低的元素全部移除，并更新出栈元素对应的等待天数，这样可以确保等待天数一定是最小的。
+  */
+ /**
+  * java 代码
+  * 
+  * class Solution {
+  *     public int[] dailyTemperatures(int[] T) {
+  *         int length = T.length;
+  *         int[] ans = new int[length];
+  *         Deque<Integer> stack = new LinkedList<Integer>();
+  *         for(int i = 0;i < length; i++) {
+  *             int temperature = T[i];
+  *             while(!stack.isEmpty() && temperature > T[stack.peek()]) {
+  *                 int prevIndex = stack.pop();
+  *                 ans[prevIndex] = i - prevIndex;
+  *             }
+  *             stack.push(i);
+  *         }
+  *     return ans; 
+  *     }
+  * }
+  */
+ /**
+  * 理解
+  * 这个逻辑还是比较容易理解的，，
+  * 对于栈这边的操作，因为栈顶元素维护的是当前未处理的元素的最小值，这样当处理到一个新元素的时候，只要是比栈顶小，则只需要压入栈
+  * 大于栈顶元素则直接出栈，没有其他情况，站内的元素不一定是连续的，但是肯定是从顶到底温度递增的
+  * 
+  * 
+  */
