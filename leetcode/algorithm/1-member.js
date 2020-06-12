@@ -13,19 +13,19 @@
  */
 var twoSum = function(nums, target) {
     // i+j = target，那么 target - i = j
-    let obj = {};
+    let map = new Map();
     for (let i = 0; i < nums.length; i++) {
-        if(i === obj[num]) continue;
-        if(obj[nums[i]] !== undefined) {
-            return [obj[nums[i]],i];
+        let dif = target - nums[i]
+        if (map.has(dif)) {
+            return [map.get(dif), i]
         }else {
-           obj[target - nums[i]] = i;
+            map.set(nums[i], i);
         }
     }
     
 };
 console.log(twoSum([2, 7, 11, 15],9));
 /**
- * 执行用时 :92 ms, 在所有 JavaScript 提交中击败了60.59%的用户
- * 内存消耗 :36.3 MB, 在所有 JavaScript 提交中击败了9.32%的用户
+ * 执行用时 :72 ms, 在所有 JavaScript 提交中击败了79.51%的用户
+ * 内存消耗 :36.7 MB, 在所有 JavaScript 提交中击败了6.78%的用户
  */
