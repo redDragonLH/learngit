@@ -36,3 +36,26 @@ console.log(lengthOfLongestSubstring('abcabcbb'))
  * 执行用时 :92 ms, 在所有 JavaScript 提交中击败了91.00%的用户
  * 内存消耗 :38 MB, 在所有 JavaScript 提交中击败了75.34%的用户
  */
+
+/**
+ * js 耗时最短代码 范例
+ * 
+ * 思路是差不多的，用一个容器把数据装起来，计算当前装的最长的数据
+ * 
+ * 优点是用数组也可以直接判断是否存在，而且可以得到位置，这样把这个位置之前的数据全部去除，都有现成的方法
+ * 
+ * 问题： splice 删除数组元素不会很慢么～
+ */
+var lengthOfLongestSubstring = function(s) {
+    let max=0;
+    let arr=[];
+    for(let i=0;i<s.length;i++){
+        let index=arr.indexOf(s[i])
+        if(index!==-1){
+            arr.splice(0,index+1);
+        }
+        arr.push(s.charAt(i));
+        max = Math.max(arr.length,max);
+    }
+    return max;
+};
