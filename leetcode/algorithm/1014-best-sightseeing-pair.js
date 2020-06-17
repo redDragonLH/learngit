@@ -20,6 +20,7 @@
  */
 var maxScoreSightseeingPair = function(A) {
     let len = A.length;
+    if(len === 0) return 0 
     let maxb = A[0]; // 初始化左侧最大值
     let max = 0;
     for (let i = 1; i < len; i++) {
@@ -32,6 +33,6 @@ console.log(maxScoreSightseeingPair([8,1,5,2,6]));
 /**
  * 计算元素最大值的方案（简单重构后）
  * 
- * 执行用时 :88 ms, 在所有 JavaScript 提交中击败了43.82%的用户
- * 内存消耗 :40.5 MB, 在所有 JavaScript 提交中击败了100.00%的用户
+ * 执行用时 :84 ms, 在所有 JavaScript 提交中击败了52.81%的用户
+ * 内存消耗 :40.3 MB, 在所有 JavaScript 提交中击败了100.00%的用户
  */
