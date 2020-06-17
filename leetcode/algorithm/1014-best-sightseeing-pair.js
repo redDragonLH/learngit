@@ -20,7 +20,7 @@
  */
 var maxScoreSightseeingPair = function(A) {
     let len = A.length;
-    if(len === 0) return 0 
+    if(len === 0) return 0;
     let maxb = A[0]; // 初始化左侧最大值
     let max = 0;
     for (let i = 1; i < len; i++) {
