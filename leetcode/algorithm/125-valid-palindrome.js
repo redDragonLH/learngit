@@ -18,7 +18,7 @@
  * @param {string} s
  * @return {boolean}
  */
-var isPalindrome = function(s) {
+var isPalindromeOld = function(s) {
     let lows = s.toLowerCase();
     let low = lows.length-1;
     if(low < 0) return true;
@@ -66,7 +66,7 @@ let isValid = (str) => {
   * 
   * 内存使用量升高严重
   */
- var isPalindromeByReg = function(s) {    
+ var isPalindromeByRegOld = function(s) {    
     let lows = s.toLowerCase();
     let low = lows.length-1;
     if(low < 0) return true;
@@ -90,8 +90,8 @@ let isValid = (str) => {
     return true;
 };
 // let str =  "A man, a plan, a canal: Panama";
-let str = "race a car";
-console.log(isPalindromeByReg(str));
+// let str = "race a car";
+// console.log(isPalindromeByReg(str));
 /**
  * 改为正则后 内存使用量升高严重，只增加 为空判断 提升也不明显
  */
@@ -101,3 +101,27 @@ console.log(isPalindromeByReg(str));
  *  又新想法， 循环改为 while 是否对性能有提升 
  * （经简单调查，好像也不是很明显）
  */
+
+/**
+ * 2020-06-19 每日一题新实践
+ */
+
+var isPalindrome = function (s) {
+    s = s.replace(/[^0-9a-zA-Z]/g, '').toLowerCase(); // 只获取需要匹配的数据
+    let n = s.length;
+    let left = 0;
+    let right = n - 1
+    while (left < right) {
+      if (s[left] != s[right]) {
+        return false;
+      }
+      left++;
+      right--;
+    }
+    return true
+  };
+  
+// let str = "race a car";
+let str =  "A man, a plan, a canal: Panama";
+
+console.log(isPalindrome(str));
