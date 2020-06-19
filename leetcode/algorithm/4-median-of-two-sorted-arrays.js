@@ -7,52 +7,42 @@
  */
 
 /**
- * 为两个数组定义两个指针，起始为零，
- * 然后计算出两个数组的长度的和，这样就可以得出中位数的需要走过的长度，
- * 然后循环数组，每次判断指针指着的元素大小，小的+1，这样移动到 中位数走过的长度然后获取它，
- * 
- * 但是，写的问题太多~~各种判断
+ * 判断奇偶，因为奇数只需要获取中位数即可，偶数得是中位两个数相加除2的值才是中位数
  * @param {number[]} nums1
  * @param {number[]} nums2
  * @return {number}
  */
 var findMedianSortedArrays = function(nums1, nums2) {
-    let jo = (nums1.length + nums2.length) % 2;
-    let mid = Math.floor((nums1.length + nums2.length) / 2);
-    let n1 = n2 = 0;
-    let isn = true;
-    let num = 0;
-    console.log(jo,mid);
-    
-    let getMid = (is,n1,n2,jo) => {
-        console.log(is,n1,n2,jo,nums1[n1] + (nums1[n1+1] && nums1[n1+1]<nums2[n2] ? nums1[n1+1] : nums2[n2]));
-        
-        if(is) {
-            return jo ? nums1[n1] : (nums1[n1] + (nums1[n1+1] && nums1[n1+1]<nums2[n2] ? nums1[n1+1] : nums2[n2] ))/2;
-        }else {
-            return jo ? nums2[n2] : (nums2[n2] + (nums2[n2+1] && nums1[n1]>nums2[n2+1] ? nums2[n2+1] : nums1[n1] ))/2;
-        }
-    };
-    while (true) {
-        console.log(n1,n2);
-        if(nums1[n1] < nums2[n2]){
-            isn = true;
-            num++ 
-            if(num === mid){return getMid(isn,n1,n2,jo)}
-            n1++;
-        } else {
-            num++ 
-            isn= false;
-            if(num === mid){return getMid(isn,n1,n2,jo)}
+    let count = nums1.length + nums2.length;
+    let isOdd = count % 2;
+    let midNumber = parseInt(count /2);
+    let n1 = n2 =0;
+    let number = 0;
+    let prev = number;
+    while(midNumber >= n1 + n2) {
+        if( typeof nums1[n1] !== 'number' || nums1[n1] > nums2[n2]) {
+            prev = number;
+            number = typeof nums2[n2] === 'number' ? nums2[n2] : prev;
             n2++;
-        }
-
-        if(n1+n2 === 10) {
-            return false
+        }else {
+            prev = number
+            number = nums1[n1];
+            n1++;
         }
     }
-
+    console.log(number,prev);
+    
+    return isOdd ? number : (number + prev)/2
+    
 };
 
-// console.log(findMedianSortedArrays([1, 2],[3,4]));
-console.log('f',findMedianSortedArrays([1, 3],[2]));
+// console.log(findMedianSortedArrays([0, 0],[0,0]));
+console.log(findMedianSortedArrays([1, 2],[3,4]));
+// console.log('f',findMedianSortedArrays([1, 3],[2]));
+
+/**
+ * 初版 有点惨 基本没有优化，并且每次判断都会有数据交换，
+ * 
+ * 执行用时：188 ms, 在所有 JavaScript 提交中击败了15.62%的用户
+ * 内存消耗：43.3 MB, 在所有 JavaScript 提交中击败了6.25%的用户
+ */
