@@ -21,28 +21,29 @@ var findMedianSortedArrays = function(nums1, nums2) {
     let prev = number;
     while(midNumber >= n1 + n2) {
         if( typeof nums1[n1] !== 'number' || nums1[n1] > nums2[n2]) {
-            prev = number;
-            number = typeof nums2[n2] === 'number' ? nums2[n2] : prev;
+            if(midNumber-2 < n1 + n2) {
+                prev = number;
+                number = typeof nums2[n2] === 'number' ? nums2[n2] : prev;
+            }
             n2++;
         }else {
-            prev = number
-            number = nums1[n1];
+            if(midNumber-2 < n1 + n2) {
+                prev = number
+                number = nums1[n1];
+            }
             n1++;
         }
     }
-    console.log(number,prev);
-    
     return isOdd ? number : (number + prev)/2
     
 };
-
 // console.log(findMedianSortedArrays([0, 0],[0,0]));
 console.log(findMedianSortedArrays([1, 2],[3,4]));
 // console.log('f',findMedianSortedArrays([1, 3],[2]));
 
 /**
- * 初版 有点惨 基本没有优化，并且每次判断都会有数据交换，
+ * 数据交换优化版只在最后快得出结果时菜交换数据，但是也有点坑每次都要计算 指针的位置与开始获取数据的位置
  * 
- * 执行用时：188 ms, 在所有 JavaScript 提交中击败了15.62%的用户
- * 内存消耗：43.3 MB, 在所有 JavaScript 提交中击败了6.25%的用户
+ * 执行用时：136 ms, 在所有 JavaScript 提交中击败了 64.12% 的用户
+ * 内存消耗：40.5 MB, 在所有 JavaScript 提交中击败了6.25%的用户
  */
