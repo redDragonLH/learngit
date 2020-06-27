@@ -25,7 +25,7 @@ var firstMissingPositive = function(nums) {
     };
     return len;
 };
-console.log(firstMissingPositive([3,4,-1,1]));
+// console.log(firstMissingPositive([3,4,-1,1]));
 
 /**
  * 优化点： 排序与过滤自己写相对应得方法应该会快很多，而且可以避免set与array互相转换的损耗
@@ -33,3 +33,48 @@ console.log(firstMissingPositive([3,4,-1,1]));
  * 执行用时：76 ms, 在所有 JavaScript 提交中击败了45.83%的用户
  * 内存消耗：33.5 MB, 在所有 JavaScript 提交中击败了100.00%的用户
  */
+
+/**
+ * 上一方法的优化方案，主要优化 数组的排序和过滤
+ * 
+ * 逻辑未跑通
+ */
+var firstMissingPositive = function(nums) {
+    let len = nums.length;
+    if(!len) return 1;
+    if(len===1) return nums[0]===1? 2 : 1;
+
+    let count = 0;
+    let pick = -1;
+    while (count < len) {
+        if(count === nums[count]) {
+            count++;
+            continue;
+        }
+        if (pick > -1 && pick < len) {
+            if(nums[pick] >-1 && nums[pick]< len) {
+                let c = nums[pick];
+                nums[pick] = pick;
+                pick = c;
+            }
+            else {
+                nums[pick] = pick;
+                pick = -1;
+            }
+            continue;
+        }
+        let c = nums[count];
+        if(c > 0 && c < len) {
+            pick = nums[c];
+            nums[c] = c;
+        }
+        count ++;
+    }
+
+    len = nums.length;
+    for (var i = 1; i < len; i++) {
+        if(nums[i] !== i) return i;
+    };
+    return len;
+};
+console.log(firstMissingPositive([1]));
