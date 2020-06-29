@@ -14,7 +14,7 @@ var findKthLargest = function(nums, k) {
     return nums[k-1]; // 因为数组是从0开始计数
 };
 /**
- * 只比一半的人快，肯定还有其他解法 (同样的代码别人能跑 5ms~~~)
+ * 只比一半的人快，肯定还有其他解法 (同样的代码别人能跑 50ms~~~)
  * 内存消耗～～～，有不用排序的解法么
  * 
  * 执行用时：88 ms, 在所有 JavaScript 提交中击败了57.15%的用户
@@ -73,9 +73,10 @@ var findKthLargest = function(nums, k) {
     let heapSize = nums.length;
     heap.buildMaxHeap(nums,heapSize); // 首先是构建一个初始化的最大堆
     for (let i = heapSize-1; i >= heapSize - k + 1; i--) {
+        // 把最大值交换到数组最后（固化已得的最大值）
         heap.swap(nums, 0, i);
-        --heapSize;
-        heap.maxheapify(nums, 0, heapSize);
+        --heapSize; // 未排序数数量组减1
+        heap.maxheapify(nums, 0, heapSize); // 在未排序数组元素里获取最大值
     }
     return nums[0];
 };
@@ -96,7 +97,11 @@ class heap {
     }
     // 这是怎么全部排序的，有点迷茫
     maxheapify(arr,i, heapSize) {
-        // 为什么要找两个 元素，一个元素应该也可以的吧
+        // 1.父结点索引：(i-1)/2（这里计算机中的除以2，省略掉小数）
+        // 2.左孩子索引：2*i+1
+        // 3.右孩子索引：2*i+2
+
+        // 这里是获取左右子节点，同时判断，找到最小值
         let l = i * 2 + 1;
         let r = i * 2 + 2;
         let largest = i; // 创建新变量保存元素最大的下标
