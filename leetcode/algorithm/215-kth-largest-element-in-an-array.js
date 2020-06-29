@@ -27,8 +27,8 @@ var findKthLargest = function(nums, k) {
   * 思路： 建立一个大根堆，做k -1 次删除操作后堆顶元素就是我们要找的答案
   * 
   * class Solution {
-  *     public int findKthLargest(int[] name,int k) {
-  *         int heapSize = name.length;
+  *     public int findKthLargest(int[] nums,int k) {
+  *         int heapSize = nums.length;
   *         buildMaxHeap(nums,heaoSize);
   *         for(int i = nums.length-1;i >= nums.length - k + 1; --i) {
   *             swap(nums,0,i);
@@ -62,3 +62,68 @@ var findKthLargest = function(nums, k) {
   *     }
   * }
   */
+
+/**
+ * 堆逻辑，从java转换而来 
+ * @param {*} nums 
+ * @param {*} k 
+ */
+ var findKthLargest = function(nums, k) {
+    let heap = new heap();
+    let heapSize = nums.length;
+    heap.buildMaxHeap(nums,heapSize); // 首先是构建一个初始化的最大堆
+    for (let i = heapSize-1; i >= heapSize - k + 1; i--) {
+        heap.swap(nums, 0, i);
+        --heapSize;
+        heap.maxheapify(nums, 0, heapSize);
+    }
+    return nums[0];
+};
+/**
+ * 最大堆排序所构建的是一个从大到小排列的数组，转换成二叉树后也应该是从大到小排列的
+ * 
+ * 使用的方法是循环与递归 交换元素位置
+ */
+class heap {
+    buildMaxHeap(arr, heapSize) {
+        // heapSize 是数组的长度，为什么要除2 呢，
+        // 除2 应该是因为在 maxheapify 内会查找 * 2 后的元素然后与当前元素判断是否交换位置
+        // (反正都是要交换，循环一半就得了？)
+        for (let i = heapSize/2; i >= 0; i--) {
+            // 再把数组传入到构成函数
+            maxheapify(arr, i, heapSize);            
+        }
+    }
+    // 这是怎么全部排序的，有点迷茫
+    maxheapify(arr,i, heapSize) {
+        // 为什么要找两个 元素，一个元素应该也可以的吧
+        let l = i * 2 + 1;
+        let r = i * 2 + 2;
+        let largest = i; // 创建新变量保存元素最大的下标
+        // 找出当前三个元素内最大元素的下标
+        // 没有超出数组，并且比当前元素大
+        if(l < heapSize && arr[l] > a[largest]) {
+            largest = l;
+        }
+        // 没有超出数组大小 并且比当前元素大
+        if(r < heapSize && arr[r] > a[largest]) {
+            largest = r;
+        }
+        // 不是i的话就交换数据
+        // 处理数据
+        if(largest != i) {
+            // 交换数组内位置
+            swap(arr, i, largest);
+            // 递归处理交换完的数据
+            // 最大值是 原元素，则不会触发，那么以后就算还有元素未处理也没办法处理了
+            // 如果不是原元素则会按照翻倍的速度处理元素，很快就会到头
+            this.maxheapify(arr, largest, heapSize);
+        }
+    }
+    // 交换元素位置
+    swap (arr, i, j) {
+        let temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+}
