@@ -78,3 +78,32 @@ console.log(findLength([0,0,0,0,1],[1,0,0,0,0]));
  * 执行用时：9064 ms, 在所有 JavaScript 提交中击败了5.70%的用户
  * 内存消耗：37.2 MB, 在所有 JavaScript 提交中击败了100.00%的用户
  */
+
+
+ /**
+  * 官方：动态规划
+  * 
+  * java 
+  * 
+  * class Solution {
+  *     public int findLength(int[] A, int[] B) {
+  *         int n = A.length,m = B.length;
+  *         int[][] dp = new int[n+1][m+1];
+  *         int ans = 0;
+  *         for (int i = n - 1; i>=0; i--) {
+  *             for (int j = m -1; j >= 0; j--) {
+  *                 dp[i][j] = A[i] == B[j] ? dp[i+1][j+1]+1 : 0;
+  *                 ans = Math.max(ans,dp[i][j]);
+  *             }
+  *         }
+  *         return ans;
+  *     }
+  * }
+  */
+ /**
+  * 动态规划思路
+  * 状态转移方程： dp[i][j] = dp[i+1][j+1] +1 从尾到头顺序，当前元素的状态只与上一个状态有关
+  * 
+  * 执行用时：67 ms, 在所有 Java 提交中击败了35.66%的用户
+  * 内存消耗：49.2 MB, 在所有 Java 提交中击败了100.00%的用户
+  */
