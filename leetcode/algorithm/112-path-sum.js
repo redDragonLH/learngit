@@ -35,3 +35,45 @@ var hasPathSum = function(root, sum) {
  * 执行用时：72 ms, 在所有 JavaScript 提交中击败了95.30%的用户
  * 内存消耗：38.5 MB, 在所有 JavaScript 提交中击败了14.29%的用户
  */
+
+ /**
+  * 官方题解  广度优先搜索
+  * 
+  * java 代码
+  * 
+  * class Solution {
+  *     public Boolean hasPathSum(TreeNode root, int sum) {
+  *         if(root == null) {
+  *             return false;
+  *         }
+  *         // Queue 是一个先进先出的管道结构
+  *         // 这样的话数据的处理就是有可能是处理一个插入两个～～，所以判断条件也是为空的时候停止～
+  *         // 那逻辑上其实是和递归很像的一个方案，只是说会延后处理，两个队列的同一个位置保存则节点和将要和sum 对比的数字
+  *         Queue<TreeNode> queNode = new LinkedList<TreeNode>();
+  *         Queue<Integer> queVal = new LinkedList<Integer>();
+  *         queNode.offer(root);
+  *         queVal.offer(root.val);
+  * 
+  *         while(!queNode.isEmpty()) {
+  *             TreeNode now = queNode.poll();
+  *             int temp = queVal.poll();
+  *             if(now.left == null && now.right == null) {
+  *                 if(temp == sum) {
+  *                     return true;
+  *                 }
+  *                 continue;
+  *             }
+  *             // 就算插入两个也能处理
+  *             if(now.left != null) {
+  *                 queNode.offer(now.left);
+  *                 queVal.offer(now.left.val + temp);
+  *             }
+  *             if(now.right != null) {
+  *                 queNode.offer(now.right);
+  *                 queVal.offer(now.rigth.val + temp);
+  *             }
+  *         }
+  *         return false;
+  *     }
+  * }
+  */
