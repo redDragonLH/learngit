@@ -39,3 +39,19 @@ console.log(divingBoard(1,2,3))
  * 执行用时：320 ms, 在所有 JavaScript 提交中击败了17.10%的用户
  * 内存消耗：47.9 MB, 在所有 JavaScript 提交中击败了100.00%的用户
  */
+
+ /**
+  * java 代码
+  * 
+  class Solution {
+    public int[] divingBoard(int shorter, int longer, int k) {
+        if(k == 0) return new int[0];
+        if(shorter == longer) return new int[]{shorter*k};
+        int[] arr = new int[k+1]; // 因此创建长度为 k+1 的数组 lengths，对于 0 ≤ i ≤ k，令 lengths[i] = shorter * (k-i) + longer * i ，则 lengths 包含跳水板所有可能的长度，
+        for(int i = 0; i<=k;i++) {
+            arr[i] = longer * i + shorter * (k-i);
+        }
+        return arr;
+    }
+}
+  */
