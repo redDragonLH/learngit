@@ -14,28 +14,21 @@
  * @return {number[]}
  */
 var divingBoard = function(shorter, longer, k) {
-    if(!k) return [];
+    let arr = []
+    if(!k) return arr;
     if(shorter === longer) return [shorter*k];
-    let shortLen =0;
-    let longLen = k;
-    let arr = new Set()
-    let end = parseInt(k/2);
-    while(longLen >= end) {
-        arr.add(shorter*shortLen + longer * longLen);
-        arr.add(shorter*longLen + longer * shortLen)
-        longLen--;
-        shortLen++
+    let count = 0
+    while(count <= k) {
+        arr.push(longer*count + shorter * (k-count));
+        count++;
     }
-    arr = Array.from(arr).sort((a,b)=> {
-        return a-b;
-    })
     return arr;
 };
 divingBoard(1,2,3)
 
 /**
- * 速度折半还这么慢，其他的是怎么做的
+ * 因为从最短的长板开始计算，所以数字应该天生就是从小到大的
  * 
- * 执行用时：224 ms, 在所有 JavaScript 提交中击败了26.32%的用户
- * 内存消耗：49.9 MB, 在所有 JavaScript 提交中击败了100.00%的用户
+ * 执行用时：176 ms, 在所有 JavaScript 提交中击败了60.53%的用户
+ * 内存消耗：47.9 MB, 在所有 JavaScript 提交中击败了100.00%的用户
  */
