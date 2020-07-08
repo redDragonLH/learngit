@@ -6,7 +6,7 @@
  */
 
 /**
- * 先算出单独的由一种木板构成的跳水板的长度，然后循环每个短的减一，长的 +1，反过来再来一遍
+ * 如果还是用折半查找，分为两个数组，最后合并一下的方案呢
  * 
  * @param {number} shorter
  * @param {number} longer
@@ -14,21 +14,28 @@
  * @return {number[]}
  */
 var divingBoard = function(shorter, longer, k) {
-    let arr = []
-    if(!k) return arr;
+    let arrB = [];
+    let arrAfter = [];
+    if(!k) return arrB;
     if(shorter === longer) return [shorter*k];
-    let count = 0
-    while(count <= k) {
-        arr.push(longer*count + shorter * (k-count));
-        count++;
+    let start = 0;
+    let end = k;
+    let count = parseInt(k/2);
+    while(end >= count) {
+        arrB.push(longer*start + shorter * end);
+        arrAfter.unshift(shorter * start + longer * end)
+        end--;
+        start++;
     }
-    return arr;
+    
+    return Array.from(new Set(arrB.concat(arrAfter)));
 };
-divingBoard(1,2,3)
+console.log(divingBoard(1,2,3))
+
 
 /**
- * 因为从最短的长板开始计算，所以数字应该天生就是从小到大的
+ * 数据转换花了太多时间
  * 
- * 执行用时：176 ms, 在所有 JavaScript 提交中击败了60.53%的用户
+ * 执行用时：320 ms, 在所有 JavaScript 提交中击败了17.10%的用户
  * 内存消耗：47.9 MB, 在所有 JavaScript 提交中击败了100.00%的用户
  */
