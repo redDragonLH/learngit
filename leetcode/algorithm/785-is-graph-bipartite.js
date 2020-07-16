@@ -76,7 +76,7 @@ var isBipartite = function (graph) {
           let linj = j;
           while (j > 0) {
             linj--;
-            graphTable[graph[i][linj]] = -graphTable[i];
+            !graphTable[graph[i][linj]] && (graphTable[graph[i][linj]] = -graphTable[i]);
           }
         }
       }
@@ -166,26 +166,35 @@ var isBipartite = function (graph) {
  * }
  */
 
+ /**
+  * 官方题解广度优先搜索 js版
+  * 
+  * 上边我废弃的并不是广度优先搜索？和官方的有质的差别
+  * 
+  * 官方题解会从临接元素再处理到临接表，再往临接元素与临接表扩展，
+  * 那深度优先搜索呢，不也是临接元素转到临接表再反复
+  */
 var isBipartite = function (graph) {
+    // 三态
   const UNCOLORED = 0;
   const RED = 1;
   const GREEN = 2;
   let n = graph.length;
 
-  let color = new Array(n).fill(UNCOLORED);;
+  let color = new Array(n).fill(UNCOLORED);
   for (let i = 0; i < n; ++i) {
-    if (color[i] == UNCOLORED) {
-      let queue = [];
+    if (color[i] == UNCOLORED) { // 过滤已处理
+      let queue = []; // 使用一个数组保存还未处理的临接表的位置
       queue.push(i);
-      color[i] = RED;
-      while (queue.length) {
+      color[i] = RED; // 初始化当前循环元素的颜色 // 直接赋值就行，不需要考虑临接表内的元素，这样就不需要回溯
+      while (queue.length) { // 判断是否有元素还未处理
         let node = queue.shift();
         let cNei = color[node] == RED ? GREEN : RED;
-        for (let i = 0; i < graph[node].length; i++) {
-            let neighbor = graph[node][i];
-            if (color[neighbor] == UNCOLORED) {
-                queue.push(neighbor);
-                color[neighbor] = cNei;
+        for (let i = 0; i < graph[node].length; i++) { // 处理此元素相对的临接表
+            let neighbor = graph[node][i]; // 临接元素
+            if (color[neighbor] == UNCOLORED) { // 临接元素未赋值
+                queue.push(neighbor);// 说明临接元素的临接表也没有处理
+                color[neighbor] = cNei; // 临接元素赋值
               } else if (color[neighbor] != cNei) {
                 return false;
               }
