@@ -55,7 +55,7 @@ var isBipartite = function (graph) {
 /**
  * 超出时间限制～～
  * 原理明白了，代码写的太垃圾
- * @param {*} graph 
+ * @param {*} graph
  */
 
 var isBipartite = function (graph) {
@@ -68,9 +68,11 @@ var isBipartite = function (graph) {
     for (let j = 0; j < graph[i].length; j++) {
       if (graphTable[i] && graphTable[graph[i][j]] === graphTable[i]) {
         return false; // 一条线上的点颜色相同，不是二向图
-      } else if (!graphTable[i] && graphTable[graph[i][j]]) { // 若干当前元素未染色，查找是否有已染色的临接点进行染色
+      } else if (!graphTable[i] && graphTable[graph[i][j]]) {
+        // 若干当前元素未染色，查找是否有已染色的临接点进行染色
         graphTable[i] = -graphTable[graph[i][j]];
-        if (j > 0) { // 如果临接表前方有未染色的点，返回染色// 争取让所有轮询过的点都染色
+        if (j > 0) {
+          // 如果临接表前方有未染色的点，返回染色// 争取让所有轮询过的点都染色
           let linj = j;
           while (j > 0) {
             linj--;
@@ -82,12 +84,123 @@ var isBipartite = function (graph) {
   }
   return true;
 };
+
+
+/**
+ * 官方题解
+ *
+ * java 代码
+ *
+ * 深度优先搜索
+ *
+ * class Solution {
+ *      private static final int UNCOLORED = 0;
+ *      private static final int RED = 1;
+ *      private static final int GREEN = 2;
+ *      private int[] color;
+ *      private boolean valid;
+ *
+ *      public boolean isBipartite(int[][] graph) {
+ *          int n = graph.length;
+ *          valid = true;
+ *          color = new int[n];
+ *          Arrays.fill(color,UNCOLORED);
+ *          for(int i = 0; i < n && valid; ++i) {
+ *              if(color[i] == UNCOLORED) {
+ *                  dfs(i,RED,graph);
+ *              }
+ *          }
+ *          return valid;
+ *      }
+ *
+ *      public void dfs(int node,int c,int[][] graph) {
+ *          color[node] = c;
+ *          int cNei = c == RED ? GREEN : RED;
+ *          for (int neighbor : graph[node]) {
+ *              if(color[neighbor] == UNCOLORED) {
+ *                  dfs(neighbor,cNei,graph);
+ *                  if(!valid) {
+ *                      return;
+ *                  }
+ *              } else if(color[neighbor] != cNei) {
+ *                  valid = false;
+ *                  return;
+ *              }
+ *          }
+ *      }
+ * }
+ *
+ * 广度优先搜索
+ *
+ * class Solution {
+ *      private static final int UNCLORED = 0;
+ *      private static final int RED = 1;
+ *      private static final int GREEN = 2;
+ *      private int[] color;
+ *
+ *      public boolean isBipartite(int[][] graph) {
+ *          int n = graph.length;
+ *          color = new int[n];
+ *          Arrays.fill(color, UNCOLORED);
+ *          for(int i = 0;i < n; ++i) {
+ *              if(color[i] == UNCOLORED) {
+ *                  Queue<Integer> queue = new LinkedList<Integer>();
+ *                  queue.offer(i);
+ *                  color[i] = RED;
+ *                  while(!queue.isEmpty()) {
+ *                      int node = queue.poll();
+ *                      int cNei = color[node] == RED ? GREEN : RED;
+ *                      for(int neighbor : graph[node]) {
+ *                          if(color[neighbor] == UNCOLORED) {
+ *                              queue.offer(neighbor);
+ *                              color[neighbor] = cNei;
+ *                          } else if(color[neighbor] != cNei) {
+ *                              return false
+ *                          }
+ *                      }
+ *                  }
+ *              }
+ *          }
+ *          return true;
+ *      }
+ * }
+ */
+
+var isBipartite = function (graph) {
+  const UNCOLORED = 0;
+  const RED = 1;
+  const GREEN = 2;
+  let n = graph.length;
+
+  let color = new Array(n).fill(UNCOLORED);;
+  for (let i = 0; i < n; ++i) {
+    if (color[i] == UNCOLORED) {
+      let queue = [];
+      queue.push(i);
+      color[i] = RED;
+      while (queue.length) {
+        let node = queue.shift();
+        let cNei = color[node] == RED ? GREEN : RED;
+        for (let i = 0; i < graph[node].length; i++) {
+            let neighbor = graph[node][i];
+            if (color[neighbor] == UNCOLORED) {
+                queue.push(neighbor);
+                color[neighbor] = cNei;
+              } else if (color[neighbor] != cNei) {
+                return false;
+              }
+        }
+      }
+    }
+  }
+  return true;
+};
 console.log(
-  isBipartite([
-    [1, 3],
-    [0, 2],
-    [1, 3],
-    [0, 2],
-  ])
-);
-console.log(isBipartite([[1], [0, 3], [3], [1, 2]]))
+    isBipartite([
+      [1, 3],
+      [0, 2],
+      [1, 3],
+      [0, 2],
+    ])
+  );
+  console.log(isBipartite([[1], [0, 3], [3], [1, 2]]));
