@@ -46,4 +46,17 @@ console.log(numTrees(3));
  *          1. 都假设是一个断点.断点左侧是A,右侧是B
  *          2. 那么A就是i-1个数,B就是 n - 1 个数
  *          3. 递归,并将A和B的结果相乘即可
+ * class Solution {
+ *      public int numTrees(int n) {
+ *          if(n <= 1) {
+ *              return 1;
+ *          }
+ *          res = 0;
+ *          for (int i =1;i<=n;i++) {
+ *              res += numTrees(i-1) * numTrees(n - 1);
+ *          }
+ *          return res;
+ *      }
+ * }
+ * 
  */
