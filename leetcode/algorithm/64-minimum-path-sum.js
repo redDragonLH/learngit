@@ -19,30 +19,40 @@ var minPathSum = function(grid) {
     let row = grid.length;
     if(!row) return row; 
     let line = grid[0].length;
-    // 使用新的数组创建方法
-    const dp = Array.from(Array(row), () => Array(line)) // 时间还变长了~~
-    
-    for (let i = 0; i < row; i++) {
-        dp[i][0] = grid[i][0] +(i > 0 && dp[i-1][0])
-    }
+    // 使用一维数组保存数据
+    // 从上到下一层一层计算,保存数据内新覆盖旧
+    const dp = new Array(line).fill(0);
+
+    // 为了处理边界方便,先进行第一层处理
+    dp[0] = grid[0][0];
     for (let i = 1; i < line; i++) {
-        dp[0][i] = grid[0][i] +(i > 0 && dp[0][i-1])
+        // 因为是第一层,所以没有覆盖,这样只要前加后即可
+        dp[i] = dp[i-1] + grid[0][i];
+        
     }
+    // 因为边界条件的问题,所以最好从第二个元素开始计算
     for (let i = 1; i < row; i++) {
+        // 先把开头的元素计算出来,下边就不用考虑边界条件来
+        dp[0] += grid[i][0];
         for (let j = 1; j < line; j++) {
-            dp[i][j] = grid[i][j] + Math.min(dp[i-1][j],dp[i][j-1])
+            //                                    dp[j]其实是上
+            dp[j] = grid[i][j] + Math.min(dp[j-1],dp[j])
         }
         
     }
-    return dp[row-1][line-1];
+    return dp[line-1];
 };
 console.log(minPathSum([
     [1,3,1],
     [1,5,1],
     [4,2,1]
   ]));
+  console.log(minPathSum([[1,2,5],[3,2,1]]));
+  
 /**
  * 二维数组版,还可以用以为一维数组保存数据
- * 执行用时：96 ms, 在所有 JavaScript 提交中击败了16.88%的用户
- * 内存消耗：40 MB, 在所有 JavaScript 提交中击败了14.29%的用户
+ * 就是慢~~
+ * 
+ * 执行用时：92 ms, 在所有 JavaScript 提交中击败了21.58%的用户
+ * 内存消耗：38.5 MB, 在所有 JavaScript 提交中击败了14.29%的用户
  */
