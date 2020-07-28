@@ -18,12 +18,10 @@
  */
 var maxDepth = function(root,deep=0) {
     if(!root) return deep;
-    let left = maxDepth(root.left,deep + 1);
-    let right = maxDepth(root.right,deep + 1);
-    return left > right?left:right;
+    return Math.max(maxDepth(root.left,deep + 1),maxDepth(root.right,deep + 1))
 };
 /**
  * 效率吊差
- * 执行用时：104 ms, 在所有 JavaScript 提交中击败了10.18%的用户
- * 内存消耗：40.7 MB, 在所有 JavaScript 提交中击败了8.33%的用户
+ * 执行用时：84 ms, 在所有 JavaScript 提交中击败了53.46%的用户
+ * 内存消耗：40.9 MB, 在所有 JavaScript 提交中击败了8.33%的用户
  */
