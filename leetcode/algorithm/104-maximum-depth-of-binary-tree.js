@@ -21,7 +21,23 @@ var maxDepth = function(root,deep=0) {
     return Math.max(maxDepth(root.left,deep + 1),maxDepth(root.right,deep + 1))
 };
 /**
- * 效率吊差
+ * 效率好多了
  * 执行用时：84 ms, 在所有 JavaScript 提交中击败了53.46%的用户
  * 内存消耗：40.9 MB, 在所有 JavaScript 提交中击败了8.33%的用户
+ */
+
+/**
+ class Solution {
+    public int maxDepth(TreeNode root) {
+        return deepCount(root,0);
+    }
+    public int deepCount(TreeNode root,int deep) {
+        if(root== null){return deep;}
+        return Math.max(deepCount(root.left,deep+1),deepCount(root.right,deep+1));
+    }
+}
+ */
+/**
+ * 执行用时：0 ms, 在所有 Java 提交中击败了100.00%的用户
+ * 内存消耗：39 MB, 在所有 Java 提交中击败了36.78%的用户
  */
