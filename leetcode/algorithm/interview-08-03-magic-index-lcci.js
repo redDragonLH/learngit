@@ -58,9 +58,15 @@
 
 var findMagicIndex = function (nums) {
   let len = nums.length;
-  for (let i = 0; i < len; i++) {
+  let i = 0;
+  while (i < len) {
     if (i === nums[i]) {
       return i;
+    }
+    if (i < nums[i]) {
+      i = nums[i];
+    } else {
+      i += 1;
     }
   }
   return -1;
