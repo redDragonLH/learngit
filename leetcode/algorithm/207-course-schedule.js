@@ -89,7 +89,7 @@ var canFinishFail = function (numCourses, prerequisites) {
  * @param {number[][]} prerequisites
  * @return {boolean}
  */
-var canFinish = function (numCourses, prerequisites) {
+var canFinishFailTow = function (numCourses, prerequisites) {
   // 构建有向图,
   // 怎么构建嘞,使用一层对象,映射数组吗,然后循环是否有环,那和我上边失败的差不多,不过开头就是使用数组
 
@@ -113,3 +113,47 @@ console.log(
     [2, 0],
   ])
 );
+
+
+/**
+ * 官方java 代码
+ * 
+ * class Solution {
+ *    List<List<Integer>> edges; // 二维数组 
+ *    int[] visited;
+ *    boolean valid = true;
+ * 
+ *    public boolean canFinish(int numCourses,int[][] prerequisites) {
+ *      edges = new ArrayList<List<Integer>>(); // 创建一个保存边的二维数组
+ *      for(int i = 0;i < numCourses; ++i) {
+ *        edges.add(new ArrayList<Integer>());
+ *      }
+ *      visited = new int[numCourses];
+ *      for(int[] info:prerquisites) {
+ *        edges.get(info[1].add(info[0]));
+ *      }
+ *      for(int i = 0;i < numCourses && valid; ++i) {
+ *        if(visited[i] == 0) {
+ *          dfs(i);
+ *        }
+ *      }
+ *      return valid;
+ *    }
+ * 
+ *    public void dfs(int u) {
+ *      visited[u] = 1;
+ *      for(int v:edges.get(u)) {
+ *        if(visited[v] == 0) {
+ *          dfs(v);
+ *          if(!valid) {
+ *            return;
+ *          }
+ *        }else if(visited[v] == 1 ) {
+ *          valid = false;
+ *          return;
+ *        }
+ *      }
+ *      visited[u] = 2;
+ *    }
+ * }
+ */
