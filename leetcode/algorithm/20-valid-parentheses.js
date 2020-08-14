@@ -1,8 +1,8 @@
 /**
  * 20. 有效的括号
- * 
+ *
  * 给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。
- * 
+ *
  * 有效字符串需满足：
  * 左括号必须用相同类型的右括号闭合。
  * 左括号必须以正确的顺序闭合。
@@ -11,35 +11,44 @@
 
 /**
  * 栈的应用嘛
- * 
+ *
+ * 应该还是可以优化的,因为如果有一个比对的不相等,那么这个字符串肯定就不相等, 短路判断
  * @param {string} s
  * @return {boolean}
  */
 var isValid = function(s) {
-    if(!s.length) return true;
-    const map = {
-        ')': '(',
-        '}': '{',
-        ']': '['
-    }
-    const stack = [];
-    for (let i = 0; i < s.length; i++) {
-        if(!stack.length) {
-            stack.unshift(s[i])
-        }else {
-            if(stack[0] === map[s[i]]) {
-                stack.shift();
-            }else {
-                stack.unshift(s[i])
-            }
+    let arr=s.split("");
+    let temp=[];
+    for(let item of arr){
+        if(item=="(")
+            temp.push(item)
+        else if(item=="{")
+            temp.push(item)
+        else if(item=="[")
+            temp.push(item)
+        else if(item=="]"){
+            if(temp[temp.length-1]!="[")
+                return false;
+            temp.pop()
+        }
+        else if(item=="}"){
+            if(temp[temp.length-1]!="{")
+                return false;
+            temp.pop()
+        }
+        else if(item==")"){
+            if(temp[temp.length-1]!="(")
+                return false;
+            temp.pop()
         }
     }
-    return !stack.length; // 这里比上次的三元好不少
+    return !temp.length;
+
 };
-console.log(isValid('([)]'));
+console.log(isValid("()[]{}"));
 
 /**
  * 和第一次逻辑基本是一样的,为啥运行时间还慢了
- * 执行用时：72 ms, 在所有 JavaScript 提交中击败了73.99%的用户
- * 内存消耗：38 MB, 在所有 JavaScript 提交中击败了45.97%的用户
+ * 执行用时：80 ms, 在所有 JavaScript 提交中击败了48.93%的用户
+ * 内存消耗：38.2 MB, 在所有 JavaScript 提交中击败了28.60%的用户
  */
