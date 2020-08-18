@@ -26,27 +26,102 @@
  * @return {TreeNode}
  */
 var sortedListToBST = function (head) {
-    let list = []
-    while(head) {
-        list.push(head.val)
-        head = head.next;
-    }
+  let list = [];
+  while (head) {
+    list.push(head.val);
+    head = head.next;
+  }
 
-    let mid = list[list.length>>1]
-    let root = new TreeNode(mid);
-    creatTree(root,list,0,mid-1,'left');
-    creatTree(root,list,mid+1,list.length,'right');
-    return root;
+  let mid = list[list.length >> 1];
+  let root = new TreeNode(mid);
+  creatTree(root, list, 0, mid - 1, "left");
+  creatTree(root, list, mid + 1, list.length, "right");
+  return root;
 };
-const creatTree = (root,list,start,end,pos)=> {
-    let mid = list[(end+start)>>1];
-    root[pos] = new TreeNode(mid);
-    creatTree(root,list,start,mid-1,'left');
-    creatTree(root,list,mid+1,end,'right');
-}
+const creatTree = (root, list, start, end, pos) => {
+  let mid = list[(end + start) >> 1];
+  root[pos] = new TreeNode(mid);
+  creatTree(root, list, start, mid - 1, "left");
+  creatTree(root, list, mid + 1, end, "right");
+};
 /**
  * 生成了就行~~,和测试用例差了十万八千里
- * 
+ *
  * 执行用时：252 ms, 在所有 JavaScript 提交中击败了6.12%的用户
  * 内存消耗：49.3 MB, 在所有 JavaScript 提交中击败了5.06%的用户
  */
+
+/**
+ * 官方题解: 分治
+ */
+
+/**
+ * java 题解
+ *
+ * class Solution {
+ *      public TreeNode sortedListToBST(ListNode head) {
+ *          return buildTree(head,null);
+ *      }
+ *      public TreeNode buildTree(ListNode left,ListNode right) {
+ *          if(left == right) {
+ *              return null;
+ *          }
+ *          ListNode mid = getMedian(left,right);
+ *          TreeNode root = new TreeNode(mid.val);
+ *          root.left = buildTree(left,mid);
+ *          root.right = buildTree(mid.next,right);
+ *          return root;
+ *      }
+ *      public ListNode getMedian(ListNode left,ListNode right) {
+ *          ListNode fast = left;
+ *          ListNode slow = left;
+ *          while(fast != right && fast.next != right) {
+ *              fast = fast.next;
+ *              fast = fast.next;
+ *              slow = slow.net;
+ *          }
+ *          return slow;
+ *      }
+ * }
+ */
+
+/**
+ * 官方题解: 分治加中序遍历优化
+ */
+
+/**
+ * java 代码
+ * 
+ * class Solution {
+ *      ListNode globaHead;
+ * 
+ *      public TreeNode sortListToBST(ListNode head) {
+ *          globaHead = head;
+ *          int length = getLength(head);
+ *          return buildTree(0,length - 1);
+ *      }
+ * 
+ *     public int getLength (ListNode head) {
+ *          int ret = 0;
+ *          while (head != null) {
+ *              ++ret;
+ *              head = head.next;
+ *          }
+ *          return ret;
+ *      }
+ *      
+ *      public TreeNode buildTree(int left,int right){
+ *          if( left > right) {
+ *              return null;
+ *          }
+ *          int mid = (left + right + 1) /2;
+ *          TreeNode root = new TreeNode();
+ *          root.left = buildTree(left,mid - 1); // 位置很重要~
+ *          root.val= globalHead.val();
+ *          globalHead = globalHead.next;
+ *          root.right = buildTree(mid + 1,right);
+ *          return root;
+ *      }
+ * }
+ */
+
