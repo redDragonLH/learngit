@@ -10,24 +10,24 @@
  * @param {string} s
  * @return {number}
  */
-var countSubstrings = function(s) {
-    let count = len =  s.length;
+var countSubstrings = function (s) {
+    let count = len = s.length;
     for (let i = 0; i < len; i++) {
-        let s=s[i];
-        for (let j = i+1; j < len; j++) {
+        let s = s[i];
+        for (let j = i + 1; j < len; j++) {
             count += isPalindromic(s += s[j]);
 
         }
-        
+
     }
     return count;
 };
-const isPalindromic = (s) =>{
+const isPalindromic = (s) => {
     let start = 0;
-    let end = s.length-1
+    let end = s.length - 1
 
-    while(start>end) {
-        if(s[start] !== s[end]) return 0;
+    while (start > end) {
+        if (s[start] !== s[end]) return 0;
         start++;
         end--;
     }
@@ -38,3 +38,26 @@ const isPalindromic = (s) =>{
  * 执行用时：744 ms, 在所有 JavaScript 提交中击败了8.51%的用户
  * 内存消耗：43.8 MB, 在所有 JavaScript 提交中击败了64.52%的用户
  */
+
+/**
+ * 官方题解 中心拓展
+ * 
+ * 最朴素方法就是枚举出所有的回文子串：
+ *  * 枚举出所有的子串，然后判断这些子串是否是回文
+ *  * 拓展每一个可能的回文中心，然后用两个指针分别向左右两边拓展，当两个指针指向的元素相同的时候就拓展，否则停止拓展
+ * 
+ */
+
+var countSubstrings = function (s) {
+    const n = s.length;
+    let ans = 0;
+    for (let i = 0; i < 2 * n - 1; ++i) {
+        let l = i / 2, r = i / 2 + i % 2;
+        while (l >= 0 && r < n && s.charAt(l) == s.charAt(r)) {
+            --l;
+            ++r;
+            ++ans;
+        }
+    }
+    return ans;
+};
