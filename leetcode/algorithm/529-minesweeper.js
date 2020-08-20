@@ -67,3 +67,59 @@ updateBoard([['B', '1', 'E', '1', 'B'],
 ['B', '1', 'M', '1', 'B'],
 ['B', '1', '1', '1', 'B'],
 ['B', 'B', 'B', 'B', 'B']],[1,2])
+
+/**
+ * 官方题解 深度优先搜索
+ * 
+ * 总共分为两种情况:
+ *      1. 当前点击的是[未挖出的地雷],我们将其值改为X 即可
+ *      2. 当前点击的是[未挖出的空方块],我们需要统计它周围相邻的方块里地雷的数量(即M的数量).如果周围没有地雷,则需要将其改为B,
+ * 且递归的处理周围的八个未挖出的方块,递归终止条件即为规则4,没有更多方块可被揭露的时候,否则执行规则3,将其修改为数字
+ * 
+ * java 代码
+ * 
+ * class Solution {
+ *  int[] dirX = {0,1,0,-1,1,1,-1,-1};
+ *  int[] dirY = {1,0,-1,0,1,-1,1,-1};
+ *  
+ *  public char[][] updateBoard(char[][] board,int[] click) {
+ *      int x = click[0],y = click[1];
+ *      if(board[x][y] == 'M') {
+ *          board[x][y] = 'X';
+ *      } else {
+ *          dfs(board,x,y);
+ *      }
+ *      return board;
+ *  }
+ *  public void dfs(char[][] board,int x, int y) {
+ *      int cnt = 0;
+ *      for(int i = 0;i<8;i++) {
+ *          int tx = x + dirx[i];
+ *          int ty = y + dirY[i];
+ *          if(tx < 0 || tx >= board.length || ty < 0 || ty >= board[0].length) {
+ *              continue;
+ *          }
+ *          // 不用判断 M ,因为如果有M的话游戏已经结束了
+ *          if(board[tx][ty] == 'M) {
+ *              ++cnt;
+ *          }
+ *      }
+ *      if(cnt > 0) {
+ *          // 规则 3
+ *          board[x][y] = (char)(cnt + '0');
+ *      } else {
+ *          // 规则2
+ *          board[x][y] = 'B';
+ *          for(int i = 0;i < B ;++i){
+ *              int tx = x + dirX[i];
+ *              int ty = y + dirY[i];
+ *              //  这里不需要在存在B的时候继续扩展,因为B之前被点击的时候已经被扩展过了
+ *               if (tx < 0 || tx >= board.length || ty < 0 || ty >= board[0].length || board[tx][ty] != 'E') {
+ *                     continue;
+ *                }
+ *              dfs(board,tx,ty);
+ *          }
+ *      }
+ *  }
+ * }
+ */
