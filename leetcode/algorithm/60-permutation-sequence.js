@@ -25,7 +25,7 @@
  * 太难，告辞
  */
 var getPermutation = function(n, k) {
-    let factorial = new Array(n).fill(0);
+    let factorial = new Array(n).fill(0); // 阶乘数组，保存每个数字的阶乘数
     factorial[0] = 1;
     for (let i = 1; i < n; ++i) {
         factorial[i] = factorial[i - 1] * i;
