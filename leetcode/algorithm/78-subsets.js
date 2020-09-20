@@ -32,3 +32,28 @@ const deep = (result,nums,path,pos)=> {
     }
 }
 console.log(subsets([1,2,3]));
+
+/**
+ * 
+ * 
+ */
+var subsets = function(nums) {
+    const len = nums.length;
+    const result =[]
+    if(!len) return result;
+
+    for (let i = len-1; i > -1; i--) {
+        let rlen = result.length;
+        for (let j = 0; j < rlen; j++) {
+            result.push([...result[j],nums[i]])
+        }
+        result.push([nums[i]])
+    }
+    result.push([])
+    return result;
+};
+
+/**
+ * 执行用时：92 ms, 在所有 JavaScript 提交中击败了42.99%的用户
+ * 内存消耗：39.7 MB, 在所有 JavaScript 提交中击败了5.10%的用户
+ */
