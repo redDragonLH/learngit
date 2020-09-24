@@ -49,3 +49,51 @@ const deep =(root,obj)=> {
  * 执行用时：116 ms, 在所有 JavaScript 提交中击败了23.48%的用户
  * 内存消耗：44.9 MB, 在所有 JavaScript 提交中击败了40.46%的用户
  */
+
+ /**
+  * 空间复杂度 O(1) 的算法
+  * 
+  * 一棵 BST 的中序遍历序列是一个递增的有序序列,依据这个性质,使用中序遍历会把相同的数字连接到一起,那么在计算的时候就可以在顺序处理中处理完一个数字,不担心乱序影响正确性
+  */
+ var findMode = function(root) {
+    let base = 0, count = 0, maxCount = 0;
+    let answer = [];
+
+    const update = (x) => {
+        if (x === base) {
+            ++count;
+        } else {
+            count = 1;
+            base = x;
+        }
+        if (count === maxCount) {
+            answer.push(base);
+        }
+        if (count > maxCount) {
+            maxCount = count;
+            answer = [base];
+        }
+    }
+
+    let cur = root, pre = null;
+    while (cur !== null) {
+        if (cur.left === null) {
+            update(cur.val);
+            cur = cur.right;
+            continue;
+        }
+        pre = cur.left;
+        while (pre.right !== null && pre.right !== cur) {
+            pre = pre.right;
+        }
+        if (pre.right === null) {
+            pre.right = cur;
+            cur = cur.left;
+        } else {
+            pre.right = null;
+            update(cur.val);
+            cur = cur.right;
+        }
+    }
+    return answer;
+};
