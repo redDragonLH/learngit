@@ -25,3 +25,18 @@ var numJewelsInStones = function (J, S) {
  * 执行用时：100 ms, 在所有 JavaScript 提交中击败了26.21%的用户
  * 内存消耗：39 MB, 在所有 JavaScript 提交中击败了10.43%的用户
  */
+/**
+ * 哈希算法已经是这个问题的已知最好题解,但是代码组织上还可以化简
+ */
+
+ /**
+  * 官方题解
+  * 
+  * 使用 set 结构与 reduce方法,但是转了两次字符串转数组
+  */
+ var numJewelsInStones = function(J, S) {
+    const jewelsSet = new Set(J.split(''));
+    return S.split('').reduce((prev, val) => {
+        return prev + jewelsSet.has(val); // 隐式转换为 0/1
+    }, 0);
+};
