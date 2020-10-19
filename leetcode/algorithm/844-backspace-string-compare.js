@@ -79,3 +79,30 @@ console.log(backspaceCompare("#ab#c", "ad#c"));
  * 执行用时：84 ms, 在所有 JavaScript 提交中击败了80.41%的用户
  * 内存消耗：39.1 MB, 在所有 JavaScript 提交中击败了13.05%的用户
  */
+
+/**
+ * 第三方题解 表现优异
+ */
+/**
+ * @param {string} S
+ * @param {string} T
+ * @return {boolean}
+ */
+function getStr(str) {
+    let statck = []
+    for (let val of str) { // 是 # 不仅不往里放还要退出来一个
+        if (val === '#') {
+            statck.pop()
+        } else {
+            statck.push(val)
+        }
+    }
+    return statck
+}
+var backspaceCompare = function (S, T) {
+    if (S === T) {
+        return true
+    }
+    let str1 = getStr(S).join(''), str2 = getStr(T).join('')
+    return str1 === str2
+};
