@@ -58,3 +58,49 @@ var smallerNumbersThanCurrent = function(nums) {
     }
     return ret;
 };
+
+/**
+ *  官方题解 计数排序
+ * 
+ * 注意到数组元素的值域为 [0,100][0,100]，所以可以考虑建立一个频次数组 cntcnt ，
+ * cnt[i]cnt[i] 表示数字 ii 出现的次数。那么对于数字 ii 而言，小于它的数目就为 cnt[0...i-1]cnt[0...i−1] 的总和。
+ */
+
+var smallerNumbersThanCurrent = function(nums) {
+    const cnt = new Array(101).fill(0);
+    const n = nums.length;
+    for (let i = 0; i < n; ++i) {
+        cnt[nums[i]] += 1;
+    }
+    for (let i = 1; i <= 100; ++i) {
+        cnt[i] += cnt[i - 1]; // 没有数据的也污染了,不过也算扣题目
+    }
+    const ret = [];
+    for (let i = 0; i < n; ++i) {
+        ret.push(nums[i] ? cnt[nums[i] - 1] : 0);
+    }
+    return ret;
+};
+
+/**
+ * 第三方题解,有点像上两个的结合
+ */
+/**
+ * 上边那俩给我我也没想粗来
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var smallerNumbersThanCurrent = function(nums) {
+    const max = Math.max(...nums);
+    const arr = new Array(max+1).fill(0); // 计数排序的起始步骤,而且减少了后半部分无用位置的创建与循环
+    nums.forEach(num=>arr[num]++); // 计数排序步骤,有数的位置置为当前元素的数量
+    let map = { // 二维数组换成对象
+        0: 0
+    };
+    // 当前元素之前总的数量
+    for(let i = 1; i <= max; i++){
+        map[i] = map[i-1] + arr[i-1];
+    }
+    //
+    return nums.map(num=>map[num]);
+};
