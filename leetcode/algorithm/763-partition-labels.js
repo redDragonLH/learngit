@@ -42,15 +42,19 @@ const checkout = (str, obj, arr) => {
   return -1;
 };
 const merge =(obj,arr,pos) => {
+    let objArr = [];
     for (let i = arr.length-1; i > pos; i--) {
         arr[pos]+=arr.pop();
-        obj[pos] = Object.assign(obj[pos], obj[i])
+        objArr.push(obj[i])
+        delete obj[i]
     }
+    obj[pos] = Object.assign(obj[pos], ...objArr)
+
 }
 console.log(partitionLabels("ababcbacadefegdehijhklij"))
 
 /**
- * 合并的时候对象合并应该消耗了很多资源,而且还是多次合并
+ * 优化合并流程,越优化越慢~~
  * 
  * 执行用时：108 ms, 在所有 JavaScript 提交中击败了31.10%的用户
  * 内存消耗：41.1 MB, 在所有 JavaScript 提交中击败了6.17%的用户
