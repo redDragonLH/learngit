@@ -32,3 +32,26 @@ var sumNumbers = function(root) {
  * 执行用时：84 ms, 在所有 JavaScript 提交中击败了89.80%的用户
  * 内存消耗：39.7 MB, 在所有 JavaScript 提交中击败了7.29%的用户
  */
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var sumNumbers = function(root) {
+    return help(root,0);
+};
+function help(root,i){
+    if(!root) return 0;
+    var tmp = i*10+root.val;
+    if(!root.left&&!root.right){
+        return tmp;
+    }
+    return help(root.left,tmp)+help(root.right,tmp);
+}
