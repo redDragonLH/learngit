@@ -74,3 +74,23 @@ var intersection = function(nums1, nums2) {
  * 执行用时：76 ms, 在所有 JavaScript 提交中击败了96.84%的用户
  * 内存消耗：39 MB, 在所有 JavaScript 提交中击败了29.79%的用户
  */
+
+/**
+ * 
+ * 第三方题解
+ * 
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number[]}
+ */
+var intersection = function(nums1, nums2) {
+    let set1=new Set(nums1)
+    let res=[]
+    for(let cur of nums2){
+        if(set1.has(cur)){
+            res.push(cur)
+            set1.delete(cur)
+        }
+    }
+    return res
+};
