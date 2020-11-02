@@ -44,3 +44,33 @@ var intersection = function(nums1, nums2) {
  * 执行用时：88 ms, 在所有 JavaScript 提交中击败了63.99%的用户
  * 内存消耗：39 MB, 在所有 JavaScript 提交中击败了27.63%的用户
  */
+
+ /**
+ * 进行预处理版
+ * 
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number[]}
+ */
+var intersection = function(nums1, nums2) {
+    const resule = [];
+    if(!nums1.length || !nums2.length) return resule;
+    const nums2o = {};
+    nums2.forEach(a=> {
+        nums2o[a]=true;
+        
+    })
+    nums1.forEach(a=> {
+        if(nums2o[a]){
+            resule.push(a);
+            nums2o[a]= false;
+        };
+    })
+    return resule;
+};
+/**
+ * 又提升了12毫秒,自带的方法运行也是要时间的
+ * 
+ * 执行用时：76 ms, 在所有 JavaScript 提交中击败了96.84%的用户
+ * 内存消耗：39 MB, 在所有 JavaScript 提交中击败了29.79%的用户
+ */
