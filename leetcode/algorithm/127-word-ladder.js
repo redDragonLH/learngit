@@ -56,12 +56,51 @@ let recursive = (tag,wordList,obj,end,c) => {
     
 }
 let complateDiff = (target,com) => {
-    let count = 0
+    let count = 0;
     for (let i = 0; i < target.length; i++) {
         if(target[i] !== com[i]) {
             if(++count>1) return false;
-        }  
+        }
     }
-    return count === 0 ? 0: true;
+    return count ? true : false;
 }
 console.log(ladderLength("hit","cog",["hot","dot","dog","lot","log","cog"]));
+
+
+/**
+ * 新一轮尝试
+ * 
+ * 失败,还得是动态规划
+ * @param {string} beginWord
+ * @param {string} endWord
+ * @param {string[]} wordList
+ * @return {number}
+ */
+var ladderLength = function(beginWord, endWord, wordList) {
+    if(!wordList.includes(endWord)) return 0;
+    if(beginWord.length ===1 && beginWord.length === endWord.length) return 2
+    let result = Number.MAX_SAFE_INTEGER;
+    for (let i = 0; i < wordList.length; i++) {
+        if(complateDiff(beginWord,wordList[i])){
+            if(wordList[i] === endWord) return 2;
+            result = linearSearch(wordList[i],endWord,wordList,[beginWord,wordList[i]])
+        }
+    }
+    return result === Number.MAX_SAFE_INTEGER?0:result;
+};
+
+const linearSearch = (beginWord,endWord,wordList,result)=> {
+    if(complateDiff(beginWord,endWord)) return result.length+1;
+    let min = Number.MAX_SAFE_INTEGER;
+    for (let i = 0; i < wordList.length; i++) {
+        if(!result.includes(wordList[i]) && complateDiff(beginWord,wordList[i])) {
+            console.log(result,wordList[i], endWord)
+            if(wordList[i] === endWord) return result.length+1;
+            result.push(wordList[i])
+            min = Math.min(min,linearSearch(wordList[i],endWord,wordList,result));
+
+        }
+        
+    }
+    return min;
+}
