@@ -19,7 +19,7 @@ var kClosest = function (points, K) {
   points.map((a) => {
     powA.push(Math.pow(a[0], 2) + Math.pow(a[1], 2));
   });
-  console.log('powA',powA);
+  console.log("powA", powA);
   for (let i = 0; i < K; i++) {
     let min = Number.MAX_VALUE;
     let pos = -1;
@@ -32,29 +32,34 @@ var kClosest = function (points, K) {
     powA[pos] = Number.MAX_VALUE;
     result.push(points[pos]);
   }
-  return result
+  return result;
 };
 
-kClosest([
-  [1, 3],
-  [-2, 2],
-],1);
+kClosest(
+  [
+    [1, 3],
+    [-2, 2],
+  ],
+  1
+);
 /**
  * 够惨
- * 
+ *
  * 执行用时：800 ms, 在所有 JavaScript 提交中击败了7.37%的用户
  * 内存消耗：47.9 MB, 在所有 JavaScript 提交中击败了52.69%的用户
  */
 var kClosest = function (points, K) {
-    points.sort((a,b)=> Math.pow(a[0],2)+ Math.pow(a[1],2)-Math.pow(b[0],2)-Math.pow(b[1],2));
-    console.log(points);
-    let result = [];
-    for (let i = 0; i < K; i++) {
-        result.push(points[k])
-    }
-    console.log(result);
-}
+  points.sort(
+    (a, b) =>
+      Math.pow(a[0], 2) +
+      Math.pow(a[1], 2) -
+      Math.pow(b[0], 2) -
+      Math.pow(b[1], 2)
+  );
+  return points.slice(0,K);
+};
 /**
- * 执行用时：216 ms, 在所有 JavaScript 提交中击败了77.89%的用户
- * 内存消耗：46.7 MB, 在所有 JavaScript 提交中击败了75.27%的用户
+ * 还是快了一点
+ * 执行用时：212 ms, 在所有 JavaScript 提交中击败了81.05%的用户
+ * 内存消耗：47.2 MB, 在所有 JavaScript 提交中击败了64.52%的用户
  */
