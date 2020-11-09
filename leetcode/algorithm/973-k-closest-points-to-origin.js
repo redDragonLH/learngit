@@ -49,17 +49,17 @@ kClosest(
  * 内存消耗：47.9 MB, 在所有 JavaScript 提交中击败了52.69%的用户
  */
 var kClosest = function (points, K) {
-  points.sort(
-    (a, b) =>
-      Math.pow(a[0], 2) +
-      Math.pow(a[1], 2) -
-      Math.pow(b[0], 2) -
-      Math.pow(b[1], 2)
-  );
-  return points.slice(0,K);
-};
+    return points.sort(
+      (a, b) =>
+        Math.pow(a[0], 2) +
+        Math.pow(a[1], 2) -
+        Math.pow(b[0], 2) -
+        Math.pow(b[1], 2)
+    ).slice(0,K);
+  };
 /**
- * 还是快了一点
- * 执行用时：212 ms, 在所有 JavaScript 提交中击败了81.05%的用户
- * 内存消耗：47.2 MB, 在所有 JavaScript 提交中击败了64.52%的用户
+ * 进一步压缩,潜力耗尽
+ * 
+ * 执行用时：204 ms, 在所有 JavaScript 提交中击败了89.47%的用户
+ * 内存消耗：46.8 MB, 在所有 JavaScript 提交中击败了70.97%的用户
  */
