@@ -63,3 +63,7 @@ var kClosest = function (points, K) {
  * 执行用时：204 ms, 在所有 JavaScript 提交中击败了89.47%的用户
  * 内存消耗：46.8 MB, 在所有 JavaScript 提交中击败了70.97%的用户
  */
+
+ /**
+  * 用小根堆还有点浪费,毕竟只是一次性的
+  */
