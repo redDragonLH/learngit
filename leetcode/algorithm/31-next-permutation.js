@@ -57,3 +57,39 @@ const getNumber =(arr,i,target,len)=> {
  * 执行用时：132 ms, 在所有 JavaScript 提交中击败了6.05%的用户
  * 内存消耗：43 MB, 在所有 JavaScript 提交中击败了5.46%的用户
  */
+
+/**
+ * 官方题解 java
+ * 
+class Solution {
+    public void nextPermutation(int[] nums) {
+        int i = nums.length - 2;
+        while (i >= 0 && nums[i] >= nums[i + 1]) {
+            i--;
+        }
+        if (i >= 0) {
+            int j = nums.length - 1;
+            while (j >= 0 && nums[i] >= nums[j]) {
+                j--;
+            }
+            swap(nums, i, j);
+        }
+        reverse(nums, i + 1);
+    }
+
+    public void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+
+    public void reverse(int[] nums, int start) {
+        int left = start, right = nums.length - 1;
+        while (left < right) {
+            swap(nums, left, right);
+            left++;
+            right--;
+        }
+    }
+}
+ */
