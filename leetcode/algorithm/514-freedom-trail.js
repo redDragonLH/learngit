@@ -90,3 +90,13 @@ class Ringitem {
 // console.log(findRotateSteps("aaaaa", "aaaaa"),5);
 // console.log(findRotateSteps("pqwcx", "cpqwx"),13);
 console.log(findRotateSteps("caotmcaataijjxi", "oatjiioicitatajtijciocjcaaxaaatmctxamacaamjjx"),137); // 超时~~~
+
+
+/**
+ * 感觉动态规划挺不错的
+ * 
+ * 第一步:定义数组含义
+ *    应该是个二维数组,每个内容是对应两个字符的距离,并且可以只计算key内有的字符
+ * 第二步:数组元素间的关系式
+ *    感觉没啥关系吧,
+ */
