@@ -52,3 +52,30 @@ const sort =(arr,prevLen)=>{
 }
 reconstructQueue([[7,0], [4,4], [7,1], [5,0], [6,1], [5,2]])
 // 自题解 失败
+
+/**
+ * 官方题解java转js 还失败
+ */
+var reconstructQueue = function(people) {
+    people.sort( (o1, o2) => o1[0] == o2[0] ? o1[1] - o2[1] : o2[0] - o1[0]);
+    const n = people.length;
+    const ans = new Array(n);
+    for (let i = 0; i < n; i++) {
+        ans[i] =[];
+        
+    }
+    for (let p of people) {
+        let spaces = p[1] + 1;
+        for (let i = 0; i < n; ++i) {
+            if (ans[i] == null) {
+                --spaces;
+                if (spaces == 0) {
+                    ans[i] = p;
+                    break;
+                }
+            }
+        }
+    }
+    console.log(ans);
+    return ans;
+}
