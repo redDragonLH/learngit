@@ -55,6 +55,11 @@ var countNodes = function(root) {
   * 官方题解
   * 
   * 二分查找
+  * 
+  * 确定最大深度,左子树一溜下来,就是完全二叉树的最大深度
+  * 
+  * 
+  * 这样就有了最底层节点的最大最小点,再从这些点之内二分查找
   */
 const exists = (root, level, k) => {
     let bits = 1 << (level - 1);
