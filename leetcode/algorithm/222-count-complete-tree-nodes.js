@@ -50,3 +50,44 @@ var countNodes = function(root) {
  * 执行用时：120 ms, 在所有 JavaScript 提交中击败了75.00%的用户
  * 内存消耗：57.1 MB, 在所有 JavaScript 提交中击败了5.18%的用户
  */
+
+ /**
+  * 官方题解
+  * 
+  * 二分查找
+  */
+const exists = (root, level, k) => {
+    let bits = 1 << (level - 1);
+    let node = root;
+    while (node !== null && bits > 0) {
+        if (!(bits & k)) {
+            node = node.left;
+        } else {
+            node = node.right;
+        }
+        bits >>= 1;
+    }
+    return node !== null;
+}
+
+var countNodes = function(root) {
+    if (root === null) {
+        return 0;
+    }
+    let level = 0;
+    let node = root;
+    while (node.left !== null) {
+        level++;
+        node = node.left;
+    }
+    let low = 1 << level, high = (1 << (level + 1)) - 1;
+    while (low < high) {
+        const mid = Math.floor((high - low + 1) / 2) + low;
+        if (exists(root, level, mid)) {
+            low = mid;
+        } else {
+            high = mid - 1;
+        }
+    }
+    return low;
+};
