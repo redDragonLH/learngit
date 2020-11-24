@@ -38,3 +38,15 @@ var countNodes = function(root) {
  * 执行用时：136 ms, 在所有 JavaScript 提交中击败了34.94%的用户
  * 内存消耗：57 MB, 在所有 JavaScript 提交中击败了5.18%的用户
  */
+
+var countNodes = function(root) {
+    if(!root) return 0;
+    return countNodes(root.left)+countNodes(root.right)+1;
+};
+/**
+ * 
+ * 优化版,优化还挺多
+ * 
+ * 执行用时：120 ms, 在所有 JavaScript 提交中击败了75.00%的用户
+ * 内存消耗：57.1 MB, 在所有 JavaScript 提交中击败了5.18%的用户
+ */
