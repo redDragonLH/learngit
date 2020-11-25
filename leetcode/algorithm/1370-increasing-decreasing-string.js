@@ -30,14 +30,9 @@ var sortString = function(s) {
         let pos = s[i].charCodeAt()-'a'.charCodeAt();
         arr[pos]++
     }
-    let arrLen = 26;
-    for (let i = arr.length-1; i > -1; i--) {
-        if(arr[i]) break;
-        if(!arr[i]) arrLen--;
-    }
     let result = '';
     //  直观~~~
-    while (result.length < len.length) {
+    while (result.length < len) {
         for (let i = 0; i < 26; i++) {
             if (arr[i]) {
                 result += String.fromCharCode(i + 'a'.charCodeAt());
@@ -61,3 +56,42 @@ sortString('aaaabbbbcccc')
  * 执行用时：96 ms, 在所有 JavaScript 提交中击败了90.95%的用户
  * 内存消耗：40.4 MB, 在所有 JavaScript 提交中击败了82.73%的用户
  */
+
+/**
+ * 第三方最快题解
+ * 
+ * 第三方题解去掉了 a 的转码
+ * 以及简化了循环的判断条件
+ * 整体逻辑并没有改变
+ */
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var sortString = function(s) {
+    let bucket = new Array(26).fill(0);
+   
+    let str = "";
+    for (let i = 0; i < s.length; i++) {
+        bucket[s[i].charCodeAt() - 97]++
+    }
+    let len = s.length;
+    while (len) {
+        for (let i = 0; i < 26; i++) {
+            if (bucket[i]) {
+                str += String.fromCharCode(i + 97)
+                bucket[i]--
+                len -- 
+            }
+        }
+        for (let i = 25; i >= 0; i--) {
+            if (bucket[i]) {
+                str += String.fromCharCode(i + 97)
+                bucket[i]--
+                len -- 
+            }
+        }
+    }
+
+    return str
+};
