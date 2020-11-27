@@ -42,6 +42,8 @@ fourSumCount(A = [ 1, 2]
 
 /**
  * 速度感人
+ * for 循环的一个问题是循环和要循环的数据没有关系,
+ * 必须再去数据内去获取一次
  * 
  * 执行用时：388 ms, 在所有 JavaScript 提交中击败了35.71%的用户
  * 内存消耗：69.9 MB, 在所有 JavaScript 提交中击败了17.30%的用户
@@ -72,3 +74,27 @@ var fourSumCount = function(A, B, C, D) {
     }
     return ans;
 };
+
+/**
+ * 第三方最快题解
+ */
+/**
+ * @param {number[]} A
+ * @param {number[]} B
+ * @param {number[]} C
+ * @param {number[]} D
+ * @return {number}
+ */
+var fourSumCount = function(A, B, C, D, h = new Map(), r = 0) {
+    // 逻辑都一样啊~~~写法有这么大的差距吗
+    for(var a of A)
+        for(var b of B)
+            h.set(0 - a - b, (h.get(0 - a - b) || 0) + 1)
+    for(var c of C)
+        for(var d of D)
+            h.has(c + d) && (r += h.get(c + d))
+    return r
+};
+/**
+ * 看来 map 还是比纯object 快
+ */
