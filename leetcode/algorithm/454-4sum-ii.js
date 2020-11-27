@@ -19,20 +19,20 @@ var fourSumCount = function(A, B, C, D) {
     const ab ={};
     for (let i = 0; i < A.length; i++) {
         for (let j = 0; j < B.length; j++) {
-            ab[A[i]+B[j]]? ab[A[i]+B[j]].push([i,j]):ab[A[i]+B[j]] = [[i,j]];
+            let num = A[i]+B[j]
+            ab[num]? ab[num]+=1:ab[num]=1;
         }
     }
     for (let i = 0; i < C.length; i++) {
         for (let j = 0; j < D.length; j++) {
             let res = ab[0-C[i]-D[j]]
             if(res) {
-                result+=res.length;
+                result+=res;
             }
             
         }
         
     }
-    console.log(result);
     return result;
 };
 fourSumCount(A = [ 1, 2]
@@ -43,6 +43,6 @@ fourSumCount(A = [ 1, 2]
 /**
  * 速度感人
  * 
- * 执行用时：860 ms, 在所有 JavaScript 提交中击败了5.24%的用户
- * 内存消耗：111.3 MB, 在所有 JavaScript 提交中击败了5.28%的用户
+ * 执行用时：388 ms, 在所有 JavaScript 提交中击败了35.71%的用户
+ * 内存消耗：69.9 MB, 在所有 JavaScript 提交中击败了17.30%的用户
  */
