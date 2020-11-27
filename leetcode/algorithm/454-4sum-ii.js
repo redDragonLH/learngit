@@ -46,3 +46,29 @@ fourSumCount(A = [ 1, 2]
  * 执行用时：388 ms, 在所有 JavaScript 提交中击败了35.71%的用户
  * 内存消耗：69.9 MB, 在所有 JavaScript 提交中击败了17.30%的用户
  */
+
+/**
+ * 官方题解
+ * 
+ * 有点迷茫,逻辑都一样就差了方法和一个set
+ * @param {number[]} A
+ * @param {number[]} B
+ * @param {number[]} C
+ * @param {number[]} D
+ * @return {number}
+ */
+var fourSumCount = function(A, B, C, D) {
+    const countAB = new Map();
+    // forEach 比我for循环要快吗,这~~
+    A.forEach(u => B.forEach(v => countAB.set(u + v, (countAB.get(u + v) || 0) + 1)));
+    let ans = 0; 
+    // for in 这~~~
+    for (let u of C) {
+        for (let v of D) {
+            if (countAB.has(-u - v)) {
+                ans += countAB.get(-u - v);
+            }
+        }
+    }
+    return ans;
+};
