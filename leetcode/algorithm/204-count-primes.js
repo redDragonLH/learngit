@@ -47,3 +47,30 @@ console.log(countPrimes(10));
  * 执行用时：340 ms, 在所有 JavaScript 提交中击败了32.52%的用户
  * 内存消耗：38.4 MB, 在所有 JavaScript 提交中击败了76.16%的用户
  */
+
+/**
+ * 官方题解: 厄拉多塞筛法，简称埃氏筛。
+ * 
+ * 如果 x 是质数，那么大于 x 的 x 的倍数 2x,3x,… 一定不是质数.依据这个理论我们就可以在处理时对质数的2x,3x...进行处理,
+ * 从前往后处理,这样当处理到一个数时,如果发现已经标记为合数,则直接跳过,质数则加一
+ */
+
+var countPrimes = function(n) {
+    const arr = new Array(n).fill(1);
+    let result =0;
+    for (let i = 2; i < n; i++) {
+        if(arr[i]) {
+            result++;
+            for (let j = i*i; j < n; j+=i) {
+                arr[j]=0;
+            }
+        }        
+    }
+    return result;
+}
+/**
+ * 速度翻番
+ * 
+ * 执行用时：140 ms, 在所有 JavaScript 提交中击败了70.75%的用户
+ * 内存消耗：50.3 MB, 在所有 JavaScript 提交中击败了47.22%的用户
+ */
