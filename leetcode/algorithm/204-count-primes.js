@@ -53,6 +53,8 @@ console.log(countPrimes(10));
  * 
  * 如果 x 是质数，那么大于 x 的 x 的倍数 2x,3x,… 一定不是质数.依据这个理论我们就可以在处理时对质数的2x,3x...进行处理,
  * 从前往后处理,这样当处理到一个数时,如果发现已经标记为合数,则直接跳过,质数则加一
+ * 
+ * 原理都好简单,但是想不出来
  */
 
 var countPrimes = function(n) {
@@ -74,3 +76,33 @@ var countPrimes = function(n) {
  * 执行用时：140 ms, 在所有 JavaScript 提交中击败了70.75%的用户
  * 内存消耗：50.3 MB, 在所有 JavaScript 提交中击败了47.22%的用户
  */
+
+
+ /**
+  * 线性筛
+  * 
+  *  **最小质因数**
+  * 
+  * 维护一个 \textit{primes}primes 数组表示当前得到的质数集合。我们从小到大遍历，如果当前的数 xx 是质数，就将其加入 \textit{primes}primes 数组。
+  * 只标记质数集合中的数与 xx 相乘的数
+  * 
+  * 核心点在于：如果 x 可以被 primes[i]整除，那么对于合数 y=x * primes[i+1]而言，
+  * 它一定在后面遍历到 x/primes[i] * primes[i+1]
+  * 这个数的时候会被标记，其他同理，这保证了每个合数只会被其「最小的质因数」筛去，即每个合数被标记一次。
+  */
+ var countPrimes = function(n) {
+    const isPrime = new Array(n).fill(1);
+    const primes = [];
+    for (let i = 2; i < n; ++i) {
+        if (isPrime[i]) {
+            primes.push(i);
+        }
+        for (let j = 0; j < primes.length && i * primes[j] < n; ++j) {
+            isPrime[i * primes[j]] = 0;
+            if (i % primes[j] === 0) {
+                break;
+            }
+        }
+    }
+    return primes.length;
+};
