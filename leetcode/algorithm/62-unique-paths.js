@@ -35,3 +35,18 @@ console.log(uniquePaths(7,3));
  * 执行用时：60 ms, 在所有 JavaScript 提交中击败了94.49%的用户
  * 内存消耗：32.3 MB, 在所有 JavaScript 提交中击败了100.00%的用户
  */
+
+/**
+ * 数学方程式法
+ * 
+ * 从左上角到右下角的过程中，我们需要移动 m+n-2m+n−2 次，其中有 m-1m−1 次向下移动，n-1n−1 次向右移动。
+ * 因此路径的总数，就等于从 m+n-2m+n−2 次移动中选择 m-1m−1 次向下移动的方案数，
+ */
+
+var uniquePaths = function(m, n) {
+    let ans = 1;
+    for (let x = n, y = 1; y < m; ++x, ++y) {
+        ans = Math.floor(ans * x / y);
+    }
+    return ans;
+};
