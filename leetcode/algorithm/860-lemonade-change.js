@@ -47,3 +47,31 @@ var lemonadeChange = function(bills) {
  * 执行用时：104 ms, 在所有 JavaScript 提交中击败了19.53%的用户
  * 内存消耗：40.1 MB, 在所有 JavaScript 提交中击败了29.62%的用户
  */
+
+/**
+ * 官方题解
+ */
+var lemonadeChange = function(bills) {
+    let five = 0, ten = 0;
+    for (const bill of bills) {
+        if (bill === 5) {
+            five += 1;
+        } else if (bill === 10) {
+            if (five === 0) {
+                return false;
+            }
+            five -= 1;
+            ten += 1;
+        } else {
+            if (five > 0 && ten > 0) {
+                five -= 1;
+                ten -= 1;
+            } else if (five >= 3) {
+                five -= 3;
+            } else {
+                return false;
+            }
+        }
+    }
+    return true;
+};
