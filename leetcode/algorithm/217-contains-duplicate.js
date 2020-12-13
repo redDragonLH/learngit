@@ -26,3 +26,12 @@ var containsDuplicate = function(nums) {
  * 执行用时：80 ms, 在所有 JavaScript 提交中击败了96.11%的用户
  * 内存消耗：42 MB, 在所有 JavaScript 提交中击败了72.38%的用户
  */
+var containsDuplicate = function(nums) {
+    const len = nums.length;
+    if(len<2) return false;
+    return new Set(nums).size !== len;
+}
+/**
+ * 执行用时：80 ms, 在所有 JavaScript 提交中击败了96.11%的用户
+ * 内存消耗：43.6 MB, 在所有 JavaScript 提交中击败了46.08%的用户
+ */
