@@ -65,5 +65,41 @@ const isAnagrams = (str1,str2)=> {
     }
     return true;
 }
-console.log(groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]));
 // console.log(groupAnagrams(["ddddddddddg","dgggggggggg"]));
+
+
+/**
+ * 使用对象存储映射表
+ * 哈希表方案
+ */
+var groupAnagrams = function(strs) {
+    const result = [[strs[0]]];
+    const mapping = [];
+    mapping.push(sort(strs[0]))
+    loop1:
+    for (let i = 1; i < strs.length; i++) {
+        const strSort = sort(strs[i]);
+        loop2:
+        for (let j = 0; j < result.length; j++) {
+            if(mapping[j].length !== strs[i].length) continue;
+            if(mapping[j] === strSort){
+                result[j].push(strs[i]);
+                continue loop1
+            }
+        }
+        result.push([strs[i]])
+        mapping.push(sort(strs[i]))
+    }
+    return result;
+}
+const sort = (str) => str.split('').sort((a,b)=> a.charCodeAt()-b.charCodeAt()).join('');
+
+console.log(groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]));
+console.log(groupAnagrams(["ddddddddddg","dgggggggggg"]));
+console.log(groupAnagrams(["",""]));
+
+/**
+ * 时间有点长~~~
+ * 执行用时：380 ms, 在所有 JavaScript 提交中击败了5.01%的用户
+ * 内存消耗：46.8 MB, 在所有 JavaScript 提交中击败了92.41%的用户
+ */
