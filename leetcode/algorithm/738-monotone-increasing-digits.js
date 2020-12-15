@@ -31,4 +31,40 @@ const isMonotoneIncreasing =(num)=> {
     }
     return true;
 }
+
+/**
+ * 理论上,如果前一个数据比另一个数据大,那么应该把前一个位减一,
+ * 然后应该把后边所有的数字都应该置为9,这样这个数就是当前条件下最大的,还要向前比较,查看是否没问题,
+ * 
+ * 考虑从后往前处理
+ * 
+ * 从后往前处理就减少了从前往后方案的回退处理
+ */
+var monotoneIncreasingDigits = function(N) {
+    let str = N.toString();
+    let len = str.length-1;
+    const arr = Array.from(str)
+    let pos= len
+
+    for (let i = len; i > 0; i-- ) {
+        if(arr[i]< arr[i-1]) {
+            arr[i-1] = Number(arr[i-1]) -1
+
+            format(arr,i,pos)
+            pos = i;
+        }
+    }
+    return Number(arr.join(''));
+};
+const format=(arr,start,end)=> {
+    while(start<= end) {
+        arr[start]=9;
+        start++;
+    }
+}
 console.log(monotoneIncreasingDigits(605068545));
+console.log(monotoneIncreasingDigits(332));
+/**
+ * 执行用时：84 ms, 在所有 JavaScript 提交中击败了89.47%的用户
+ * 内存消耗：39.2 MB, 在所有 JavaScript 提交中击败了26.32%的用户
+ */
