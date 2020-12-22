@@ -15,7 +15,6 @@
 var minCostClimbingStairs = function(cost) {
     const len = cost.length
     return deep(cost,-1,0,len);
-
 };
 const deep = (cost,i,count,len)=> {
     if(i>= len )return count;
