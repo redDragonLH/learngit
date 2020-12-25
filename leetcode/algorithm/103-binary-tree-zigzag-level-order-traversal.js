@@ -35,3 +35,7 @@ const deep = (root,pos,arr)=> {
  * 执行用时：84 ms, 在所有 JavaScript 提交中击败了82.03%的用户
  * 内存消耗：40 MB, 在所有 JavaScript 提交中击败了5.00%的用户
  */
+/**
+ * 官方题解也就这样了
+ * 
+ */
