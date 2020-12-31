@@ -47,3 +47,8 @@ var lastStoneWeight = function(stones) {
  * 执行用时：84 ms, 在所有 JavaScript 提交中击败了65.28%的用户
  * 内存消耗：39.1 MB, 在所有 JavaScript 提交中击败了55.44%的用户
  */
+
+
+/**
+ * 要不要实现一个大顶堆~~
+ */
