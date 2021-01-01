@@ -28,3 +28,23 @@ var canPlaceFlowers = function(flowerbed, n) {
  * 执行用时：88 ms, 在所有 JavaScript 提交中击败了75.03%的用户
  * 内存消耗：39.9 MB, 在所有 JavaScript 提交中击败了67.14%的用户
  */
+
+var canPlaceFlowers = function(flowerbed, n) {
+    const len = flowerbed.length;
+    for (let i = 0; i < len; i++) {
+        if(!flowerbed[i] && n){
+            if(!flowerbed[i-1] && !flowerbed[i+1]) {
+                flowerbed[i]=1;
+                n--;i++
+            }
+        } 
+        
+    }
+    return !n;
+};
+/**
+ * 竟然还更慢，理论上跳过了n个没必要判断的位置
+ * 
+ * 执行用时：96 ms, 在所有 JavaScript 提交中击败了42.53%的用户
+ * 内存消耗：39.8 MB, 在所有 JavaScript 提交中击败了79.45%的用户
+ */
