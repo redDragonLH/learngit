@@ -60,3 +60,18 @@ var fib = function(n) {
  * 执行用时：84 ms, 在所有 JavaScript 提交中击败了61.72%的用户
  * 内存消耗：37.8 MB, 在所有 JavaScript 提交中击败了27.52%的用户
  */
+
+/**
+ *  
+ */
+var fib = function(n) {
+    const sqrt5 = Math.sqrt(5);
+    const fibN = Math.pow((1 + sqrt5) / 2, n) - Math.pow((1 - sqrt5) / 2, n);
+    return Math.round(fibN / sqrt5);
+};
+/**
+ * 数学归纳法所得出的计算公式,代码最简,但是自带的方法内部实现影响较大
+ * 
+ * 执行用时：80 ms, 在所有 JavaScript 提交中击败了78.52%的用户
+ * 内存消耗：37.1 MB, 在所有 JavaScript 提交中击败了96.49%的用户
+ */
