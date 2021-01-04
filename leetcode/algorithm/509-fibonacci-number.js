@@ -20,3 +20,16 @@ var fib = function(n) {
  * 执行用时：128 ms, 在所有 JavaScript 提交中击败了6.40%的用户
  * 内存消耗：37.8 MB, 在所有 JavaScript 提交中击败了20.58%的用户
  */
+const map = new Map();
+var fib = function(n) {
+    if(map.has(n))return map.get(n);
+    if(n===0)return 0;
+    if(n==1) return 1;
+    map.set(n,fib(n-1) + fib(n-2));
+    return map.get(n);
+};
+/**
+ * 增加缓存数据结构
+ * 执行用时：76 ms, 在所有 JavaScript 提交中击败了90.07%的用户
+ * 内存消耗：37.7 MB, 在所有 JavaScript 提交中击败了35.96%的用户
+ */
