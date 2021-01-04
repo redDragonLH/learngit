@@ -33,3 +33,30 @@ var fib = function(n) {
  * 执行用时：76 ms, 在所有 JavaScript 提交中击败了90.07%的用户
  * 内存消耗：37.7 MB, 在所有 JavaScript 提交中击败了35.96%的用户
  */
+
+ /**
+  * 因为有了达到公式,那么可以考虑使用动态规划
+  * 
+  * 步骤:
+  * 确定元素含义:应该不需要使用数组,因为这个是无后向性,只需要固定的位置
+  * 
+  * 元素关系式: F(n) = F(n - 1) + F(n - 2)，其中 n > 1
+  * 初始数据: F(0) = 0，F(1) = 1
+  */
+ var fib = function(n) {
+    if(n===0)return 0;
+    if(n==1) return 1;
+     let f=0,s =1;
+     let l = 2;
+     while(l < n) {
+        let temp = s
+        s = f+s;
+        f = temp;
+        l++;
+     }
+     return s+f; //f(n-1)+f(n-2)
+ }
+/**
+ * 执行用时：84 ms, 在所有 JavaScript 提交中击败了61.72%的用户
+ * 内存消耗：37.8 MB, 在所有 JavaScript 提交中击败了27.52%的用户
+ */
