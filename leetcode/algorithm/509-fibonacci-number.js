@@ -62,7 +62,7 @@ var fib = function(n) {
  */
 
 /**
- *  
+ *  通项公式
  */
 var fib = function(n) {
     const sqrt5 = Math.sqrt(5);
