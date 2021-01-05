@@ -38,3 +38,25 @@ var largeGroupPositions = function(s) {
  * 执行用时：112 ms, 在所有 JavaScript 提交中击败了29.52%的用户
  * 内存消耗：41.8 MB, 在所有 JavaScript 提交中击败了15.53%的用户
  */
+
+/**
+ * 比较好看的题解
+ * @param {string} s
+ * @return {number[][]}
+ */
+var largeGroupPositions = function(s) {
+    const re = [];
+    for(let i=0; i<s.length - 2; ) {
+        const char = s[i]
+        let j=i;
+        // 内部循环检查后边的字符是否相等
+        while(++j<s.length && s[j] === char ) {
+        }
+        if(j >= i+3) {
+            re.push([i, j-1]);
+        }
+        // 同步位置,要不然要循环的次数多很多
+        i=j;
+    }
+    return re;
+  };
