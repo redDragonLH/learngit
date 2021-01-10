@@ -32,3 +32,29 @@ var summaryRanges = function(nums) {
     }
     return ret;
 };
+
+/**
+ * 第三方最优解
+ * 
+ * @param {number[]} nums
+ * @return {string[]}
+ */
+var summaryRanges = function(nums) {
+    var arr = []
+      var start = 0
+      var end = 0
+      for(let i = 0; i < nums.length;i++){
+        if(nums[i+1] - nums[i] !== 1){
+          if(end == start){
+            arr.push(`${nums[start]}`)
+          }else{
+            arr.push(`${nums[start]}->${nums[end]}`)
+          }
+          start = i + 1
+          end = i + 1
+        }else{
+          end++
+        }
+      }
+      return arr
+};
