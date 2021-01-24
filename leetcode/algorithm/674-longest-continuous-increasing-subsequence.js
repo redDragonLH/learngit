@@ -32,3 +32,19 @@ var findLengthOfLCIS = function(nums) {
  * 执行用时：88 ms, 在所有 JavaScript 提交中击败了53.83%的用户
  * 内存消耗：38.5 MB, 在所有 JavaScript 提交中击败了70.52%的用户
  */
+
+/**
+ * 最快第三方题解
+ */
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var findLengthOfLCIS = function(nums) {
+    let l = 0, ans = 0;
+    for (let i = 0; i < nums.length; i++) {
+      if (i > 0 && nums[i] <= nums[i - 1]) l = i;
+      ans = ans > i - l + 1 ? ans : i - l + 1;
+    }
+    return ans;
+  };
