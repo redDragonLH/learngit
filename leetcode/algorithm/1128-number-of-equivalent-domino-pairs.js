@@ -27,3 +27,24 @@ var numEquivDominoPairs = function(dominoes) {
     }
     return ret;
 };
+
+/**
+ * 第三方 优秀题解
+ */
+/**
+ * @param {number[][]} dominoes
+ * @return {number}
+ */
+var numEquivDominoPairs = function(dominoes) {
+    let ans = 0 , map = new Map()
+    for(let d of dominoes){
+       let [i,j] = d , key
+       if(i < j)  key=10*i+j
+       else key = 10*j+i
+       map.set(key,(map.get(key)||0)+1)
+    }
+    for(let [,v] of map){
+        ans += v*(v-1)/2
+    }
+    return ans
+};
