@@ -23,3 +23,30 @@ var pivotIndex = function(nums) {
     }
     return -1;
 };
+
+/**
+ * 第三方优秀题解
+ */
+
+
+/**
+ * 基本思路差不多啊
+ * @param {number[]} nums
+ * @return {number}
+ */
+var pivotIndex = function(nums) {
+    var sum=0;
+    var temp=0;
+    nums.push(0);
+    nums.unshift(0);
+    for(let i=0;i<nums.length;i++){
+        sum+=nums[i];
+    }
+    for(let j=0;j<nums.length-2;j++){
+        temp+=nums[j];
+        if(temp===sum-temp-nums[j+1]){
+            return j;
+        }
+    }
+    return -1;
+};
