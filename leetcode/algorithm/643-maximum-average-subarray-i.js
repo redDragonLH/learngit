@@ -24,10 +24,31 @@ var findMaxAverage = function(nums, k) {
     for (let i = 0; i < k; i++) {
         temp+=nums[i];
     }
-    max = Math.max(max,temp)
+    max = temp
     for (let i = k; i < len; i++) {
-        temp+=(nums[i]-nums[left++]);
+        temp+=(nums[i]-nums[left++]); // 这段代码有问题
         max = Math.max(max,temp);
     }
     return max /k;
+};
+
+/**
+ * 官方题解
+ * 
+ * 感觉差不多啊
+ * @param { } nums 
+ * @param {*} k 
+ */
+var findMaxAverage = function(nums, k) {
+    let sum = 0;
+    const n = nums.length;
+    for (let i = 0; i < k; i++) {
+        sum += nums[i];
+    }
+    let maxSum = sum;
+    for (let i = k; i < n; i++) {
+        sum = sum - nums[i - k] + nums[i]; // 
+        maxSum = Math.max(maxSum, sum);
+    }
+    return maxSum / k;
 };
