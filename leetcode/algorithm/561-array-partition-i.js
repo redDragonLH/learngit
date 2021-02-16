@@ -22,3 +22,24 @@ var arrayPairSum = function(nums) {
  * 执行用时：156 ms, 在所有 JavaScript 提交中击败了38.22%的用户
  * 内存消耗：43.5 MB, 在所有 JavaScript 提交中击败了34.77%的用户
  */
+
+ /**
+  * 第三方优秀题解
+  */
+ /**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var arrayPairSum = function(nums) {
+    const arr = new Int32Array(20001);
+    const lim = 10000;
+    for (const num of nums)
+        arr[num + lim]++;
+    let d = 0;
+    let sum = 0;
+    for (let i = -10000; i <= 10000; i++) {
+        sum += ((arr[i + lim] + 1 - d) >> 1) * i;
+        d = (2 + arr[i + lim] - d) % 2;
+    }
+    return sum;
+};
