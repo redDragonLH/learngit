@@ -28,3 +28,40 @@ var matrixReshape = function(nums, r, c) {
     }
     return ans;
 };
+
+/**
+ * 第三方最优解
+ */
+/**
+ * @param {number[][]} nums
+ * @param {number} r
+ * @param {number} c
+ * @return {number[][]}
+ */
+var matrixReshape = function(nums, r, c) {
+    let  row = nums.length, col = row == 0 ? 0 : nums[0].length;
+    if(row == 0) {
+        return [];
+    }
+    if (row * col != r * c) {
+        return nums;
+    }
+    let result = [];
+    for (let i = 0; i < r; i++ ) {
+        result[i] = [];
+    }
+    let tempArr = [];
+    nums.forEach(function(arr) {
+        tempArr.push.apply(tempArr, arr);
+    });
+    if (r == 1) {
+        return [tempArr];
+    }
+    for (let i = 0; i < r; i++) {
+        for (let j = 0; j < c; j++) {
+            result[i][j] = tempArr[i * c + j];
+        }
+    }
+    return result;
+
+};
