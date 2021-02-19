@@ -18,6 +18,10 @@
  * 所以应该按照顺序依次把0转换为1,如果超出数量则从尾部去掉一个,然后判断现在位置到尾部的长度,到尾部的长度内包括原始1和转换的1
  * 
  * 遇到的问题: 在开头是0的时候无法正确处理,以及可转换数为0时有问题
+ * 
+ * 超时问题: 优化获取尾部位置应该可以解决,但是怎么在执行过程中保存尾部
+ * 
+ * 尾部有两个获取位置,可能是原生1,也可能是置换1,在两个不同元素内,不过当置换数组在推出尾部数据时尾部肯定会变成 推出位置的后一个位置 √
  * @param {number[]} A
  * @param {number} K
  * @return {number}
@@ -30,21 +34,17 @@ var longestOnes = function(A, K) {
         if(!A[i]) {
             tran.push(i)
             if(tran.length > K) {
-                tran.shift();
+                // 优化尾部获取逻辑
+                end = tran.shift();
             }
         }
-        end = getEnd(i,A,tran);
         // end 等于0 时 计算会出问题,i是从0开始计算
         !end && (end = -1)
         max = Math.max(max,i-end)
     }
     return max
 };
-const getEnd = (pos,arr,tran)=> {
-    for (let i = pos; i >= 0; i--) {
-        if(!(arr[i] || tran.find(e=>e==i))){
-            return i;
-        }
-    }
-    return 0;
-}
+/**
+ * 执行用时：148 ms, 在所有 JavaScript 提交中击败了14.65%的用户
+ * 内存消耗：46.2 MB, 在所有 JavaScript 提交中击败了10.60%的用户
+ */
