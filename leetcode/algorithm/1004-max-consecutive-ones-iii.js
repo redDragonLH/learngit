@@ -17,22 +17,21 @@
  * 预设逻辑: 需置1的位置肯定是相连的,至少间隔内肯定都是1
  * 所以应该按照顺序依次把0转换为1,如果超出数量则从尾部去掉一个,然后判断现在位置到尾部的长度,到尾部的长度内包括原始1和转换的1
  * 
- * 遇到的问题: 在开头是0的时候无法正确处理,有问题以及可转换数为0时
+ * 遇到的问题: 在开头是0的时候无法正确处理,以及可转换数为0时有问题
  * @param {number[]} A
  * @param {number} K
  * @return {number}
  */
 var longestOnes = function(A, K) {
     let tran = [];
-    !A[0] && tran.push(A[0])
     let end = 0;
     let max = 0;
     for (let i = 1; i < A.length; i++) {
         if(!A[i]) {
+            tran.push(i)
             if(tran.length > K) {
                 tran.shift();
             }
-            K && tran.push(i)
         }
         end = getEnd(i,A,tran);
         // end 等于0 时 计算会出问题,i是从0开始计算
