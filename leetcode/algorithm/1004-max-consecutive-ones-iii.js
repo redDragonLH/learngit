@@ -45,6 +45,23 @@ var longestOnes = function(A, K) {
     return max
 };
 /**
+ * 感觉不到哪里还可以优化~
  * 执行用时：148 ms, 在所有 JavaScript 提交中击败了14.65%的用户
  * 内存消耗：46.2 MB, 在所有 JavaScript 提交中击败了10.60%的用户
+ */
+
+/**
+ * 有意思的题解
+ * 
+ *
+class Solution {
+    public int longestOnes(int[] A, int K) {
+        int l = 0, r = 0;
+        while (r < A.length) {
+            if (A[r++] == 0) K--;
+            if (K < 0 && A[l++] == 0) K++;
+        }
+        return r - l;
+    }
+}
  */
