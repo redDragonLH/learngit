@@ -27,11 +27,14 @@ var findShortestSubArray = function(nums) {
             numsObj[nums[i]].len+=1
             numsObj[nums[i]].pos[1] = i
             maxLen = Math.max(maxLen,numsObj[nums[i]].len)
+            // 合并循环 思路
+            // 判断单个元素的len是否等于maxLen,等于的话就更新子数组长度,有个问题是必须保存上一次更新子数组长度的元素的len,否则会遇到问题
+            // 如果上一次的子数组长度与当前子数组长度相同则进行对比,如果上一次子数组长度小于当前子数组长度则直接替换
         }
     }
     if(nums.length<2) return nums.length;
 
-    
+
     let min = 50000;
     Object.keys(numsObj).forEach(e=> {
         let el = numsObj[e]
@@ -46,6 +49,9 @@ var findShortestSubArray = function(nums) {
 };
 
 /**
+ * 官方的和我一样啊~~~
+ * 
+ * 应该可以把后一次循环合并到第一次里去,但是这样就增加了第一个循环的复杂度
  * 执行用时：84 ms, 在所有 JavaScript 提交中击败了99.47%的用户
  * 内存消耗：42.1 MB, 在所有 JavaScript 提交中击败了59.89%的用户
  */
