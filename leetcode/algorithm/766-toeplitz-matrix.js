@@ -72,3 +72,39 @@ var isToeplitzMatrix = function(matrix) {
  * 执行用时：80 ms, 在所有 JavaScript 提交中击败了100.00%的用户
  * 内存消耗：39.6 MB, 在所有 JavaScript 提交中击败了44.35%的用户
  */
+
+/**
+ * 第三方优秀题解
+ */
+/**
+ * @param {number[][]} matrix
+ * @return {boolean}
+ */
+var isToeplitzMatrix = function (matrix) {
+    let row1 = matrix[0];
+    for (let i = 0; i < row1.length; i++) {
+      if (!checkNum(row1[i], 0, i, matrix)) {
+        return false;
+      }
+    }
+    for (let i = 1; i < matrix.length; i++) {
+      if (!checkNum(matrix[i][0], i, 0, matrix)) {
+        return false;
+      }
+    }
+    return true;
+  };
+  const checkNum = (num, row, col, matrix) => {
+    let maxRow = matrix.length,
+      maxCol = matrix[0].length;
+    row++;
+    col++;
+    while (row < maxRow && col < maxCol) {
+      if (num !== matrix[row][col]) {
+        return false;
+      }
+      row++;
+      col++;
+    }
+    return true;
+  };
