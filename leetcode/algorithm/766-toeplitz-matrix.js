@@ -10,6 +10,9 @@
  * 
  * 这种方法特殊情况太多
  * 优化思路是从两头获取点位然后这样就循环一半就可以
+ * 
+ * 注意: 还是要注意在优化过程中是否会陷入新增逻辑过多反而效率降低的问题
+ * 
  * @param {number[][]} matrix
  * @return {boolean}
  */
@@ -45,4 +48,27 @@ var isToeplitzMatrix = function(matrix) {
 /**
  * 执行用时：104 ms, 在所有 JavaScript 提交中击败了29.03%的用户
  * 内存消耗：40.3 MB, 在所有 JavaScript 提交中击败了5.64%的用户
+ */
+
+/**
+ * 官方题解
+ * 
+ * 越来越傻,想了太多,忘了其实就这点事,分解到最后就是i,j与i-1,j-1两个位置的事
+ */
+var isToeplitzMatrix = function(matrix) {
+    const m = matrix.length, n = matrix[0].length;
+    for (let i = 1; i < m; i++) {
+        for (let j = 1; j < n; j++) {
+            if (matrix[i][j] != matrix[i - 1][j - 1]) {
+                return false;
+            }
+        }
+    }
+    return true;
+};
+/**
+ * 因为没有那么多判断条件么,这么快
+ * 
+ * 执行用时：80 ms, 在所有 JavaScript 提交中击败了100.00%的用户
+ * 内存消耗：39.6 MB, 在所有 JavaScript 提交中击败了44.35%的用户
  */
