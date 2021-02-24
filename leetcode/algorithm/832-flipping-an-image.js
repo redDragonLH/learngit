@@ -56,4 +56,9 @@ var flipAndInvertImage = function(A) {
 
  /**
   * python的语法很有意思
+  * 
+  * class Solution:
+  *     def flipAndInvertImage(self, A: List[List[int]]) -> List[List[int]]:
+  *         # [::-1] 做的工作就是list取反
+  *         return [[j ^ 1 for j in row[::-1]] for row in A]
   */
