@@ -34,3 +34,26 @@ var flipAndInvertImage = function(A) {
  * 执行用时：88 ms, 在所有 JavaScript 提交中击败了78.34%的用户
  * 内存消耗：39.5 MB, 在所有 JavaScript 提交中击败了67.87%的用户
  */
+
+
+ /**
+  * 第三方优秀题解
+  * 
+  * 也没想到用官方API,也不知道每个字都取反和 增加逻辑判断 谁的资源消耗高
+  */
+ /**
+ * @param {number[][]} A
+ * @return {number[][]}
+ */
+var flipAndInvertImage = function(A) {
+    return A.map(it => {
+      return it.reverse().map(o=>{
+        return 1^o
+      })
+    })
+  };
+
+
+ /**
+  * python的语法很有意思
+  */
