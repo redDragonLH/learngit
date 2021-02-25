@@ -58,3 +58,21 @@ var transpose = function(matrix) {
  * 执行用时：112 ms, 在所有 JavaScript 提交中击败了19.03%的用户
  * 内存消耗：40 MB, 在所有 JavaScript 提交中击败了71.02%的用户
  */
+
+/**
+ * 第三方优秀题解
+ */
+/**
+ * @param {number[][]} A
+ * @return {number[][]}
+ */
+var transpose = function(A) {
+    const res = Array.from({length: A[0].length}, () => []) // 使用函数返回的数组是不是能避免引用类型的问题
+    // 这个思路很厉害,没看懂运行时
+    A.forEach((item) => {
+      item.forEach((sub, inx) => {
+        res[inx].push(sub)
+      }) 
+    })
+    return res
+};
