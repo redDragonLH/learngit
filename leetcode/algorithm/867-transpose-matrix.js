@@ -40,10 +40,11 @@ var transpose = function(matrix) {
  * 增加一个转换结构,但是这不会有问题么
  * 
  * 不会,因为 j i,已经限定到一定程度,
- * 感觉还是没想明白
+ * 感觉还是没想明白 : 创建的时候是长宽是反的,这样就把当前数据结构折90度,这样在赋值的时候就不会出现问题
  */
 var transpose = function(matrix) {
     const m = matrix.length, n = matrix[0].length;
+    // 创建的时候是长宽是反的,这样就把当前数据结构折90度
     const transposed = new Array(n).fill(0).map(() => new Array(m).fill(0));
     for (let i = 0; i < m; i++) {
         for (let j = 0; j < n; j++) {
@@ -52,3 +53,8 @@ var transpose = function(matrix) {
     }
     return transposed;
 };
+
+/**
+ * 执行用时：112 ms, 在所有 JavaScript 提交中击败了19.03%的用户
+ * 内存消耗：40 MB, 在所有 JavaScript 提交中击败了71.02%的用户
+ */
