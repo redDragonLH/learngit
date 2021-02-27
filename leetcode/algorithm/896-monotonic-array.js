@@ -23,3 +23,20 @@ var isMonotonic = function(A) {
     }
     return inc || dec;
 };
+
+/**
+ * 第三方优秀题解
+ * 
+ */
+/**
+ * @param {number[]} A
+ * @return {boolean}
+ */
+var isMonotonic = function(A) {
+    let a;
+    for(let i = 0;i<A.length - 1;i++){
+        if(a&&(a * (A[i+1] - A[i]) < 0 )) return false;//若之前保存的差 乘 当前组之差小于零，则表示不是单调数组，直接返回false
+        if( A[i+1] - A[i] !=0) a = A[i+1] - A[i];//若元素之差不等于零，则保存差值
+    }
+    return true;
+};
