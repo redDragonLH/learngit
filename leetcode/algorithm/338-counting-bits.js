@@ -32,3 +32,26 @@ var countBits = function (num) {
  * 执行用时：140 ms, 在所有 JavaScript 提交中击败了23.50%的用户
  * 内存消耗：44.9 MB, 在所有 JavaScript 提交中击败了20.05%的用户
  */
+
+/**
+ * 官方题解: 最高有效位
+ * 
+ * 出发思路比较简单,就是一个奇数的前一个偶数的二进制格式肯定比这个奇数少一个 1
+ * 
+ * 一个偶数与他前一个奇数相比,1的数量是一样的,只是位置不同
+ */
+var countBits = function(num) {
+    const bits = new Array(num + 1).fill(0);
+    let highBit = 0;
+    for (let i = 1; i <= num; i++) {
+        // 最主要的一句话
+        // 按位与: 在a,b的位表示中，每一个对应的位都为1则返回1， 否则返回0,也就是 当同一个位置的两个数据是1,则在返回值中+2,只有一个1,或者没有则返回值+0
+        // 
+        // 只有偶数更新,例子: 100/11
+        if ((i & (i - 1)) == 0) {
+            highBit = i;
+        }
+        bits[i] = bits[i - highBit] + 1;
+    }
+    return bits;
+};
