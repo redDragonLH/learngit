@@ -33,3 +33,37 @@ var maxEnvelopes = function(envelopes) {
     }
     return max
 };
+
+
+/**
+ * 官方题解: 动态规划
+ * 
+ */
+var maxEnvelopes = function(envelopes) {
+    if (envelopes.length === 0) {
+        return 0;
+    }
+    
+    const n = envelopes.length;
+    envelopes.sort((e1, e2) => {
+        // 以宽度为主,宽度为升序排列.宽度相同,则以高度为降序排列
+        if (e1[0] !== e2[0]) {
+            return e1[0] - e2[0]; 
+        } else {
+            return e2[1] - e1[1];
+        }
+    })
+    // 设 f[i] 表示 h 的前 i 个元素可以组成的最长严格递增子序列的长度
+    const f = new Array(n).fill(1);
+    let ans = 1;
+    for (let i = 1; i < n; ++i) {
+        // 从 0 到 i
+        for (let j = 0; j < i; ++j) {
+            if (envelopes[j][1] < envelopes[i][1]) {
+                f[i] = Math.max(f[i], f[j] + 1);
+            }
+        }
+        ans = Math.max(ans, f[i]);
+    }
+    return ans;
+};
