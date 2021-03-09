@@ -7,11 +7,31 @@
  */
 
 /**
- * 递归处理么,或者拆开
+ * 递归处理么,或者拆开,感觉拆效率会比较慢~~~
  * @param {string} S
  * @return {string}
  */
 var removeDuplicates = function(S) {
     const slen= S.length
-    const posArr = new Array.from(slen)
+    recursion(S)
+};
+const recursion = (S)=> {
+    for (let i = 0; i < S.length;) {
+        
+    }
+}
+
+/**
+ * 官方题解 栈
+ */
+var removeDuplicates = function(S) {
+    const stk = [];
+    for (const ch of S) {
+        if (stk.length && stk[stk.length - 1] === ch) {
+            stk.pop();
+        } else {
+            stk.push(ch);
+        }
+    }
+    return stk.join('');
 };
