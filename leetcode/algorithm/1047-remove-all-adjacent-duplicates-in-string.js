@@ -35,3 +35,30 @@ var removeDuplicates = function(S) {
     }
     return stk.join('');
 };
+
+/**
+ * 第三方题解
+ */
+/**
+ * @param {string} S
+ * @return {string}
+ */
+var removeDuplicates = function(S) {
+    if(S === ''){
+        return '';
+    }
+    let stack = [];
+    for(let i = 0; i < S.length; i++){
+        let code = S.charAt(i);
+        if(stack.length == 0){
+            stack.push(code);
+        }else{
+            if(stack[stack.length - 1] === code){
+                stack.pop();
+            }else{
+                stack.push(code);
+            }
+        }
+    }
+    return stack.join('');
+};
