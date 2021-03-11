@@ -54,3 +54,50 @@ var calculate = function(s) {
     }
     return ans;
 };
+
+
+/**
+ * 第三方优秀题解,和官方题解比,思路未变,但是进行了不少细节优化,比在最后不使用 pop 方法,弹出
+ * @param {string} s
+ * @return {number}
+ */
+var calculate = function(s) {
+    let n=0,res=0;
+    let c;
+    let sign='+';
+    let stack=[];
+    for(let i=0;i<=s.length;i++){
+        c=s.charAt(i);
+        if(c==' '){
+            continue;
+        }
+        // 减少了很多 显式转换,和方法判断,使用字符串比较代替,但是这样应该也会有隐式转换把
+        if(c>='0'&&c<='9'){
+            n=n*10+Number(c);
+            continue;
+        }
+
+        if(sign=='+'){
+            stack.push(n);
+        }
+        else if(sign=='-'){
+            stack.push(-n);
+        }
+        else if(sign=='*'){
+            // 增加不必要的变量,增加内存
+            let a=stack.pop();
+            stack.push(a*n);
+        }
+        else if(sign=='/'){
+            let a=stack.pop();
+            stack.push(Math.trunc(a/n));
+        }
+        sign=c;
+        n=0;
+    }
+    //  不使用 pop 方法返回数据,减少操作
+    for(let i=0;i<stack.length;i++){
+        res+=stack[i];
+    }
+    return res;
+};
