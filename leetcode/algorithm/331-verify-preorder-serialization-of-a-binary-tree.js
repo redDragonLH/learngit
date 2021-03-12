@@ -33,6 +33,8 @@ var isValidSerialization = function(preorder) {
  * 满二叉树叶子节点 = 非叶子节点 + 1 <-:  槽位的原理应该和这句话有关
  * 
  * 官方的题解方案应该都和这个有关
+ * 
+ * 依照上边的公式,计算当前叶子节点与非叶子节点的对应关系,以及位置关系,栈是为了保存位置关系
  */
 
 var isValidSerialization = function(preorder) {
