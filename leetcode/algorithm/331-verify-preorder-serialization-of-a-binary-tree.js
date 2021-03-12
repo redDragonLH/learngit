@@ -30,4 +30,68 @@ var isValidSerialization = function(preorder) {
  * 遍历结束后，若栈为空，说明没有待填充的槽位，因此是一个合法序列；否则若栈不为空，则序列不合法。此外，在遍历的过程中，若槽位数量不足，则序列不合法。
  * 
  * >>>> 这个槽位到底是什么原理
+ * 满二叉树叶子节点 = 非叶子节点 + 1 <-:  槽位的原理应该和这句话有关
+ * 
+ * 官方的题解方案应该都和这个有关
  */
+
+var isValidSerialization = function(preorder) {
+    const n = preorder.length;
+    let i = 0;
+    const stack = [1];
+    while (i < n) {
+        if (!stack.length) {
+            return false;
+        }
+        if (preorder[i] === ',') {
+            ++i;
+        } else if (preorder[i] === '#') {
+            stack[stack.length - 1]--;
+            if (stack[stack.length - 1] === 0) {
+                stack.pop();
+            } 
+            ++i;
+        } else {
+            // 读一个数字
+            while (i < n && preorder[i] !== ',') {
+                ++i;
+            }
+            stack[stack.length - 1]--;
+            if (stack[stack.length - 1] === 0) {
+                stack.pop();
+            }
+            stack.push(2);
+        }
+    }
+    return stack.length === 0;
+};
+
+/**
+ * 官方题解 计数
+ * 
+ * 回顾 栈方法 的逻辑，如果把栈中元素看成一个整体，即所有剩余槽位的数量，也能维护槽位的变化。
+ * 因此，我们可以只维护一个计数器，代表栈中所有元素之和，其余的操作逻辑均可以保持不变。
+ */
+var isValidSerialization = function(preorder) {
+    const n = preorder.length;
+    let i = 0;
+    let slots = 1;
+    while (i < n) {
+        if (slots === 0) {
+            return false;
+        }
+        if (preorder[i] === ',') {
+            ++i;
+        } else if (preorder[i] === '#') {
+            --slots;
+            ++i;
+        } else {
+            // 读一个数字
+            while (i < n && preorder[i] !== ',') {
+                ++i;
+            }
+            ++slots; // slots = slots - 1 + 2
+        }
+    }
+    return !slots;
+};
