@@ -95,3 +95,29 @@ var isValidSerialization = function(preorder) {
     }
     return !slots;
 };
+
+/**
+ * 第三方优秀题解
+ * 
+ * 基本原理没变,优化运行逻辑
+ * @param {*} preorder 
+ */
+var isValidSerialization = function(preorder) {
+
+    // 首先是前序遍历获取的字符串
+    var slot = 1;
+    var stack = preorder.split(',');
+
+    for(let i = 0;i<stack.length;i++) {
+        // 所有字符串都都把槽位-1
+        --slot
+        if(slot<0) return false; //直接反回
+
+        // 叶子节点,槽位+2
+        if(stack[i]!=="#") {
+            slot+=2;
+        }
+        
+    }
+    return slot === 0;
+}
