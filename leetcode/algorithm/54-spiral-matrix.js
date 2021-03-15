@@ -47,5 +47,42 @@ var spiralOrder = function(matrix) {
     return order;
 };
 /**
+ * 官方题解 : 按层模拟
  * 
+ * 这个比较容易理解,也没观察出这个规律来~~~
  */
+var spiralOrder = function(matrix) {
+    if (!matrix.length || !matrix[0].length) {
+        return [];
+    }
+
+    const rows = matrix.length, columns = matrix[0].length;
+    const order = [];
+    let left = 0, right = columns - 1, top = 0, bottom = rows - 1;
+    while (left <= right && top <= bottom) {
+        // 左到右
+        for (let column = left; column <= right; column++) {
+            order.push(matrix[top][column]);
+        }
+        // 上到下
+        for (let row = top + 1; row <= bottom; row++) {
+            order.push(matrix[row][right]);
+        }
+        if (left < right && top < bottom) {
+        // 右到左
+
+            for (let column = right - 1; column > left; column--) {
+                order.push(matrix[bottom][column]);
+            }
+            // 下到上
+            for (let row = bottom; row > top; row--) {
+                order.push(matrix[row][left]);
+            }
+        }
+        // 正好一个循环
+
+        // 圈缩小
+        [left, right, top, bottom] = [left + 1, right - 1, top + 1, bottom - 1];
+    }
+    return order;
+};
