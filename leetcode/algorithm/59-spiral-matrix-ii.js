@@ -54,3 +54,34 @@ var generateMatrix = function(n) {
  * 执行用时：96 ms, 在所有 JavaScript 提交中击败了19.96%的用户
  * 内存消耗：38 MB, 在所有 JavaScript 提交中击败了32.55%的用户
  */
+
+/**
+ * 第三方优秀题解
+ * 
+ * 模拟的架子,简化了太多
+ * @param {number} n
+ * @return {number[][]}
+ */
+var generateMatrix = function(n) {
+    let r = []
+    for (let i=0; i<n; i++) {
+        r.push([])
+    }
+    let i=0, j=0, k=1
+    while(!r[i][j] && k<n*n) {
+        while(j<n-1 && !r[i][j+1]) {
+            r[i][j++] = k++ 
+        }
+        while(i<n-1 && !r[i+1][j]) {
+            r[i++][j] = k++
+        }
+        while (j>0 && !r[i][j-1]) {
+            r[i][j--] = k++
+        }
+        while (i>0 && !r[i-1][j]) {
+            r[i--][j] = k++
+        }
+    }
+    r[i][j] = k
+    return r
+};
