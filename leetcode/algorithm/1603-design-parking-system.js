@@ -45,3 +45,36 @@ var ParkingSystem = function (big, medium, small) {
  * 执行用时：188 ms, 在所有 JavaScript 提交中击败了19.37%的用户
  * 内存消耗：44.3 MB, 在所有 JavaScript 提交中击败了99.03%的用户
  */
+
+/**
+ * 第三方最优解
+ */
+/**
+ * @param {number} big
+ * @param {number} medium
+ * @param {number} small
+ */
+var ParkingSystem = function (big, medium, small) {
+    // 数据结构~~~
+    ParkingSystem.cars = [big, medium, small]
+};
+
+/** 
+ * @param {number} carType
+ * @return {boolean}
+ */
+ParkingSystem.prototype.addCar = function (carType) {
+    // 配合数据结构
+    if (ParkingSystem.cars[carType - 1]) {
+        ParkingSystem.cars[carType - 1]--
+        return true
+    } else {
+        return false
+    }
+};
+
+/**
+ * Your ParkingSystem object will be instantiated and called as such:
+ * var obj = new ParkingSystem(big, medium, small)
+ * var param_1 = obj.addCar(carType)
+ */
