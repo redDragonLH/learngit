@@ -47,6 +47,52 @@
     return stack[0]
 };
 /**
+ * 我这还是都是从left 处理数据
  * 执行用时：104 ms, 在所有 JavaScript 提交中击败了38.97%的用户
  * 内存消耗：39.7 MB, 在所有 JavaScript 提交中击败了82.33%的用户
  */
+
+
+
+/**
+ * 第三方优秀题解
+ * 
+ * @param {string[]} tokens
+ * @return {number}
+ */
+ var evalRPN = function(tokens) {
+    if(!tokens || !tokens.length) return 0;
+    let sign = ['+','-','*','/']; 
+    let stack = [];
+    for(let i = 0; i<tokens.length; i++){
+        let cur = tokens[i];
+        // 优化，但是也得轮询把， object会不会好一点，但是初始化也是坑
+        if( sign.indexOf(cur) != -1){
+            let a = stack.pop();
+            // 减少了一次 pop 事件
+            stack[stack.length - 1]  = handleComputed(stack[stack.length - 1],a,cur);
+        }else{
+            stack.push(cur);
+        }
+    }
+    return stack[0];
+};
+
+function handleComputed(a, b, sign){
+    let res = 0;
+    switch(sign){
+        case '+':
+            res = Number(a) + Number(b);
+            break;
+        case '-':
+            res = a - b;
+            break;
+        case '*':
+            res = a * b;
+            break;
+        case '/':
+            res = parseInt(a / b);
+            break;
+    }
+    return res;
+}
