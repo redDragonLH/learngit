@@ -93,3 +93,52 @@ const setZeroe = (arr,posr,posc,row,cow)=>{
  * 执行用时：132 ms, 在所有 JavaScript 提交中击败了13.36%的用户
  * 内存消耗：40.8 MB, 在所有 JavaScript 提交中击败了21.61%的用户
  */
+
+/**
+ * 官方题解: 使用两个标记变量
+ * 
+ * 我们可以用矩阵的第一行和第一列代替方法一中的两个标记数组，以达到 O(1)O(1) 的额外空间。但这样会导致原数组的第一行和第一列被修改，
+ * 无法记录它们是否原本包含 00。因此我们需要额外使用两个标记变量分别记录第一行和第一列是否原本包含 00。
+ * 
+ * 在实际代码中，我们首先预处理出两个标记变量，接着使用其他行与列去处理第一行与第一列，
+ * 然后反过来使用第一行与第一列去更新其他行与列，最后使用两个标记变量更新第一行与第一列即可。
+ */
+
+ var setZeroes = function(matrix) {
+    const m = matrix.length, n = matrix[0].length;
+    let flagCol0 = false, flagRow0 = false;
+    for (let i = 0; i < m; i++) {
+        if (matrix[i][0] === 0) {
+            flagCol0 = true;
+        }
+    }
+    for (let j = 0; j < n; j++) {
+        if (matrix[0][j] === 0) {
+            flagRow0 = true;
+        }
+    }
+    for (let i = 1; i < m; i++) {
+        for (let j = 1; j < n; j++) {
+            if (matrix[i][j] === 0) {
+                matrix[i][0] = matrix[0][j] = 0;
+            }
+        }
+    }
+    for (let i = 1; i < m; i++) {
+        for (let j = 1; j < n; j++) {
+            if (matrix[i][0] === 0 || matrix[0][j] === 0) {
+                matrix[i][j] = 0;
+            }
+        }
+    }
+    if (flagCol0) {
+        for (let i = 0; i < m; i++) {
+            matrix[i][0] = 0;
+        }
+    }
+    if (flagRow0) {
+        for (let j = 0; j < n; j++) {
+            matrix[0][j] = 0;
+        }
+    }
+};
