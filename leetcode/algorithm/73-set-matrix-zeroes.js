@@ -60,3 +60,36 @@ const setZeroe = (arr,posr,posc,row,cow)=>{
         arr[posr][0] = 0
     }
 }
+
+/**
+ * 直观题解倒是简单，轮询所有元素，然后递归四边，或者按照上，左两条条线循环一次也就可以了
+ * 
+ * 但是更好的解法就有点想不出来了，顶多是储存一下已经被置空的行列，不去循环
+ */
+ var setZeroes = function(matrix) {
+
+    let row = matrix.length;
+    if(!row )return matrix;
+    let cow = matrix[0].length;
+    let copy = JSON.parse(JSON.stringify(matrix))
+    
+    for (let i = 0; i < row; i++) {
+        for (let j = 0; j < cow; j++) {
+            if(!copy[i][j]) {
+                for (let k = 0; k < row; k++) {
+                    matrix[k][j] =0
+                }
+                for (let b = 0; b < cow; b++) {
+                    matrix[i][b] =0
+                }
+            }
+        }        
+    }
+    return matrix;
+};
+/**
+ * 最惨的解法
+ * 
+ * 执行用时：132 ms, 在所有 JavaScript 提交中击败了13.36%的用户
+ * 内存消耗：40.8 MB, 在所有 JavaScript 提交中击败了21.61%的用户
+ */
