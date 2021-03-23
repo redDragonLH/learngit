@@ -112,45 +112,45 @@ NestedIterator.prototype.nextPos = function () {
  * @param {NestedInteger[]} nestedList
  */
 var NestedIterator = function (nestedList) {
-    this.stack = [];
-    this.pos = 0;
-    for (let i = 0; i < nestedList.length; i++) {
-      if (nestedList[i].isInteger()) {
-        this.stack.push(nestedList[i].getInteger());
-      } else {
-        this.add(nestedList[i].getList());
-      }
+  this.stack = [];
+  this.pos = 0;
+  for (let i = 0; i < nestedList.length; i++) {
+    if (nestedList[i].isInteger()) {
+      this.stack.push(nestedList[i].getInteger());
+    } else {
+      this.add(nestedList[i].getList());
     }
-  };
-  /**
-   * @this NestedIterator
-   * @returns {boolean}
-   */
-  NestedIterator.prototype.add = function (arr) {
-    for (let i = 0; i < arr.length; i++) {
-      if (arr[i].isInteger()) {
-        this.stack.push(arr[i].getInteger());
-      } else {
-        this.add(arr[i].getList());
-      }
+  }
+};
+/**
+ * @this NestedIterator
+ * @returns {boolean}
+ */
+NestedIterator.prototype.add = function (arr) {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].isInteger()) {
+      this.stack.push(arr[i].getInteger());
+    } else {
+      this.add(arr[i].getList());
     }
-  };
-  
-  /**
-   * @this NestedIterator
-   * @returns {boolean}
-   */
-  NestedIterator.prototype.hasNext = function () {
-    return this.pos < this.stack.length;
-  };
-  
-  /**
-   * @this NestedIterator
-   * @returns {integer}
-   */
-  NestedIterator.prototype.next = function () {
-    return this.stack[this.pos++];
-  };
+  }
+};
+
+/**
+ * @this NestedIterator
+ * @returns {boolean}
+ */
+NestedIterator.prototype.hasNext = function () {
+  return this.pos < this.stack.length;
+};
+
+/**
+ * @this NestedIterator
+ * @returns {integer}
+ */
+NestedIterator.prototype.next = function () {
+  return this.stack[this.pos++];
+};
 
 /**
  * 执行用时：124 ms, 在所有 JavaScript 提交中击败了37.44%的用户
@@ -159,12 +159,16 @@ var NestedIterator = function (nestedList) {
 
 /**
  * 官方题解
+ * 把最前面的数组结构,然后放回原位,这样数组的最前面就会是当前已经解构的数据,如果,第一个元素一直是数组,那就继续解构
+ * 我感觉也差不多把,毕竟每次都要改变数组结构和内容
+ * 
  */
 var NestedIterator = function (nestedList) {
   this.stack = nestedList;
 };
 
 NestedIterator.prototype.hasNext = function () {
+  // 惰性求值，如果第一个是数组，那就解构，并追加到大数组最前面
   while (this.stack.length !== 0) {
     if (this.stack[0].isInteger()) {
       return true;
