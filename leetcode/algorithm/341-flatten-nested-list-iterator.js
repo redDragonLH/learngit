@@ -104,3 +104,45 @@ NestedIterator.prototype.nextPos = function () {
  * var i = new NestedIterator(nestedList), a = [];
  * while (i.hasNext()) a.push(i.next());
 */
+
+
+/**
+ * 其实可以进行预处理,先扁平化,然后再用一个位置指针记录位置
+ * 
+ * 数据并不是嵌套数组,而是没有length 的数据,所以预处理有点坑
+ * @constructor
+ * @param {NestedInteger[]} nestedList
+ */
+var NestedIterator = function(nestedList) {
+    this.stack = [];
+    this.pos = 0;
+    this.add(nestedList)
+};
+/**
+ * @this NestedIterator
+ * @returns {boolean}
+ */
+NestedIterator.prototype.add = function(arr) {
+    for (let i = 0; i < arr.length; i++) {
+        if(typeof arr[i] === 'object'){
+            this.add(arr[i])
+        }
+        this.stack.push(arr[i])
+    }
+};
+
+/**
+ * @this NestedIterator
+ * @returns {boolean}
+ */
+NestedIterator.prototype.hasNext = function() {
+    return pos < this.stack.length;
+};
+
+/**
+ * @this NestedIterator
+ * @returns {integer}
+ */
+NestedIterator.prototype.next = function() {
+    return this.stack[pos++]
+};
