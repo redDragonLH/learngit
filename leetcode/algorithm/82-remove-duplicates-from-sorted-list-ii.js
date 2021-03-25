@@ -30,7 +30,7 @@ var deleteDuplicates = function (head) {
         next = next.next;
       }
       prev.next = next.next;
-      // 这边不能 prev=next,因为删除了,所以prev仍旧是原来的
+      // 这边不能 prev=next,因为删除prev后边的相同元素了,所以prev仍旧是原来的
     } else {
       prev = next;
     }
