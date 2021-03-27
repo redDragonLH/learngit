@@ -41,3 +41,36 @@
     arr.length && (arr[arr.length - 1].next = null)
     return head.next
 };
+
+/**
+ * 官方题解： 闭合为环
+ * 
+ * 就是把这个链表闭合成为一个环，这个过程中肯定知道了链表的长度，
+ * 然后再循环链表长度-k 个距离，这个节点就是旋转k个节点之后的头节点
+ */
+ var rotateRight = function(head, k) {
+    if (k === 0 || !head || !head.next) {
+        return head;
+    }
+    let n = 1;
+    let cur = head;
+    while (cur.next) {
+        cur = cur.next;
+        n++;
+    }
+
+    let add = n - k % n;
+    if (add === n) {
+        return head;
+    }
+
+    cur.next = head;
+    while (add) {
+        cur = cur.next;
+        add--;
+    }
+
+    const ret = cur.next;
+    cur.next = null;
+    return ret;
+};
