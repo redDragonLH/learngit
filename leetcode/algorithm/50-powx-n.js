@@ -38,3 +38,20 @@ var myPow = function (x, n) {
 var myPow = function (x, n) {
     return Math.pow(x,n); 
 };
+
+/**
+ * 官方题解: 快速幂
+ * 
+ * 从x开始,把直接把上一个的结果进行平方
+ * 
+ * 比较不好处理的是奇数的话要单✖乘一个x
+ */
+var myPow = function (x, n) {
+    const quickMul =(N)=> {
+        if(!N)return 1;
+        y = quickMul(parseInt( N / 2));
+        return N % 2 == 0 ? y * y : y * y * x;
+    }
+
+    return n >= 0 ? quickMul(x, n) : 1 / quickMul(x, -n);
+};
