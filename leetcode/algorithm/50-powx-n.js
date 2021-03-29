@@ -28,3 +28,13 @@ var myPow = function (x, n) {
  * 
  * 超出时间限制
  */
+
+/**
+ * 官方实现才超过 20%的人,开玩笑呢吧~~~
+ * @param {number} x
+ * @param {number} n
+ * @return {number}
+ */
+var myPow = function (x, n) {
+    return Math.pow(x,n); 
+};
