@@ -48,3 +48,8 @@ var findMin = function (nums) {
     }
     return nums[low];
 };
+
+/**
+ * 题解参考:
+ * https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/solution/er-fen-cha-zhao-wei-shi-yao-zuo-you-bu-dui-cheng-z/
+ */
