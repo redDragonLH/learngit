@@ -45,3 +45,12 @@ var findMin = function (nums) {
  * 执行用时：104 ms, 在所有 JavaScript 提交中击败了9.57%的用户
  * 内存消耗：38.8 MB, 在所有 JavaScript 提交中击败了86.33%的用户
  */
+
+var findMin = function (nums) {
+  return Math.min(...nums);
+};
+/**
+ * ?
+ * 执行用时：96 ms, 在所有 JavaScript 提交中击败了21.48%的用户
+ * 内存消耗：38.9 MB, 在所有 JavaScript 提交中击败了68.36%的用户
+ */
