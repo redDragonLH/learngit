@@ -20,3 +20,20 @@
  * 执行用时：88 ms, 在所有 JavaScript 提交中击败了72.15%的用户
  * 内存消耗：39.1 MB, 在所有 JavaScript 提交中击败了97.29%的用户
  */
+
+/**
+ * @param {number[]} nums
+ * @return {string}
+ */
+ var largestNumber = function (nums) {
+    function compare(a, b) {
+      return a + b > b + a ? -1 : 1;
+    }
+    // 把数据一次性转为字符串,省的每次对比转换
+    nums = nums.map((a) => (a += ''));
+    nums.sort(compare);
+    if (nums[0] == 0) {
+      return '0';
+    }
+    return nums.join('');
+  };
