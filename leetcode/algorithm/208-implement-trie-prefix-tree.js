@@ -108,3 +108,47 @@ Trie.prototype.startsWith = function(prefix) {
  * 执行用时：240 ms, 在所有 JavaScript 提交中击败了51.14%的用户
  * 内存消耗：52.5 MB, 在所有 JavaScript 提交中击败了100.00%的用户
  */
+
+
+/**
+ * 第三方优秀题解
+ */
+ const Trie = function () {
+    this.root = {} // 所有数据都放到一个变量内
+  }
+  
+  // 插入函数
+  Trie.prototype.insert = function (word) {
+    let node = this.root
+    // 循环单词字符
+    for (const w of word) {
+      // 这句话 !node[w] && (node[w] = {}),(node = node[w])
+      // 不存在则创建一个节点
+      !node[w] && (node[w] = {})
+      // 递归往下赋值
+      node = node[w]
+    }
+    // 这个单词的末尾又一个结束符
+    node.isEnd = 1
+  }
+  
+  // 辅助函数
+  Trie.prototype.help = function (word) {
+    let node = this.root
+    for (const w of word) {
+      if (!node[w]) return false
+      node = node[w]
+    }
+    return node
+  }
+  
+  // 查找函数
+  Trie.prototype.search = function (allWord, node) {
+    return (node = this.help(allWord)) && node.isEnd === 1
+  }
+  
+  // startsWith函数
+  Trie.prototype.startsWith = function (prefixWord) {
+    return !!this.help(prefixWord)
+  }
+  
