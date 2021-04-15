@@ -13,21 +13,58 @@
  * @param {number[]} nums
  * @return {number}
  */
- var rob = function (nums) {
-    
-    let maxArrr = [0,0]
-    let len = nums.length
-    if(!len) return 0
-    if(len === 1) return nums[0];
-    nums.forEach((e,i)=>{
-        if(i%2){
-            maxArrr[1]+=e
-        }else {
-            if(i!==len-1) {
-                maxArrr[0]+=e
-            }
-            
-        }
-    })
-    return Math.max(...maxArrr)
+var rob = function (nums) {
+  let maxArrr = [0, 0];
+  let len = nums.length;
+  if (!len) return 0;
+  if (len === 1) return nums[0];
+  nums.forEach((e, i) => {
+    if (i % 2) {
+      maxArrr[1] += e;
+    } else {
+      if (i !== len - 1) {
+        maxArrr[0] += e;
+      }
+    }
+  });
+  return Math.max(...maxArrr);
+};
+
+/**
+ * 此题中的难点在于房间是环状排列,意味着第一个房子和最后一个房子只能选一个,但是这样也可以转为两个单排排列房子的问题
+ *
+ * 动态规划思路
+ *  把多阶段过程转化为一系列单阶段问题,逐个求解
+ * 1. 定义数组含义~~也就是数组内数据是什么
+ *      数组应该是当前元素最多能拿到的钱
+ * 2. 找出数组元素之间的关系式
+ *
+ * 3. 找出初始值
+ *
+ * 动态规划重步推,一步一步推导,忌急. 核心就是以前面的数据求取当前的结果
+ */
+
+var rob = function (nums) {
+  const length = nums.length;
+  if (length === 1) {
+    return nums[0];
+  } else if (length === 2) {
+    return Math.max(nums[0], nums[1]);
+  }
+  // 两个单排分别处理数据,然后对比
+  return Math.max(robRange(nums, 0, length - 2), robRange(nums, 1, length - 1));
+};
+
+const robRange = (nums, start, end) => {
+    // 优化数组为两个变量
+  let first = nums[start],
+    second = Math.max(nums[start], nums[start + 1]);
+    // 直接越过first和second 进行循环,
+  for (let i = start + 2; i <= end; i++) {
+      // 内部的步骤基本逻辑和正常的数组方案是一样的
+    const temp = second;
+    second = Math.max(first + nums[i], second);
+    first = temp;
+  }
+  return second;
 };
