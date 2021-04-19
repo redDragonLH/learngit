@@ -35,3 +35,30 @@ var removeElement = function (nums, val) {
  * 执行用时：88 ms, 在所有 JavaScript 提交中击败了48.09%的用户
  * 内存消耗：37.5 MB, 在所有 JavaScript 提交中击败了97.88%的用户
  */
+
+/**
+ * 待优化
+ * @param {number[]} nums
+ * @param {number} val
+ * @return {number}
+ */
+var removeElement = function (nums, val) {
+  let len = nums.length;
+  let slow = 0,
+    fast = 0;
+  while (fast < len) {
+    if (nums[fast] === val) {
+      fast++;
+      continue;
+    }
+    nums[slow] = nums[fast];
+    slow++;
+    fast++;
+  }
+
+  return slow;
+};
+/**
+ * 执行用时：80 ms, 在所有 JavaScript 提交中击败了82.76%的用户
+ * 内存消耗：38.1 MB, 在所有 JavaScript 提交中击败了24.40%的用户
+ */
