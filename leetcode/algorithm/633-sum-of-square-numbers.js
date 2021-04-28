@@ -11,7 +11,7 @@
  * 最朴素的思路，两层for循环，从0到sqrt(c)，看是否存在符合条件的a和b。相当于遍历了两次从0到sqrt(c)
  *
  * 可以用双指针解法,但是逻辑原理是什么,
- * 
+ *
  * 失败,还是双循环的路子,first 走到头才处理last ,这个逻辑不对
  * @param {number} c
  * @return {boolean}
@@ -29,6 +29,20 @@ var judgeSquareSum = function (c) {
       first++;
     } else {
       last++;
+    }
+  }
+  return false;
+};
+
+/**
+ * 数学方法
+ */
+var judgeSquareSum = function (c) {
+  for (let a = 0; a * a <= c; a++) {
+      // 一点点减过去
+    const b = Math.sqrt(c - a * a);
+    if (b === parseInt(b)) {
+      return true;
     }
   }
   return false;
