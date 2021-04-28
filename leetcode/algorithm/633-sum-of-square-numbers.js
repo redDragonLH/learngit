@@ -51,6 +51,9 @@ var judgeSquareSum = function (c) {
 
 /**
  * 双指针,不是快慢针
+ *
+ * * a方 + b方 小于 c,a-1
+ * * a方 + b方 大于 c,b-1
  */
 var judgeSquareSum = function (c) {
   let left = 0;
