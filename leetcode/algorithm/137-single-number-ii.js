@@ -27,3 +27,8 @@ var singleNumber = function (nums) {
  * 执行用时：96 ms, 在所有 JavaScript 提交中击败了48.32%的用户
  * 内存消耗：40.8 MB, 在所有 JavaScript 提交中击败了5.15%的用户
  */
+
+/**
+ * 数字电路方案
+ * https://leetcode-cn.com/problems/single-number-ii/solution/zhi-chu-xian-yi-ci-de-shu-zi-ii-by-leetc-23t6/
+ */
