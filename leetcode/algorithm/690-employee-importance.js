@@ -35,3 +35,40 @@
     }
     return importance
 };
+
+/**
+ * 第三方优秀题解
+ * 
+ * 
+ */
+/**
+ * Definition for Employee.
+ * function Employee(id, importance, subordinates) {
+ *     this.id = id;
+ *     this.importance = importance;
+ *     this.subordinates = subordinates;
+ * }
+ */
+
+/**
+ * @param {Employee[]} employees
+ * @param {number} id
+ * @return {number}
+ */
+ var GetImportance = function(employees, id) {
+    const obj=employees.reduce((obj,employee)=>{
+        obj[employee.id]=employee;
+        return obj;
+    },{});
+    //本质上就是深度优先遍历
+    function dfs(id){
+        const employee=obj[id];
+        let res=employee.importance;
+        for(let subid of employee.subordinates){
+            res+=dfs(subid);
+        }
+        return res;
+    }
+    return dfs(id);
+}
+
