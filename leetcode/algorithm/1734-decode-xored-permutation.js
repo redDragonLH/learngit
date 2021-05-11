@@ -30,6 +30,7 @@ var decode = function (encoded) {
   const n = encoded.length + 1;
   let total = 0;
   // 从1到n的所有正整数进行异或
+  // 所有正整数的异或结果,没问题
   for (let i = 1; i <= n; i++) {
     total ^= i;
   }
@@ -47,3 +48,8 @@ var decode = function (encoded) {
   }
   return perm;
 };
+
+/**
+ * 缺失数据太多,无法理解~~
+ * https://leetcode-cn.com/problems/decode-xored-permutation/solution/jie-ma-yi-huo-hou-de-pai-lie-by-leetcode-9gw4/
+ */
