@@ -47,3 +47,23 @@ var xorQueries = function (arr, queries) {
     }
     return ans;
 };
+
+/**
+ * 第三方优秀题解
+ */
+/**
+ * 
+ * 简化官方题解
+ * @param {number[]} arr
+ * @param {number[][]} queries
+ * @return {number[]}
+ */
+ var xorQueries = function (arr, queries) {
+    const arrx = [0].concat(arr)
+    for (let i = 1; i < arrx.length; i++) {
+        arrx[i] ^= arrx[i - 1]
+    }
+    return queries.map(([left, right]) => {
+        return arrx[right + 1] ^ arrx[left]
+    })
+};
