@@ -28,3 +28,22 @@ var xorQueries = function (arr, queries) {
  * 执行用时：2100 ms, 在所有 JavaScript 提交中击败了6.06%的用户
  * 内存消耗：49.9 MB, 在所有 JavaScript 提交中击败了100.00%的用户
  */
+
+/**
+ * 前缀异或
+ * 使用前缀和方式吗
+ */
+ var xorQueries = function(arr, queries) {
+    const n = arr.length;
+    const xors = new Array(n + 1).fill(0);
+    for (let i = 0; i < n; i++) {
+        xors[i + 1] = xors[i] ^ arr[i];
+    }
+    const m = queries.length;
+    const ans = new Array(m).fill(0);
+    for (let i = 0; i < m; i++) {
+        // 为啥还用异或,普通前缀和应该使用加减,但是前缀异或和应该用异或吧
+        ans[i] = xors[queries[i][0]] ^ xors[queries[i][1] + 1];
+    }
+    return ans;
+};
