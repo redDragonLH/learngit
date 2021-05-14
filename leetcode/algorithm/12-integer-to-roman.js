@@ -57,3 +57,23 @@
     }
     return roman.join('');
 };
+
+/**
+ * 官方题解 硬编码数字
+ * @param {*} num 
+ * @returns 
+ */
+var intToRoman = function(num) {
+    // 每个数都写出来
+    const thousands = ["", "M", "MM", "MMM"];
+    const hundreds = ["", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"];
+    const tens     = ["", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"];
+    const ones     = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"];
+
+    const roman = [];
+    roman.push(thousands[Math.floor(num / 1000)]);
+    roman.push(hundreds[Math.floor(num % 1000 / 100)]);
+    roman.push(tens[Math.floor(num % 100 / 10)]);
+    roman.push(ones[num % 10]);
+    return roman.join('');
+};
