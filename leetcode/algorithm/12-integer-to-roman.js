@@ -77,3 +77,26 @@ var intToRoman = function(num) {
     roman.push(ones[num % 10]);
     return roman.join('');
 };
+
+/**
+ * 第三方优秀题解
+ * 
+ * 模拟的简明写法
+ */
+/**
+ * @param {number} num
+ * @return {string}
+ */
+ var intToRoman = function(num) {
+    let str = ''
+    let luomaArr = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I']
+    let numberArr = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
+    // 双循环
+    for(let i = 0; num > 0 && i < 13; i++) {
+        while (numberArr[i] <= num) {
+            str += luomaArr[i]
+            num -= numberArr[i]
+        }
+    }
+    return str
+};
