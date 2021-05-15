@@ -22,11 +22,12 @@ C 可以放在 D (500) 和 M (1000) 的左边，来表示 400 和 900。
 给定一个罗马数字，将其转换成整数。输入确保在 1 到 3999 的范围内。
  */
 
- /**
- * @param {string} s
- * @return {number}
- */
-var romanToInt = function(s) {
+/**
+* 位置不一样组合起来的数表示的也不一样
+* @param {string} s
+* @return {number}
+*/
+var romanToInt = function (s) {
     let map = {
         I: 1,
         V: 5,
@@ -37,14 +38,41 @@ var romanToInt = function(s) {
         M: 1000,
     }
     let len = s.length;
-    let num = 0,i=0;
-    while(i < len) {
+    let num = 0, i = 0;
+    while (i < len) {
         let mapn = map[s[i]]
-        if(num < mapn) {
+        if (num < mapn) {
             num = mapn - num;
-        }else {num += mapn}
+        } else { num += mapn }
         i++;
     }
     return num;
 };
 console.log(romanToInt('IV'));
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var romanToInt = function (s) {
+    const symbolValues = new Map();
+    symbolValues.set('I', 1);
+    symbolValues.set('V', 5);
+    symbolValues.set('X', 10);
+    symbolValues.set('L', 50);
+    symbolValues.set('C', 100);
+    symbolValues.set('C', 100);
+    symbolValues.set('D', 500);
+    symbolValues.set('M', 1000);
+    let ans = 0;
+    const n = s.length;
+    for (let i = 0; i < n; ++i) {
+        const value = symbolValues.get(s[i]);
+        if (i < n - 1 && value < symbolValues.get(s[i + 1])) {
+            ans -= value;
+        } else {
+            ans += value;
+        }
+    }
+    return ans;
+};
