@@ -22,7 +22,7 @@ var kthLargestValue = function (matrix, k) {
   const results = [];
   for (let i = 1; i < m + 1; i++) {
     for (let j = 1; j < n + 1; j++) {
-      // 这里为啥有这么多需要异或的就不知道了
+      // 因为这次是二维数组,那么单单使用前一个的异或和就不够了,还需要i-1、j-1,以及i-1,j-1,这三个位置的值和当前位置的数据进行异或
       pre[i][j] =
         pre[i - 1][j] ^
         pre[i][j - 1] ^
