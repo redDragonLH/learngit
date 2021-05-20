@@ -43,3 +43,23 @@ const dicSort = (arr, start, end) => {
     const element = array[i];
   }
 };
+/**
+ * 官方 哈希表+ 排序
+ */
+var topKFrequent = function (words, k) {
+  const cnt = new Map();
+  for (const word of words) {
+    cnt.set(word, (cnt.get(word) || 0) + 1);
+  }
+  const rec = [];
+  for (const entry of cnt.keys()) {
+    rec.push(entry);
+  }
+  // 逻辑上是一样的,不过没想到排序还能这么写
+  rec.sort((word1, word2) => {
+    return cnt.get(word1) === cnt.get(word2)
+      ? word1.localeCompare(word2)
+      : cnt.get(word2) - cnt.get(word1);
+  });
+  return rec.slice(0, k);
+};
