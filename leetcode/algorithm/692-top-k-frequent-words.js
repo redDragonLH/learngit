@@ -27,21 +27,19 @@ var topKFrequent = function (words, k) {
     }
   }
   arr.sort((a, b) => b[1] - a[1]);
-// 把次数相等的数据进行字典序排序
+  // 把次数相等的数据进行字典序排序
 
-//然后返回K大的值
+  //然后返回K大的值
 };
 
 /**
  * 分段进行字典序处理
- * @param {*} arr 
- * @param {*} start 
- * @param {*} end 
+ * @param {*} arr
+ * @param {*} start
+ * @param {*} end
  */
-const dicSort = (arr,start,end)=> {
-
-    for (let i = start; i < end; i++) {
-        const element = array[i];
-        
-    }
-}
+const dicSort = (arr, start, end) => {
+  for (let i = start; i < end; i++) {
+    const element = array[i];
+  }
+};
