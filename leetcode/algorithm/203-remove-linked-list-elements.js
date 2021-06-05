@@ -30,3 +30,7 @@ var removeElements = function (head, val) {
     }
     return link.next
 };
+/**
+ * 执行用时：96 ms, 在所有 JavaScript 提交中击败了93.13%的用户
+ * 内存消耗：42.7 MB, 在所有 JavaScript 提交中击败了20.80%的用户
+ */
