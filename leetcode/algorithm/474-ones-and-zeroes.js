@@ -8,6 +8,7 @@
 
 /**
  * 这个逻辑也挺直白的把，双层循环，循环所有字符
+ * 
  * NM,,,是多个字符串加起來有m个0，n个 1
  * 
  * 错误代码
@@ -36,4 +37,36 @@ var findMaxForm = function (strs, m, n) {
         }
     }
     return count;
+};
+
+/**
+ * 考虑考虑 排序+循环
+ * 还是不行，得有回溯的功能
+ * @param {string[]} strs
+ * @param {number} m
+ * @param {number} n
+ * @return {number}
+ */
+ var findMaxForm = function(strs, m, n) {
+    strs = strs.sort((a,b)=>a.length-b.length);
+    let len = strs.length;
+    let count =0
+    for (let i = 0; i < len; i++) {
+        let e = strs[i];
+        let eLen = strs[i].length;
+        let eCount =[0,0];
+        for (let j = 0; j < eLen; j++) {
+            if(e[j]==='0'){
+                eCount[0]++
+            }else {
+                eCount[1]++
+            }
+        }
+        if(m-eCount[0] >-1 &&n-eCount[1] >-1 ){
+            m = m-eCount[0]
+            n = n-eCount[1]
+            count++
+        }   
+    }
+return count
 };
