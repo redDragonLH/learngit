@@ -32,3 +32,13 @@ var findTargetSumWays = function (nums, target) {
   deep(nums, -1, 0);
   return count;
 };
+
+/**
+ * 考虑一下动态规划怎么做
+ * 
+ * 应该是从头循环,但是这次是获取有多少条,那当前状态就不能是当前的sum,或者不能只是sum,
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number}
+ */
+ var findTargetSumWays = function (nums, target) {}
