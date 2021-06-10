@@ -15,11 +15,16 @@ var change = function (amount, coins) {
   let len = coins.length;
   // 当前钱数下多少种组合么,可以吧coins 分开计算然后加在一起, (但是这样无法交叉计算了)
   // 0 圆钱的时候所以元素都是零
-  let dp = new Array(len).fill(0);
+  let dp = new Array(len);
+  for (let i = 0; i < len; i++) {
+    dp[i] = new Array(len).fill(0);
+  }
+  console.log(dp);
   for (let i = 1; i <= amount; i++) {
     for (let j = 0; j < len; j++) {
-      // 应该是上一个数加上当前元素coins是不是等于当前的钱
-      dp[j] = dp[j] + coins[j] === i ? dp[j] + coins[j] : dp[j];
+        for (let k = 0; k < len; k++) {
+            // 这样的话鬼知道从哪个i计算啊
+        }
     }
   }
 };
