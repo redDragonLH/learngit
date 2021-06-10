@@ -22,10 +22,33 @@ var change = function (amount, coins) {
   console.log(dp);
   for (let i = 1; i <= amount; i++) {
     for (let j = 0; j < len; j++) {
-        for (let k = 0; k < len; k++) {
-            // 这样的话鬼知道从哪个i计算啊
-        }
+      for (let k = 0; k < len; k++) {
+        // 这样的话鬼知道从哪个i计算啊
+      }
     }
   }
+};
+// change(5, [1, 2, 5]);
+
+/**
+ * 官方题解
+ *
+ * 我想复杂了,角度有问题
+ *
+ */
+var change = function (amount, coins) {
+  // dp[x] 金额之和等于 x 的硬币组合数
+  const dp = new Array(amount + 1).fill(0);
+  dp[0] = 1;
+  for (const coin of coins) {
+    //
+    for (let i = coin; i <= amount; i++) {
+      //对于面额为 coin 的硬币，当 coin ≤ i ≤ amount 时，如果存在一种硬币组合的金额之和等于 i−coin，则在该硬币组合中增加一个面额为 coin 的硬币，即可得到一种金额之和等于 i 的硬币组合
+      // 大概理解,dp[i-coin]有值的话那么说明在加一个coin值就可以等于i,i也就多了一种组合
+      //
+      dp[i] += dp[i - coin];
+    }
+  }
+  return dp[amount];
 };
 change(5, [1, 2, 5]);
