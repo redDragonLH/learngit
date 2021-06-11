@@ -31,4 +31,23 @@ var numSquares = function (n) {
     }
   }
 };
-numSquares(12);
+
+/**
+ *官方题解: 动态规划
+ * @param {*} n
+ * @returns
+ */
+var numSquares = function (n) {
+  const f = new Array(n + 1).fill(0);
+  for (let i = 1; i <= n; i++) {
+    let minn = Number.MAX_VALUE;
+    // 判断条件就是数字的平方不能大于i,组合到循环条件中
+    for (let j = 1; j * j <= i; j++) {
+      // 和 518 题的思路基本是一样的,从前边数据确认当前的数量,只保存当前的数量,当一次循环处理完毕在进行次数的处理
+      //dp 里面保存的当前的方案,难道也是最少的数量,?没太理解
+      minn = Math.min(minn, f[i - j * j]);
+    }
+    f[i] = minn + 1;
+  }
+  return f[n];
+};
