@@ -41,3 +41,30 @@ var solution = function (isBadVersion) {
         return start;
     };
 };
+
+
+/**
+ * 官方题解
+ * @param {function} isBadVersion()
+ * @return {function}
+ */
+ var solution = function(isBadVersion) {
+    /**
+     * @param {integer} n Total versions
+     * @return {integer} The first bad version
+     */
+    return function(n) {
+        let left = 1;
+        let right = n;
+        // 判断条件和循环内逻辑联动，high 节点包含在内的话就不需要等于判断
+        while(left<right){
+            let mid = Math.floor((left+right)/2);
+            if(isBadVersion(mid)){
+                right = mid;
+            }else{
+                left = mid + 1;
+            }
+        }
+        return left;
+    };
+};
