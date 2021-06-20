@@ -9,18 +9,22 @@
  * 具体信息见leetcode 官网
  */
 
-class Person{
-    constructor(name){
+class Person {
+    constructor(name) {
         this.name = name;
         this.status = true;
-        this.childs=[]
+        this.childs = []
     }
 }
 /**
  * @param {string} kingName
  */
- var ThroneInheritance = function(kingName) {
-    this.throne = new Person(kingName)
+var ThroneInheritance = function (kingName) {
+    const person = new Person(kingName);
+    this.throne = person;
+    this.throneObj = {
+        kingName: person
+    }
 };
 
 /** 
@@ -28,43 +32,26 @@ class Person{
  * @param {string} childName
  * @return {void}
  */
-ThroneInheritance.prototype.birth = function(parentName, childName) {
-    let arr = [this.throne];
-    while(arr.length){
-        let person = arr.shift()
-        if(person.name === parentName) {
-            person.childs.push(new Person(childName))
-            break;
-        }else {
-            arr.push(...person.childs)
-        }
-    }
+ThroneInheritance.prototype.birth = function (parentName, childName) {
+    this.throneObj[parentName].childs.push(new Person(childName));
 };
 
 /** 
  * @param {string} name
  * @return {void}
  */
-ThroneInheritance.prototype.death = function(name) {
-    let arr = [this.throne];
-    while(arr.length){
-        let person = arr.shift()
-        if(person.name === name) {
-            person.status = false
-            break;
-        }else {
-            arr.push(...person.childs)
-        }
-    }
+ThroneInheritance.prototype.death = function (name) {
+    this.throneObj[name].status = false;
+
 };
 
 /**
  * @return {string[]}
  */
-ThroneInheritance.prototype.getInheritanceOrder = function() {
+ThroneInheritance.prototype.getInheritanceOrder = function () {
     let result = [];
     let arr = [this.throne];
-    while(arr.length){
+    while (arr.length) {
         let person = arr.shift()
         person.status && result.push(person.name)
         person.childs.length && arr.unshift(...person.childs)
@@ -80,5 +67,6 @@ ThroneInheritance.prototype.getInheritanceOrder = function() {
  * var param_3 = obj.getInheritanceOrder()
  */
 /**
- * 超时~~~~~
+ * 执行用时：796 ms, 在所有 JavaScript 提交中击败了40.00%的用户
+ * 内存消耗：84 MB, 在所有 JavaScript 提交中击败了40.00%的用户
  */
