@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -11,6 +12,7 @@ import java.util.List;
  * <p>
  * 具体信息见leetcode 官网
  */
+
 class Person {
     public String name;
     public Boolean status = false;
@@ -29,40 +31,23 @@ class Person {
 
 class ThroneInheritance {
     public ArrayList<Person> thrones = new ArrayList<Person>();
+    public HashMap<String, Person> thronesMap = new HashMap<String, Person>();
 
     public ThroneInheritance(String kingName) {
-        thrones.add(new Person(kingName));
+        Person person = new Person(kingName);
+        thrones.add(person);
+        thronesMap.put(kingName, person);
     }
 
     public void birth(String parentName, String childName) {
-        ArrayList<Person> temp = new ArrayList<Person>();
-        temp.addAll(thrones);
-        while (temp.size()>0){
-            Person item = temp.remove(0);
-            if (item.name.equals(parentName) ) {
-
-                item.childs.add(new Person(childName));
-                break;
-            } else {
-                temp.addAll(item.childs);
-            }
-        }
-
+        Person person = new Person(childName);
+        thronesMap.get(parentName).childs.add(person);
+        thronesMap.put(childName, person);
     }
 
     public void death(String name) {
-        ArrayList<Person> temp = new ArrayList<Person>();
-        temp.addAll(thrones);
-        while (temp.size()>0){
-            Person item = temp.remove(0);
+        thronesMap.get(name).status = true;
 
-            if (item.name.equals(name)) {
-                item.status = true;
-                break;
-            } else {
-                temp.addAll(item.childs);
-            }
-        }
     }
 
     // List是抽象数据也是 数组类数组结构的祖先，所以不能直接实例化List
@@ -70,9 +55,9 @@ class ThroneInheritance {
         List<String> result = new ArrayList<String>();
         ArrayList<Person> temp = new ArrayList<Person>();
         temp.addAll(thrones);
-        while (temp.size()>0){
+        while (temp.size() > 0) {
             Person item = temp.remove(0);
-            if(!item.status) result.add(item.name);
+            if (!item.status) result.add(item.name);
             temp.addAll(0, item.childs);
         }
         return result;
@@ -84,8 +69,18 @@ class ThroneInheritance {
  * obj.birth(parentName,childName);
  * obj.death(name);
  * List<String> param_3 = obj.getInheritanceOrder();
+ * <p>
+ * 单一数据结构还是会超出时间限制
+ * <p>
+ * 单一数据结构还是会超出时间限制
+ * <p>
+ * 单一数据结构还是会超出时间限制
+ * <p>
+ * 单一数据结构还是会超出时间限制
  */
 
 /**
- * 单一数据结构还是会超出时间限制
+ * ~~~~~
+ * 执行用时：301 ms, 在所有 Java 提交中击败了99.44%的用户
+ * 内存消耗：97.7 MB, 在所有 Java 提交中击败了45.00%的用户
  */
