@@ -1,6 +1,6 @@
 /**
  * 877. 石子游戏
- *
+ * <p>
  * 亚历克斯和李用几堆石子在做游戏。偶数堆石子排成一行，每堆都有正整数颗石子 piles[i] 。
  * 游戏以谁手中的石子最多来决出胜负。石子的总数是奇数，所以没有平局。
  * 亚历克斯和李轮流进行，亚历克斯先开始。 每回合，玩家从行的开始或结束处取走整堆石头。 这种情况一直持续到没有更多的石子堆为止，此时手中石子最多的玩家获胜。
@@ -18,21 +18,19 @@ class Solution {
         //        [0 3 1 4]
         //        [0 0 4 1]
         //        [0 0 0 5]
-        int n=piles.length;
-        int [][]dps=new int[n][n];
+        int n = piles.length;
+        int[][] dps = new int[n][n];
         //dps[i][i]存储当前i的石子数
-        for(int i=0;i<n;i++)
-            dps[i][i]=piles[i];
+        for (int i = 0; i < n; i++)
+            dps[i][i] = piles[i];
         //d=1,其实代表，先算两个子的时候
-        for(int d=1;d<n;d++)
-        {
+        for (int d = 1; d < n; d++) {
             //有多少组要比较
-            for(int j=0;j<n-d;j++)
-            {
+            for (int j = 0; j < n - d; j++) {
                 //比较j到d+j
-                dps[j][d+j]=Math.max(piles[j]-dps[j+1][d+j],piles[d+j]-dps[j][d+j-1]);
+                dps[j][d + j] = Math.max(piles[j] - dps[j + 1][d + j], piles[d + j] - dps[j][d + j - 1]);
             }
         }
-        return dps[0][n-1]>0;
+        return dps[0][n - 1] > 0;
     }
 }
