@@ -55,7 +55,29 @@ const binary2Date = (binary) => {
 };
 
 /**
- * 没有进行剪枝
+ * 没有进行剪枝,把数组和字符串改为二进制数字应该能再次减少数据类型转换的时间
  * 执行用时：4200 ms, 在所有 JavaScript 提交中击败了5.04%的用户
  * 内存消耗：44.3 MB, 在所有 JavaScript 提交中击败了5.04%的用户
  */
+
+/**
+ * 官方题解: 枚举
+ * 
+ * 这个角度没想到
+ */
+
+var readBinaryWatch = function (turnedOn) {
+  const ans = [];
+  for (let h = 0; h < 12; ++h) {
+    for (let m = 0; m < 60; ++m) {
+      if (
+        h.toString(2).split("0").join("").length +
+          m.toString(2).split("0").join("").length ===
+        turnedOn
+      ) {
+        ans.push(h + ":" + (m < 10 ? "0" : "") + m);
+      }
+    }
+  }
+  return ans;
+};
