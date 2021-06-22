@@ -11,19 +11,22 @@
  */
 var permutation = function (s) {
     const data = [];
-    deep(s, '',0, data);
+    deep(s, '', 0, data);
     return data;
 };
-const deep = (s, subString,pos, data) => {
-    console.log(data);
+const deep = (s, subString, pos, data) => {
     if (subString.length === s.length) {
-        data.push(subString);
-        return data
+        !data.includes(subString) && data.push(subString);
+        return null;
     }
     for (let i = 0; i < s.length; i++) {
-        console.log(pos>>i & 0);
-        if (!subString.includes(s[i])) {
-            permutation(s, subString + s[i], data)
+        if (!(pos >> i & 1)) {
+            deep(s, subString + s[i], pos | 1 << i, data)
         }
     }
 }
+/**
+ * 理论上不需要这么长时间的啊，难道是include 方法的问题，改为object么
+ * 执行用时：3272 ms, 在所有 JavaScript 提交中击败了5.50%的用户
+ * 内存消耗：45.7 MB, 在所有 JavaScript 提交中击败了93.69%的用户
+ */
