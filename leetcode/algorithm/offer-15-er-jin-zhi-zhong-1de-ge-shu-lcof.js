@@ -19,3 +19,20 @@ var hammingWeight = function (n) {
  * 执行用时：100 ms, 在所有 JavaScript 提交中击败了43.83%的用户
  * 内存消耗：39.1 MB, 在所有 JavaScript 提交中击败了75.72%的用户
  */
+
+/**
+ * 位运算优化
+ * n &(n-1): 这种情况下因为n-1,就把最后一个1所在的位以及以后的位翻转,这样的话按位与 最后一个1以及以后的所有数据都会丢弃,那么每次处理都会精准的处理一个有效位
+ * & :按位与,当对比的两个数的同位置位都是1则此位返回1
+ *
+ * @param {number} n - a positive integer
+ * @return {number}
+ */
+var hammingWeight = function (n) {
+  let result = 0;
+  while (n) {
+    n &= n - 1;
+    result++;
+  }
+  return result;
+};
