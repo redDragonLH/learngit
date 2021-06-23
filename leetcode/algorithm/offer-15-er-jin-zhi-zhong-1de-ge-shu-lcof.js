@@ -9,12 +9,13 @@
  * @return {number}
  */
 var hammingWeight = function (n) {
-  console.log(typeof n, n);
   let result = 0;
-  while (n) {
-    result += n & 1;
-    n >>= 1;
+  for (let i = 0; i < 32; i++) {
+    result += (n >> i) & 1;
   }
-
   return result;
 };
+/**
+ * 执行用时：100 ms, 在所有 JavaScript 提交中击败了43.83%的用户
+ * 内存消耗：39.1 MB, 在所有 JavaScript 提交中击败了75.72%的用户
+ */
