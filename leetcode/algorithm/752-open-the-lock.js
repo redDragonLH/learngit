@@ -51,4 +51,84 @@ var openLock = function (deadends, target) {
   console.log(result);
 };
 
-openLock(["8888"], "6000");
+
+/**
+ * 官方题解 广度优先
+ */
+var openLock = function (deadends, target) {
+  if (target === "0000") {
+    return 0;
+  }
+  // 题解在死亡数字内,无解
+  const dead = new Set(deadends);
+  if (dead.has("0000")) {
+    return -1;
+  }
+  // 广度优先搜索初始化数据
+  let step = 0;
+  const queue = [];
+  queue.push("0000");
+  // 已处理数据保存
+  const seen = new Set();
+  seen.add("0000");
+
+  while (queue.length) {
+    // 单步,只不过这个单步有好多落脚点~~,
+    ++step;
+    // 每次处理队列所有数据,应该也就最多8个
+    const size = queue.length;
+    for (let i = 0; i < size; ++i) {
+        // 当前status 在上一个循环已经判断过了
+        // 初始数据已在循环开始前判断过
+      const status = queue.shift();
+      for (const nextStatus of get(status)) {
+          // 没遍历,也不是死亡数
+        if (!seen.has(nextStatus) && !dead.has(nextStatus)) {
+          if (nextStatus === target) {
+            return step;
+          }
+          queue.push(nextStatus);
+          seen.add(nextStatus);
+        }
+      }
+    }
+  }
+
+  return -1;
+};
+// 处理数据边界
+const numPrev = (x) => {
+  return x === "0" ? "9" : parseInt(x) - 1 + "";
+};
+// 处理数据边界
+const numSucc = (x) => {
+  return x === "9" ? "0" : parseInt(x) + 1 + "";
+};
+
+// 枚举 status 通过一次旋转得到的数字
+const get = (status) => {
+  const ret = [];
+  const array = Array.from(status);
+  // 四个转盘,每个转盘实际只能有两个移动方向
+  for (let i = 0; i < 4; ++i) {
+    const num = array[i];
+    array[i] = numPrev(num);
+    ret.push(array.join(""));
+    array[i] = numSucc(num);
+    ret.push(array.join(""));
+    // 在当前没有意义,但是在整个循环中是有意义的
+    // 恢复原来的数据,使当前四个转盘每次只移动一个数字
+    array[i] = num;
+  }
+
+  return ret;
+};
+
+/**
+ * 笔记: 
+ *  * 对于这种四位一体,多位一体的数据处理,尽量不要分开处理,作为一个整体处理
+ * 
+ *  * 在广度优先搜索中步骤可以是处理每一个数据的量,也可以是处理当前整个队列的次数
+ * 
+ *  * 判断数据是否在数组之内,除了显式为对象,还可以用 Set ,Map
+ */
