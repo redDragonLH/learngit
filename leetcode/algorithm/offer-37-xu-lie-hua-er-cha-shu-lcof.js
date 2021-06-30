@@ -114,8 +114,53 @@ var deserialize = function (data) {
   let i = 1;
   let root = new TreeNode(arr[0]);
   while (i) {
-      let num = Math.pow(2,i)
-      console.log(num);
-      if(arr)
+    let num = Math.pow(2, i);
+    console.log(num);
+    if (arr) {
+    }
   }
+};
+
+/**
+ * 官方题解
+ * 
+ * 也不知道是个人想法过于复杂还是菜
+ * 
+ * 产出格式在消费的时候可以完美转换为产出的输入么
+ * 怎么转为生产,就能怎么转为消费格式么
+ */
+var serialize = function (root) {
+  return rserialize(root, "");
+};
+
+var deserialize = function (data) {
+  const dataArray = data.split(",");
+  return rdeserialize(dataArray);
+};
+
+const rserialize = (root, str) => {
+    // 其实就是前序遍历
+  if (root === null) {
+    str += "None,";
+  } else {
+    str += root.val + "" + ",";
+    str = rserialize(root.left, str);
+    str = rserialize(root.right, str);
+  }
+  return str;
+};
+
+// 还是有些无法想象这个程序的运行时数据整体格式与流转格式
+const rdeserialize = (dataList) => {
+  if (dataList[0] === "None") {
+    dataList.shift();
+    return null;
+  }
+
+  const root = new TreeNode(parseInt(dataList[0]));
+  dataList.shift();
+  root.left = rdeserialize(dataList);
+  root.right = rdeserialize(dataList);
+
+  return root;
 };
