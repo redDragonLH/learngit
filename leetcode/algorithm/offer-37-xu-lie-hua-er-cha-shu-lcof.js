@@ -49,23 +49,22 @@ var deserialize = function (data) {
  *
  * 如果不管的话前序遍历会不会好一点,前序遍历无法处理反序列化,还是得广度优先搜索好一点
  * Encodes a tree to a single string.
- * 
+ *
  * @param {TreeNode} root
  * @return {string}
  */
- var serialize = function (root) {
-    let str = "";
-    const inorder = (root) => {
-        str += ((root ? root.val : "null") + ",");
+var serialize = function (root) {
+  let str = "";
+  const inorder = (root) => {
+    str += (root ? root.val : "null") + ",";
 
-        if (root) {
-            inorder(root.left);
-            inorder(root.right);
-
-        }
-    };
-    inorder(root)
-    return str;
+    if (root) {
+      inorder(root.left);
+      inorder(root.right);
+    }
+  };
+  inorder(root);
+  return str;
 };
 /**
  * Decodes your encoded data to tree.
@@ -74,7 +73,49 @@ var deserialize = function (data) {
  * @return {TreeNode}
  */
 var deserialize = function (data) {
-    // 前序遍历缺少关键数据
-    const arr = data.split(",");
-    
+  // 前序遍历缺少关键数据
+  const arr = data.split(",");
+};
+
+/**
+ *
+ * 广度优先搜索
+ * Encodes a tree to a single string.
+ *
+ * @param {TreeNode} root
+ * @return {string}
+ */
+var serialize = function (root) {
+  let str = "";
+  let queue = [root];
+  while (queue.length) {
+    console.log(queue);
+    let len = queue.length;
+    while (len) {
+      len--;
+      let node = queue.shift();
+      str += (node ? node.val : "null") + ",";
+      node && queue.push(node.left, node.right);
+    }
+  }
+  return str;
+};
+/**
+ * Decodes your encoded data to tree.
+ *
+ * @param {string} data
+ * @return {TreeNode}
+ */
+var deserialize = function (data) {
+  // 但是广度优先搜索的结果在序列化的时候也有问题吧~~
+  // 倒是也能解决,加一个保存上一层的数组也就好了但是这个算法好丑~~
+  const arr = data.split(",");
+  let count = 0;
+  let i = 1;
+  let root = new TreeNode(arr[0]);
+  while (i) {
+      let num = Math.pow(2,i)
+      console.log(num);
+      if(arr)
+  }
 };
