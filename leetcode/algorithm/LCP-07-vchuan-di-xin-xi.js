@@ -72,3 +72,40 @@ console.log(
  * 执行用时：6904 ms, 在所有 JavaScript 提交中击败了6.67%的用户
  * 内存消耗：57.3 MB, 在所有 JavaScript 提交中击败了16.67%的用户
  */
+
+/**
+ * 官方题解 广度优先
+ */
+
+var numWays = function (n, relation, k) {
+    // 构建边,把数据拆分,无需保留原来的元素数据结构
+  const edges = new Array(n).fill(0).map(() => new Array());
+  for (const [src, dst] of relation) {
+    edges[src].push(dst);
+  }
+
+  let steps = 0;
+  const queue = [0];
+  while (queue.length && steps < k) {
+    steps++;
+    const size = queue.length;
+    for (let i = 0; i < size; i++) {
+      const index = queue.shift();
+      const list = edges[index];
+      for (const nextIndex of list) {
+        queue.push(nextIndex);
+      }
+    }
+  }
+
+  let ways = 0;
+  if (steps === k) {
+    while (queue.length) {
+        // 使用改动数组内容在内存数组中可能会造成性能问题,可以使用遍历的方案
+      if (queue.shift() === n - 1) {
+        ways++;
+      }
+    }
+  }
+  return ways;
+};
