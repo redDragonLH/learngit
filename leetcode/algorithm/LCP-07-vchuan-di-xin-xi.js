@@ -21,7 +21,18 @@
  */
 var numWays = function (n, relation, k) {
   let result = 0;
-  let queue = relation.filter((e) => !e[0]);
+  let arrLen = relation.length;
+  let map = new Map();
+  for (let i = 0; i < arrLen; i++) {
+    if (map.has(relation[i][0])) {
+      let temp = map.get(relation[i][0]);
+      temp.push(relation[i]);
+      map.set(relation[i][0], temp);
+    } else {
+      map.set(relation[i][0], [relation[i]]);
+    }
+  }
+  queue = map.get(0).slice(0);
   while (queue.length) {
     if (!k) return result;
     k--;
@@ -32,7 +43,8 @@ var numWays = function (n, relation, k) {
       if (!k && node[1] === n - 1) {
         result++;
       } else {
-        queue.push(...relation.filter((e) => e[0] === node[1]));
+        let temp = map.get(node[1]);
+        temp && queue.push(...temp.slice(0));
       }
     }
   }
@@ -41,16 +53,22 @@ var numWays = function (n, relation, k) {
 
 console.log(
   numWays(
-    3,
+    5,
     [
       [0, 2],
       [2, 1],
+      [3, 4],
+      [2, 3],
+      [1, 4],
+      [2, 0],
+      [0, 4],
     ],
-    2
+    3
   )
 );
 /**
  * 存在可优化点
+ *  1. 数组转为对象数据,减少查询时间 : 改为对象后时间反而上升
  * 执行用时：6904 ms, 在所有 JavaScript 提交中击败了6.67%的用户
  * 内存消耗：57.3 MB, 在所有 JavaScript 提交中击败了16.67%的用户
  */
