@@ -29,3 +29,28 @@ class Solution {
  * 执行用时：41 ms, 在所有 Java 提交中击败了33.71%的用户
  * 内存消耗：54.8 MB, 在所有 Java 提交中击败了77.72%的用户
  */
+
+
+ class Solution {
+    public int maxIceCream(int[] costs, int coins) {
+        // 计数排序
+        int[] freq = new int[100001];
+        for (int cost : costs) {
+            freq[cost]++;
+        }
+        int count = 0;
+        for (int i = 1; i <= 100000; i++) {
+            if (coins >= i) {
+                // 获取最少的当前可得的雪糕数量,freq[i] 表示当前雪糕的数量,coins/i 是当前coins 能买几个雪糕,取其最小值
+                int curCount = Math.min(freq[i], coins / i);
+                // 可以买雪糕的数量
+                count += curCount;
+                // 减去相应硬币
+                coins -= i * curCount;
+            } else {
+                break;
+            }
+        }
+        return count;
+    }
+}
