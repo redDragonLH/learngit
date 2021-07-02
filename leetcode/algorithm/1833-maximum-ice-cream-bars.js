@@ -18,12 +18,15 @@ var maxIceCream = function (costs, coins) {
   for (let i = 0; i < costs.length; i++) {
     coins -= costs[i];
     if (coins > -1) result++;
+    else return result; // 及时返回
   }
   return result;
 };
 console.log(maxIceCream([1, 3, 2, 4, 1], 7));
 /**
  * 改变数据内部元素结构的动作耗能确实大
- * 执行用时：300 ms, 在所有 JavaScript 提交中击败了39.15%的用户
- * 内存消耗：51.7 MB, 在所有 JavaScript 提交中击败了31.38%的用户
+ * 
+ * 执行用时：288 ms, 在所有 JavaScript 提交中击败了54.63%的用户
+ * 内存消耗：51.3 MB, 在所有 JavaScript 提交中击败了64.65%的用户
+
  */
