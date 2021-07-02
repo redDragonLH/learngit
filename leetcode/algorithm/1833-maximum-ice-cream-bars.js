@@ -13,18 +13,17 @@
  * @return {number}
  */
 var maxIceCream = function (costs, coins) {
-    let result = 0;
-    costs.sort((a,b)=>a-b);
-    while(coins){
-        if((coins-=costs.shift())>-1){
-            result++
-        }
-    }
-    return result;
+  let result = 0;
+  costs.sort((a, b) => a - b);
+  for (let i = 0; i < costs.length; i++) {
+    coins -= costs[i];
+    if (coins > -1) result++;
+  }
+  return result;
 };
-console.log(maxIceCream([1,3,2,4,1],7));
+console.log(maxIceCream([1, 3, 2, 4, 1], 7));
 /**
- * 这个就~~~~有点差了
- * 执行用时：3608 ms, 在所有 JavaScript 提交中击败了5.10%的用户
- * 内存消耗：52.8 MB, 在所有 JavaScript 提交中击败了11.54%的用户
+ * 改变数据内部元素结构的动作耗能确实大
+ * 执行用时：300 ms, 在所有 JavaScript 提交中击败了39.15%的用户
+ * 内存消耗：51.7 MB, 在所有 JavaScript 提交中击败了31.38%的用户
  */
