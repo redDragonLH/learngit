@@ -69,10 +69,19 @@ var majorityElement = function (nums) {
   }
   count = 0;
   const length = nums.length;
+  const compared = length/2;
   for (const num of nums) {
     if (num === candidate) {
       count++;
+      // 循环中增加了一道判断流程,不一定比原版快
+      // 可能造成问题,是省时间还是多耗时间得看数据的主要元素是靠近开始还是靠近结尾
+      if(count> compared) return candidate
     }
   }
-  return count * 2 > length ? candidate : -1;
+
+  return -1;
 };
+/**
+ * 执行用时：64 ms, 在所有 JavaScript 提交中击败了100.00%的用户
+ * 内存消耗：41.6 MB, 在所有 JavaScript 提交中击败了26.27%的用户
+ */
