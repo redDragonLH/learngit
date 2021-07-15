@@ -38,3 +38,25 @@ console.log(maximumElementAfterDecrementingAndRearranging([2, 2, 1, 2, 1]));
  * 执行用时：88 ms, 在所有 JavaScript 提交中击败了100.00%的用户
  * 内存消耗：47.3 MB, 在所有 JavaScript 提交中击败了91.40%的用户
  */
+
+/**
+ * 官方题解: 计数排序+贪心
+ *
+ * 原理: 因为第一个元素必须为1,而且相邻元素绝对值不能超过1,那最终答案肯定不能超过n,
+ */
+var maximumElementAfterDecrementingAndRearranging = function (arr) {
+  const n = arr.length;
+  const cnt = new Array(n + 1).fill(0);
+  for (const v of arr) {
+    ++cnt[Math.min(v, n)];
+  }
+  let miss = 0;
+  for (let i = 1; i <= n; ++i) {
+    if (cnt[i] == 0) {
+      ++miss;
+    } else {
+      miss -= Math.min(cnt[i] - 1, miss); // miss 不会小于 0，故至多减去 miss 个元素
+    }
+  }
+  return n - miss;
+};
