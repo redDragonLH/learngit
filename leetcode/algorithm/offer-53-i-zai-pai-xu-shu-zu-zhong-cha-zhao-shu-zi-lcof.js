@@ -83,6 +83,7 @@ var search = function (nums, target) {
   return result;
 };
 /**
+ * 改为Java 就是 0 毫秒~~
  * 执行用时：64 ms, 在所有 JavaScript 提交中击败了98.97%的用户
  * 内存消耗：39.1 MB, 在所有 JavaScript 提交中击败了36.90%的用户
  */
