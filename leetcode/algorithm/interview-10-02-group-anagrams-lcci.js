@@ -14,23 +14,20 @@
  * @return {string[][]}
  */
 var groupAnagrams = function (strs) {
-    let resultObj = new Map();
+    let resultObj = {};
     strs.forEach(e => {
         let sortStr = e.split('').sort().join('');
-        if (resultObj.has(sortStr)) {
-            resultObj.set(sortStr, [...resultObj.get(sortStr), e])
+        if (resultObj[sortStr]) {
+             resultObj[sortStr].push(e)
         } else {
-            resultObj.set(sortStr, [e])
+            resultObj[sortStr] = [e];
         }
+
     })
-    let a = []
-    for (let [key, value] of resultObj) {
-        a.push(value)
-    }
-    return a
+    return Object.values(resultObj)
 };
 /**
- * 思路正确，但是这个方案应该还有可以优化的点
- * 执行用时：140 ms, 在所有 JavaScript 提交中击败了82.35%的用户
- * 内存消耗：47.4 MB, 在所有 JavaScript 提交中击败了92.16%的用户
+ * 优化逻辑之后可以提高 14% 的时间
+ * 执行用时：120 ms, 在所有 JavaScript 提交中击败了98.04%的用户
+ * 内存消耗：48.4 MB, 在所有 JavaScript 提交中击败了52.94%的用户
  */
