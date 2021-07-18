@@ -18,7 +18,7 @@ var groupAnagrams = function (strs) {
     strs.forEach(e => {
         let sortStr = e.split('').sort().join('');
         if (resultObj[sortStr]) {
-             resultObj[sortStr].push(e)
+            resultObj[sortStr].push(e)
         } else {
             resultObj[sortStr] = [e];
         }
@@ -31,3 +31,20 @@ var groupAnagrams = function (strs) {
  * 执行用时：120 ms, 在所有 JavaScript 提交中击败了98.04%的用户
  * 内存消耗：48.4 MB, 在所有 JavaScript 提交中击败了52.94%的用户
  */
+
+/**
+ * 官方题解 计数哈希
+ */
+var groupAnagrams = function (strs) {
+    const map = new Object();
+    for (let s of strs) {
+        const count = new Array(26).fill(0);
+        // 就是把字符串分割重排后的值改为计数作为对象的键，没想到，数组也能做key
+        for (let c of s) {
+            count[c.charCodeAt() - 'a'.charCodeAt()]++;
+        }
+        map[count] ? map[count].push(s) : map[count] = [s];
+    }
+    console.log(map)
+    return Object.values(map);
+};
